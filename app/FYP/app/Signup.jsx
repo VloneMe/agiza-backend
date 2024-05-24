@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Touchable } from 'react-native';
+import React, { useState } from 'react';
+
+
 
 import { Formik } from 'formik';
 
@@ -51,12 +53,21 @@ const Signup = () => {
             <PageTitle>aGIZA</PageTitle>
             <SubTitle>Account Signup</SubTitle>
             <Formik 
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ fullName: '', email: '', PhoneNumber: '', password: '', confirmPassword: ''}}
                 onSubmit={(values) => {
                     console.log(values);
                 }}
             >
                 {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                    <MyTextInput 
+                        label="Full Name"
+                        icon="person"
+                        placeholder="Omari Rasuli"
+                        placeholderTextColor={darkLight}
+                        onChangeText={handleChange('fullName')}
+                        onBlur={handleBlur('fullName')}
+                        value={values.fullName}
+                    />
                     <MyTextInput 
                         label="Email Address"
                         icon="mail"
@@ -68,14 +79,13 @@ const Signup = () => {
                         keyboardType="email-address"
                     />
                     <MyTextInput 
-                        label="Email Address"
-                        icon="mail"
-                        placeholder="rasuliomari4@gmail.com"
+                        label="Phone Number"
+                        icon="plus"
+                        placeholder="+255 657707046"
                         placeholderTextColor={darkLight}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        keyboardType="email-address"
+                        onChangeText={handleChange('PhoneNumber')}
+                        onBlur={handleBlur('PhoneNumber')}
+                        value={values.PhoneNumber}
                     />
                     <MyTextInput 
                         label="Password"
@@ -85,6 +95,19 @@ const Signup = () => {
                         onChangeText={handleChange('password')}
                         onBlur={handleBlur('password')}
                         value={values.password}
+                        secureTextEntry={hidePassword}
+                        isPassword={true}
+                        hidePassword={hidePassword}
+                        setHidePassword={setHidePassword}
+                    />
+                    <MyTextInput 
+                        label="Confirm Password"
+                        icon="lock"
+                        placeholder="* * * * * * * *"
+                        placeholderTextColor={darkLight}
+                        onChangeText={handleChange('confirmPassword')}
+                        onBlur={handleBlur('confirmPassword')}
+                        value={values.confirmPassword}
                         secureTextEntry={hidePassword}
                         isPassword={true}
                         hidePassword={hidePassword}
