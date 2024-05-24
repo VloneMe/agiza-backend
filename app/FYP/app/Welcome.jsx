@@ -50,7 +50,7 @@ const Welcome = () => {
     <>
         <StatusBar style="dark" />
         <InnerContainer>
-            <WelcomeImage resizeMode="cover" source={require("./../assets/image/img1.png")} />
+            <WelcomeImage resizeMode="cover" source={require("./../assets/image/aGIZA.jpeg")} />
             <WelcomeContainer>
                     <PageTitle welcome={true}>Welcome! Buddy</PageTitle>
                     <SubTitle welcome={true}>Rasuli Omari</SubTitle>
