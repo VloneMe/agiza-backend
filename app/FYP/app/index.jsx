@@ -2,12 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-import login from './screens/login';
+import login from './Login';
 
 
 export default function App() {
   return (
-    <login />
+    <View style={styles.container}>
+      <Text>Open up app/FYP/app/index.jsx to start working on your app!</Text>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
