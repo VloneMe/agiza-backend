@@ -28,12 +28,14 @@ const Login = () => {
                     console.log(values);
                 }}
             >
-                {({handleChange, handleBlur, handleSubmit, values})} => <StyledFormArea></StyledFormArea>
+                {({handleChange, handleBlur, handleSubmit, values}) => <StyledFormArea></StyledFormArea>}
 
             </Formik>
         </InnerContainer>
     </StyledContainer>
   )
 }
+
+const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {}
 
 export default Login
