@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { Formik } from 'formik';
 
@@ -15,7 +15,6 @@ import {
     StyledInputLabel,
     LeftIcon,
     RightIcon,
-    StyledButton,
     ButtonText,
     MsgBox,
     Line,
@@ -23,6 +22,7 @@ import {
     ExtraText,
     TextLink,
     TextLinkContent,
+    StyledButton,
     Colors,
     } from './../components/styles';
 
@@ -35,12 +35,14 @@ import {
 
     //import colors
    // import { Colors } from './../components/styles';
-const { brand, darkLight } = Colors;
+const { brand, darkLight, primary } = Colors;
 
 
 
 
 const Login = () => {
+    const [hidePassword, setHidePassword] = useState(true);
+
   return (
     <StyledContainer>
         <StatusBar style="dark" />
@@ -73,11 +75,26 @@ const Login = () => {
                         onChangeText={handleChange('password')}
                         onBlur={handleBlur('password')}
                         value={values.password}
-                        secureTextEntry={true}
+                        secureTextEntry={hidePassword}
                         isPassword={true}
-                        hidePassword={true}
-                        setHidePassword={true}
+                        hidePassword={hidePassword}
+                        setHidePassword={setHidePassword}
                     />
+                    <MsgBox>...</MsgBox>
+                    <StyledButton onPress={handleSubmit}>
+                        <ButtonText>Login</ButtonText>
+                    </StyledButton>
+                    <Line />
+                    <StyledButton onPress={handleSubmit}>
+                        <Fontisto name='google' color={primary} size={25} />
+                        <ButtonText google={true} >Sign in with Google</ButtonText>
+                    </StyledButton>
+                    <ExtraView>
+                        <ExtraText>Don't have an account already? </ExtraText>
+                        <TextLink>
+                            <TextLinkContent>Signup</TextLinkContent>
+                        </TextLink>
+                    </ExtraView>
                 </StyledFormArea>)}
 
             </Formik>
