@@ -38,7 +38,7 @@ import {
 
     //import colors
    // import { Colors } from './../components/styles';
-const { brand, darkLight, primary } = Colors;
+// const { brand, darkLight, primary } = Colors;
 
 
 
