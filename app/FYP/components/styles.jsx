@@ -96,3 +96,8 @@ export const StyledButton = styled.TouchableOpacity`
     margin-vertical: 5px;
     height: 60px;
 `;
+
+export const ButtonText = styled.Text`
+    color: ${primary};
+    font-size: 16px;
+`;
