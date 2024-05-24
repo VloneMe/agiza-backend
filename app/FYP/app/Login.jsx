@@ -11,7 +11,33 @@ import {
     PageTitle,
     SubTitle,
     StyledFormArea,
-    } from './../components/styles'
+    StyledTextInput,
+    StyledInputLabel,
+    LeftIcon,
+    RightIcon,
+    StyledButton,
+    ButtonText,
+    MsgBox,
+    Line,
+    ExtraView,
+    ExtraText,
+    TextLink,
+    TextLinkContent,
+    Colors,
+    } from './../components/styles';
+
+
+
+    //import icons
+
+    import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
+
+
+    //import colors
+   // import { Colors } from './../components/styles';
+const { brand, darkLight } = Colors;
+
+
 
 
 const Login = () => {
@@ -28,7 +54,31 @@ const Login = () => {
                     console.log(values);
                 }}
             >
-                {({handleChange, handleBlur, handleSubmit, values}) => <StyledFormArea></StyledFormArea>}
+                {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                    <MyTextInput 
+                        label="Email Address"
+                        icon="mail"
+                        placeholder="rasuliomari4@gmail.com"
+                        placeholderTextColor={darkLight}
+                        onChangeText={handleChange('email')}
+                        onBlur={handleBlur('email')}
+                        value={values.email}
+                        keyboardType="email-address"
+                    />
+                    <MyTextInput 
+                        label="Password"
+                        icon="lock"
+                        placeholder="* * * * * * * *"
+                        placeholderTextColor={darkLight}
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        value={values.password}
+                        secureTextEntry={true}
+                        isPassword={true}
+                        hidePassword={true}
+                        setHidePassword={true}
+                    />
+                </StyledFormArea>)}
 
             </Formik>
         </InnerContainer>
@@ -36,6 +86,21 @@ const Login = () => {
   )
 }
 
-const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {}
+const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
+    return (
+        <View>
+            <LeftIcon>
+                <Octicons name={icon} size={30} color={brand} />
+            </LeftIcon>
+            <StyledInputLabel>{label}</StyledInputLabel>
+            <StyledTextInput {...props} />
+            {isPassword && (
+                <RightIcon onPress={() => setHidePassword(!hidePassword)}>
+                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />
+                </RightIcon>
+            )}
+        </View>
+    )
+}
 
 export default Login
