@@ -2,21 +2,12 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
 import login from './Login';
-import Login from './Login';
+import Signup from './Signup';
 
 
 
 export default function App() {
   return (
-    <Login />
+    <Signup />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
