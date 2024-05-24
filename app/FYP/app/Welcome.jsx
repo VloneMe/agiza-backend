@@ -24,6 +24,9 @@ import {
     TextLinkContent,
     StyledButton,
     Colors,
+    WelcomeContainer,
+    WelcomeImage,
+    Avatar,
     } from '../components/styles';
 
 
@@ -44,80 +47,28 @@ const Welcome = () => {
     const [hidePassword, setHidePassword] = useState(true);
 
   return (
-    <StyledContainer>
+    <>
         <StatusBar style="dark" />
         <InnerContainer>
-            <PageLogo resizeMode="cover" source={require("./../assets/image/img1.png")} />
-            <PageTitle>aGIZA</PageTitle>
-            <SubTitle>Account Login</SubTitle>
-            <Formik 
-                initialValues={{ email: '', password: '' }}
-                onSubmit={(values) => {
-                    console.log(values);
-                }}
-            >
-                {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
-                    <MyTextInput 
-                        label="Email Address"
-                        icon="mail"
-                        placeholder="rasuliomari4@gmail.com"
-                        placeholderTextColor={darkLight}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        keyboardType="email-address"
-                    />
-                    <MyTextInput 
-                        label="Password"
-                        icon="lock"
-                        placeholder="* * * * * * * *"
-                        placeholderTextColor={darkLight}
-                        onChangeText={handleChange('password')}
-                        onBlur={handleBlur('password')}
-                        value={values.password}
-                        secureTextEntry={hidePassword}
-                        isPassword={true}
-                        hidePassword={hidePassword}
-                        setHidePassword={setHidePassword}
-                    />
-                    <MsgBox>...</MsgBox>
-                    <StyledButton onPress={handleSubmit}>
-                        <ButtonText>Login</ButtonText>
-                    </StyledButton>
+            <WelcomeImage resizeMode="cover" source={require("./../assets/image/img1.png")} />
+            <WelcomeContainer>
+                    <PageTitle welcome={true}>Welcome! Buddy</PageTitle>
+                    <SubTitle welcome={true}>Rasuli Omari</SubTitle>
+                    <SubTitle welcome={true}>rasuliomari4@gmail.com</SubTitle>
+                <StyledFormArea>
+                    <Avatar resizeMode="cover" source={require("./../assets/image/img1.png")} />    
                     <Line />
-                    <StyledButton onPress={handleSubmit}>
-                        <Fontisto name='google' color={primary} size={25} />
-                        <ButtonText google={true} >Sign in with Google</ButtonText>
+                    <StyledButton onPress={() => {}}>
+                        <ButtonText>Logout</ButtonText>
                     </StyledButton>
-                    <ExtraView>
-                        <ExtraText>Don't have an account already? </ExtraText>
-                        <TextLink>
-                            <TextLinkContent>Signup</TextLinkContent>
-                        </TextLink>
-                    </ExtraView>
-                </StyledFormArea>)}
+                </StyledFormArea>
 
-            </Formik>
+            </WelcomeContainer>
         </InnerContainer>
-    </StyledContainer>
+    </>
   )
 }
 
-const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
-    return (
-        <View>
-            <LeftIcon>
-                <Octicons name={icon} size={30} color={brand} />
-            </LeftIcon>
-            <StyledInputLabel>{label}</StyledInputLabel>
-            <StyledTextInput {...props} />
-            {isPassword && (
-                <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />
-                </RightIcon>
-            )}
-        </View>
-    )
-}
+
 
 export default Welcome;
