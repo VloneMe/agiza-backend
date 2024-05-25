@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 
 import { Formik } from 'formik';
 
+import { Link } from 'expo-router';
+
 import {
     StyledContainer,
     InnerContainer,
@@ -83,8 +85,9 @@ const Login = () => {
                             setHidePassword={setHidePassword}
                         />
                         <MsgBox>...</MsgBox>
-                        <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Login</ButtonText>
+                        {/* <StyledButton onPress={handleSubmit}> */}
+                        <StyledButton>
+                            <ButtonText><Link href="_Layout">Login</Link></ButtonText>
                         </StyledButton>
                         <Line />
                         <StyledButton onPress={handleSubmit}>
@@ -94,7 +97,7 @@ const Login = () => {
                         <ExtraView>
                             <ExtraText>Don't have an account already? </ExtraText>
                             <TextLink>
-                                <TextLinkContent>Signup</TextLinkContent>
+                                <TextLinkContent><Link href="/Signup">Signup</Link></TextLinkContent>
                             </TextLink>
                         </ExtraView>
                     </StyledFormArea>)}
