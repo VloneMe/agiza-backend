@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, Touchable } from 'react-native';
 import React, { useState } from 'react';
+import { Link } from 'expo-router';
 
 
 
@@ -127,7 +128,7 @@ const Signup = () => {
                         <ExtraView>
                             <ExtraText>Already have an account? </ExtraText>
                             <TextLink>
-                                <TextLinkContent>Login</TextLinkContent>
+                                <TextLinkContent><Link href="/Login">Login</Link></TextLinkContent>
                             </TextLink>
                         </ExtraView>
                     </StyledFormArea>)}
