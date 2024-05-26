@@ -68,6 +68,24 @@ const Welcome = () => {
               )}  
             />
           </View>
+          <View style={styles.view3}>
+            <Text style={styles.text3}> Where to ?</Text>
+            <View style={styles.view4}>
+                <Icon 
+                  type = "material-community"
+                  name = "clock-time-four"
+                  color = {Colors.grey1}
+                  size = {26}
+                />
+                <Text style={{marginLeft:5}}>Now</Text>
+                <Icon 
+                  type = "material-community"
+                  name = "chevron-down"
+                  color = {Colors.grey1}
+                  size = {26}
+              />
+            </View>
+          </View>
       </ScrollView>
       <StatusBar 
           style = "dark"
