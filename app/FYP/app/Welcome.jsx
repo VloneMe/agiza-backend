@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList } from 'react-native'
 import React from 'react'
 // import { Icons } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
@@ -12,19 +12,68 @@ import Constants from 'expo-constants';
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 const statusBarHeight = Constants.statusBarHeight;
 
+import { filterData } from '../components/data';
 
 const Welcome = () => {
   return (
     <View style={styles.container}>
-      <View styles={styles.header}></View>
-        <View style={styles.icon1}>
-            <Icon 
-                type = "material-community"
-                name = "menu"
-                color = {Colors.white}
-                size = {40}
-            />
+      <View styles={styles.header}>
+          <View style={styles.icon1}>
+              <Icon 
+                  type = "material-community"
+                  name = "menu"
+                  color = {Colors.blue}
+                  size = {40}
+              />
+          </View>
+      </View>
+      <ScrollView bounces={false}>
+        <View style={styles.home}>
+          <Text style={styles.text1}>Welcome to aGIZA</Text>
+          <View style={styles.view1}>
+            <View style={styles.view8}>
+            <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
+            <View style={styles.button1}>
+              <Text style={styles.button1Text}>Send with aGIZA</Text>
+            </View>
+            </View>
+            <View>
+              <Image 
+                style={styles.image1}
+                source={require('./../assets/kigari.png')}
+              />
+            </View>
+          </View>
         </View>
+
+        <View>
+            <FlatList 
+              numRows={4}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              data={filterData}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => (
+                <View style={styles.card}>
+                  <View style={styles.view2}>
+                    <Image 
+                      style={styles.image2}
+                      source={item.image}
+                    />
+                  </View>
+                  <View>
+                    <Text style={styles.title}>{item.name}</Text>
+                  </View>
+                </View>
+              )}  
+            />
+          </View>
+      </ScrollView>
+      <StatusBar 
+          style = "dark"
+          backgroundColor = "#2058c0"
+          translucent = {true}
+      />
     </View>
   )
 }
@@ -39,9 +88,9 @@ const styles = StyleSheet.create({
         paddingTop:parameters.statusBarHeight
     },
     header:{
-      backgroundColor:blue,
+      backgroundColor:Colors.blue,
       height:parameters.headerHeight,
-      alignItems:"flex-start"
+      alignItems:"flex-start",
      
     },
     
