@@ -134,6 +134,7 @@ const Welcome = () => {
                     />
             </View>
           </View>
+          <Text style={styles.text4}>Around You</Text>
       </ScrollView>
       <StatusBar 
           style = "dark"
