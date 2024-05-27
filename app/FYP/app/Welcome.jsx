@@ -2,10 +2,13 @@ import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList } from 
 import React from 'react'
 // import { Icons } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
+import mapView, { PROVIDER_GOOGLE,} from 'react-native-maps';
+
 import { StatusBar } from 'expo-status-bar';
 import { Link } from 'expo-router';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
+import { mapStyle } from '../components/global/mapStyle';
 import { Colors, parameters } from '../components/global/styles';
 // import { Clors } from '../components/styles'
 import Constants from 'expo-constants';
@@ -13,6 +16,7 @@ const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, 
 const statusBarHeight = Constants.statusBarHeight;
 
 import { filterData } from '../components/data';
+import MapView from 'react-native-maps';
 
 const Welcome = () => {
   return (
@@ -135,6 +139,18 @@ const Welcome = () => {
             </View>
           </View>
           <Text style={styles.text4}>Around You</Text>
+          <View style={{alignItems:"center", justifyContent:"center"}}>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={styles.map}
+              customMapStyle={mapStyle}
+              showsUserLocation={true}
+              followsUserLocation={true}
+              rotateEnabled={true}
+              zoomEnabled={true}
+              toolbarEnabled={true}
+            ></MapView>
+          </View>
       </ScrollView>
       <StatusBar 
           style = "dark"
