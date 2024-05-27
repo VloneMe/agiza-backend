@@ -19,7 +19,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+
+      "package": "com.fyp",
+      "config": {
+        "googleMaps": 
+            {
+              "apiKey": "AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw"
+            },
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "FORGROUND_SERVICE", "INTERNET", "ACCESS_BACKGROUND_LOCATION"]
+          }  
     },
     "web": {
       "bundler": "metro",
