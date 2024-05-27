@@ -86,6 +86,54 @@ const Welcome = () => {
               />
             </View>
           </View>
+          <View style={styles.view5}>
+            <View style={styles.view6}>
+              <View style={styles.view7}>
+                  <Icon 
+                      type = "material-community"
+                      name = "map-marker"
+                      color = {Colors.black}
+                      size = {22}
+                  />
+              </View>
+              <View>
+                  <Text style={{fontSize:18, color:Colors.black}}>Mliman City Mall</Text>
+                  <Text style={{color:Colors.grey3}}>Dar es Salaam</Text>
+              </View>
+            </View>
+            <View>
+                    <Icon 
+                      type = "material-community"
+                      name = "chevron-right"
+                      color = {Colors.grey}
+                      size = {26}
+                    />
+            </View>
+          </View>
+          <View style={{...styles.view5,borderBottomWidth:0}}>
+            <View style={styles.view6}>
+              <View style={styles.view7}>
+                  <Icon 
+                      type = "material-community"
+                      name = "map-marker"
+                      color = {Colors.black}
+                      size = {22}
+                  />
+              </View>
+              <View>
+                  <Text style={{fontSize:18, color:Colors.black}}>Bunju Mwisho</Text>
+                  <Text style={{color:Colors.grey3}}>Dar es Salaam</Text>
+              </View>
+            </View>
+            <View>
+                    <Icon 
+                      type = "material-community"
+                      name = "chevron-right"
+                      color = {Colors.grey}
+                      size = {26}
+                    />
+            </View>
+          </View>
       </ScrollView>
       <StatusBar 
           style = "dark"
