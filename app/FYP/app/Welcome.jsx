@@ -28,7 +28,14 @@ const Welcome = () => {
       return permission
     }
     return true
-  }
+  };
+
+  const askPermission = async () => {
+    const permission = await Location.requestForegroundPermissionsAsync()
+    return permission.status === 'granted';
+  };
+
+  
 
   const _map = useRef(1);
 
