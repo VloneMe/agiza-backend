@@ -81,10 +81,10 @@ const Welcome = () => {
             </View>
             </View>
             <View>
-              <Image 
+              {/* <Image 
                 style={styles.image1}
                 source={require('./../assets/kigari.png')}
-              />
+              /> */}
             </View>
           </View>
         </View>
@@ -186,7 +186,7 @@ const Welcome = () => {
               customMapStyle={mapStyle}
               showsUserLocation={true}
               followsUserLocation={true}
-              region={{...carsAround[0], latitudeDelta: 0.0922, longitudeDelta: 0.0421}}
+              initialRegion={{...carsAround[0], latitudeDelta: 0.0922, longitudeDelta: 0.0421}}
               // rotateEnabled={true}
               // zoomEnabled={true}
               // toolbarEnabled={true}
@@ -224,8 +224,7 @@ const styles = StyleSheet.create({
     header:{
       backgroundColor:Colors.blue,
       height:parameters.headerHeight,
-      alignItems:"flex-start",
-     
+      alignItems:"flex-start"
     },
     
     image1:{
