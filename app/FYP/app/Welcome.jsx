@@ -16,7 +16,7 @@ import Constants from 'expo-constants';
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 const statusBarHeight = Constants.statusBarHeight;
 
-import { filterData } from '../components/data';
+import { filterData, carsAround } from '../components/data';
 import MapView from 'react-native-maps';
 
 const Welcome = () => {
@@ -189,7 +189,17 @@ const Welcome = () => {
               rotateEnabled={true}
               zoomEnabled={true}
               toolbarEnabled={true}
-            ></MapView>
+            >
+              {carsAround.map((item, index) => 
+              <MapView.Marker coordinate = {item} key = {index.toString()}>
+                <Image 
+                  source={require('./../assets/kigaridereva.png')}
+                  style = {styles.carsAround}
+                  resizeMode='cover'
+                />
+              </MapView.Marker>
+            )}
+            </MapView>
           </View>
       </ScrollView>
       <StatusBar 
