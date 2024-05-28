@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList } from 'react-native'
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 // import { Icons } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
 import mapView, { PROVIDER_GOOGLE,} from 'react-native-maps';
+import * as Location from 'expo-location';
 
 import { StatusBar } from 'expo-status-bar';
 import { Link } from 'expo-router';
