@@ -20,6 +20,9 @@ import { filterData } from '../components/data';
 import MapView from 'react-native-maps';
 
 const Welcome = () => {
+
+  const _map = useRef(1);
+
   return (
     <View style={styles.container}>
       <View styles={styles.header}>
@@ -141,7 +144,8 @@ const Welcome = () => {
           </View>
           <Text style={styles.text4}>Around You</Text>
           <View style={{alignItems:"center", justifyContent:"center"}}>
-            <MapView
+            <MapView 
+              ref={_map}
               provider={PROVIDER_GOOGLE}
               style={styles.map}
               customMapStyle={mapStyle}
