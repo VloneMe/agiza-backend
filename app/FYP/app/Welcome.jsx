@@ -186,9 +186,10 @@ const Welcome = () => {
               customMapStyle={mapStyle}
               showsUserLocation={true}
               followsUserLocation={true}
-              rotateEnabled={true}
-              zoomEnabled={true}
-              toolbarEnabled={true}
+              region={{...carsAround[0], latitudeDelta: 0.0922, longitudeDelta: 0.0421}}
+              // rotateEnabled={true}
+              // zoomEnabled={true}
+              // toolbarEnabled={true}
             >
               {carsAround.map((item, index) => 
               <MapView.Marker coordinate = {item} key = {index.toString()}>
