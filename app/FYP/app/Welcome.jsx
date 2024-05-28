@@ -21,6 +21,8 @@ import MapView from 'react-native-maps';
 
 const Welcome = () => {
 
+
+  const [latlng, setLatlng] = useState({}); 
   const checkPermission = async () => {
     const hasPermission = await Location.requestForegroundPermissionsAsync();
     if (hasPermission.status !== 'granted') {
@@ -35,9 +37,26 @@ const Welcome = () => {
     return permission.status === 'granted';
   };
 
-  
+  const getLocation = async () => {
+    try{
+      const {grated} = await Location.getForegroundPermissionsAsync();
+      if (!grated) return;
+      const {
+        coords: {latitude, longitude},
+      } = await Location.getCurrentPositionAsync();
+      setLatlng({latitude: latitude, longitude: longitude});
+    } catch (error){
+      console.log(error);
+    }
+  }
 
   const _map = useRef(1);
+
+  useEffect(() => {
+      checkPermission();
+      getLocation()
+      console.log(latlng)
+    ,[]})
 
   return (
     <View style={styles.container}>
