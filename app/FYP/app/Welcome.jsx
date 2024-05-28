@@ -21,6 +21,15 @@ import MapView from 'react-native-maps';
 
 const Welcome = () => {
 
+  const checkPermission = async () => {
+    const hasPermission = await Location.requestForegroundPermissionsAsync();
+    if (hasPermission.status !== 'granted') {
+      const permission = await askPermission();
+      return permission
+    }
+    return true
+  }
+
   const _map = useRef(1);
 
   return (
