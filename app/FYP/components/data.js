@@ -57,9 +57,10 @@ export const filterData = [ {name:"Small",image: require('../assets/ride.png'), 
 
 // export const availableServices = ["Uber Go","UberX","Uber connect","Uber Black","Uber Van","Uber Assist"]
 
-// export const carsAround = [{latitude:-26.207487,longitude:28.236226},
-//     {latitude:-26.202616,longitude:28.227718},
-//     {latitude:-26.202424,longitude:28.236612},
-//     {latitude:-26.208565,longitude:28.237191},
-//     {latitude:-26.203598,longitude:28.239509},
-// ]
+export const carsAround = [
+    {latitude:-6.772781,longitude:39.238679},
+    {latitude:-6.772184,longitude:39.240460},
+    {latitude:-6.775253,longitude:39.244773},
+    {latitude:-6.769095,longitude:39.236448},
+    {latitude:-6.770543,longitude:39.240675},
+]
