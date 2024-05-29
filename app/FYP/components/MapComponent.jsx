@@ -7,17 +7,10 @@ export default class MapComponent extends Component {
     return (
       <View>
          <MapView 
-              ref={_map}
               provider={PROVIDER_GOOGLE}
               style={styles.map}
               customMapStyle={mapStyle}
-              showsUserLocation={true}
-              followsUserLocation={true}
-              initialRegion={{...carsAround[0], latitudeDelta: 0.0922, longitudeDelta: 0.0421}}
-              // rotateEnabled={true}
-              // zoomEnabled={true}
-              // toolbarEnabled={true}
-            >
+              >
             </MapView>
       </View>
     )
