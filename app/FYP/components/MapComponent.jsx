@@ -17,15 +17,6 @@ export default class MapComponent extends Component {
               // zoomEnabled={true}
               // toolbarEnabled={true}
             >
-              {carsAround.map((item, index) => 
-              <MapView.Marker coordinate = {item} key = {index.toString()}>
-                <Image 
-                  source={require('./../assets/kigaridereva.png')}
-                  style = {styles.carsAround}
-                  resizeMode='cover'
-                />
-              </MapView.Marker>
-            )}
             </MapView>
       </View>
     )
