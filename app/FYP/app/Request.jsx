@@ -42,21 +42,27 @@ export default function Request() {
             source = {require('../assets/transit.png')}
             style = {styles.image1}
           />
-            <View>
+          <View>
+            <View style = {styles.view6}>
+              <Text style = {styles.text1}>From where</Text>
+            </View>
+            <View style = {styles.view7}>
               <TouchableOpacity>
                 <View style = {styles.view5}>
-                  <Text style = {styles.text10}>From where ?</Text>
+                  <Text style = {styles.text10}>...</Text>
                 </View>
               </TouchableOpacity>
               <View style = {styles.view8}>
                 <Icon 
-                  name = 'plus=thick'
+                  name = 'plus-thick'
                   type = 'material-community'
                   color = {colors.black}
                   size = {25}
                 />
               </View>
             </View>
+          </View>
+            
         </View>
       </View>
       <MapComponent />
