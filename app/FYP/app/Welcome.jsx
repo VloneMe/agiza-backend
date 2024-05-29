@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList, Toucha
 import React, { useState, useRef, useEffect } from 'react'
 // import { Icons } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
-import mapView, { PROVIDER_GOOGLE,} from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE,} from 'react-native-maps';
 import * as Location from 'expo-location';
 
 import { StatusBar } from 'expo-status-bar';
@@ -17,7 +17,7 @@ const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, 
 const statusBarHeight = Constants.statusBarHeight;
 
 import { filterData, carsAround } from '../components/data';
-import MapView from 'react-native-maps';
+// import MapView from 'react-native-maps';
 
 const Welcome = ({ navigation }) => {
 
