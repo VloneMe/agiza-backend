@@ -1,5 +1,6 @@
 import { Text, StyleSheet, View } from 'react-native'
 import { mapStyle } from '../components/global/mapStyle';
+import MapView, { PROVIDER_GOOGLE,} from 'react-native-maps';
 import React, { Component } from 'react'
 
 export default class MapComponent extends Component {
