@@ -1,5 +1,9 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
+// react navigation
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/native-stack';
+
 
 // screens
 import login from './Login';
@@ -18,7 +22,7 @@ import Request from './Request';
 
 export default function App() {
   return (
-    <Layout />
+    <Request />
   );
 }
 
