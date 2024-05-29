@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 // import { Icons } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
@@ -19,7 +19,7 @@ const statusBarHeight = Constants.statusBarHeight;
 import { filterData, carsAround } from '../components/data';
 import MapView from 'react-native-maps';
 
-const Welcome = () => {
+const Welcome = ({ navigation }) => {
 
 
   const [latlng, setLatlng] = useState({}); 
@@ -75,9 +75,11 @@ const Welcome = () => {
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <View style={styles.button1}>
-              <Text style={styles.button1Text}>Send with aGIZA</Text>
-            </View>
+            <TouchableOpacity onPress={()=>{navigation.navigate("Request")}}>
+              <View style={styles.button1}>
+                <Text style={styles.button1Text}>Send with aGIZA</Text>
+              </View>
+            </TouchableOpacity>
             </View>
             <View>
               {/* <Image 
