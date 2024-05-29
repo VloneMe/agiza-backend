@@ -1,11 +1,44 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, Image, View, Text, Dimensions, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { Colors, parameters } from '../components/global/styles';
+import { colors, parameters } from '../components/global/styles';
 import MapComponent from '../components/MapComponent';
 import { Avatar, Icon } from 'react-native-elements';
+
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 export default function Request() {
   return (
     <View style={styles.container}>
+      <View style = { styles.view1 }>
+        <Icon 
+          name = 'arrow-left'
+          type = 'material-community'
+          color = {colors.grey1}
+          size = {32}
+        />
+      </View>
+      <View style ={ styles.view2}>
+        <TouchableOpacity>
+          <View style = {styles.view3}>
+            <Avatar 
+              rounded
+              avatarStyle={{}}
+              source={require('../assets/blankProfilePic.jpg')}
+              size = {30}
+            />
+            <Text style = {{ marginLeft: 5 }}>For Someone</Text>
+            <Icon 
+              name = 'chevron-down'
+              type = 'material-community'
+              color = {colors.grey1}
+              size = {26}
+            /> 
+          </View>
+        </TouchableOpacity>
+        <View style = {styles.view4}></View>
+      </View>
       <MapComponent />
     </View>
   )
