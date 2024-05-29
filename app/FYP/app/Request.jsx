@@ -37,7 +37,27 @@ export default function Request() {
             /> 
           </View>
         </TouchableOpacity>
-        <View style = {styles.view4}></View>
+        <View style = {styles.view4}>
+          <Image 
+            source = {require('../assets/transit.png')}
+            style = {styles.image1}
+          />
+            <View>
+              <TouchableOpacity>
+                <View style = {styles.view5}>
+                  <Text style = {styles.text10}>From where ?</Text>
+                </View>
+              </TouchableOpacity>
+              <View style = {styles.view8}>
+                <Icon 
+                  name = 'plus=thick'
+                  type = 'material-community'
+                  color = {colors.black}
+                  size = {25}
+                />
+              </View>
+            </View>
+        </View>
       </View>
       <MapComponent />
     </View>
