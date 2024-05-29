@@ -8,6 +8,7 @@ import Welcome from './Welcome';
 import Layout from './Layout';
 import Home from './(tabs)/Home';
 import Login from './Login';
+import Request from './Request';
 
 // react navigation stack
 // import RootStack from './../navigators/RootStack';
