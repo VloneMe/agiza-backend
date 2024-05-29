@@ -23,4 +23,9 @@ export default class MapComponent extends Component {
   }
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    map: {
+        height:"100%",
+         width:"100%"
+        },
+})
