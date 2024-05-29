@@ -21,3 +21,12 @@ export default function App() {
     <Layout />
   );
 }
+
+const styles = StyleSheet.create({
+
+  container:{
+    flex:1
+  }
+  
+  
+  });
