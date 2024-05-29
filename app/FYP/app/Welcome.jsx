@@ -8,6 +8,7 @@ import * as Location from 'expo-location';
 import { StatusBar } from 'expo-status-bar';
 import { Link } from 'expo-router';
 const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 import { mapStyle } from '../components/global/mapStyle';
 import { Colors, parameters } from '../components/global/styles';
