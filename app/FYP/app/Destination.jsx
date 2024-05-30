@@ -1,5 +1,10 @@
-import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TextInput, View, Dimensions } from 'react-native'
+import { Avatar, Icon } from 'react-native-elements';
+import { Colors, parameters } from '../components/global/styles';
 import React from 'react'
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const Destination = () => {
   return (
@@ -86,7 +91,7 @@ const styles = StyleSheet.create({
         alignItems: "baseline",
     },
     
-    flatlist: {
+    FlatList: {
         marginTop: 20,
         zIndex: 17,
         elevation: 8
