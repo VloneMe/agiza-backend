@@ -4,6 +4,14 @@ import React from 'react'
 const Destination = () => {
   return (
     <View>
+        <View style = { styles.view1 }>
+        <Icon 
+          name = 'arrow-left'
+          type = 'material-community'
+          color = {Colors.grey1}
+          size = {32}
+        />
+      </View>
         <TouchableOpacity>
           <View style = {styles.view3}>
             <Avatar 
