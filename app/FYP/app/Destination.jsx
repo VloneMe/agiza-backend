@@ -4,6 +4,23 @@ import React from 'react'
 const Destination = () => {
   return (
     <View>
+        <TouchableOpacity>
+          <View style = {styles.view3}>
+            <Avatar 
+              rounded
+              avatarStyle={{}}
+              source={require('../assets/blankProfilePic.jpg')}
+              size = {30}
+            />
+            <Text style = {{ marginLeft: 5 }}>For Someone</Text>
+            <Icon 
+              name = 'chevron-down'
+              type = 'material-community'
+              color = {Colors.grey1}
+              size = {26}
+            /> 
+          </View>
+        </TouchableOpacity>
       <Text>Destination</Text>
     </View>
   )
