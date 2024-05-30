@@ -10,7 +10,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 
-export default function Request() {
+export default function Request(navigation) {
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
@@ -45,9 +45,11 @@ export default function Request() {
             style = {styles.image1}
           />
           <View>
-            <View style = {styles.view6}>
-              <Text style = {styles.text1}>From where</Text>
-            </View>
+            <TouchableOpacity onPress={()=>navigation.navigate("Destination")}>
+              <View style = {styles.view6}>
+                <Text style = {styles.text1}>From where</Text>
+              </View>
+            </TouchableOpacity>
             <View style = {styles.view7}>
               <TouchableOpacity>
                 <View style = {styles.view5}>
