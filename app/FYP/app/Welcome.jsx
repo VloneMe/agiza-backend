@@ -76,7 +76,7 @@ const Welcome = ({ navigation }) => {
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <TouchableOpacity onPress={()=>{navigation.navigate("Request")}}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Request')}}>
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
               </View>
