@@ -32,7 +32,7 @@ const styles = StyleSheet.create({})
 
 
 
-// import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 // import React from 'react'
 // // react navigation
 // import { NavigationContainer } from '@react-navigation/native';
