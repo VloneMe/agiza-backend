@@ -33,7 +33,7 @@
 
 
 import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import * as React from 'react'
 // react navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/native-stack';
@@ -47,6 +47,7 @@ import Layout from './Layout';
 import Home from './(tabs)/Home';
 import Login from './Login';
 import Request from './Request';
+import Destination from './Destination';
 
 // react navigation stack
 // import RootStack from './../navigators/RootStack';
@@ -56,7 +57,7 @@ import Request from './Request';
 
 export default function App() {
   return (
-    <Welcome />
+    <Destination />
   );
 }
 
