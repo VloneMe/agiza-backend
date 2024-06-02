@@ -118,7 +118,7 @@ const Signup = () => {
                         />
                         <MsgBox>...</MsgBox>
                         <StyledButton onPress={handleSubmit}>
-                            <ButtonText>Login</ButtonText>
+                            <ButtonText>Submit</ButtonText>
                         </StyledButton>
                         <Line />
                         {/* <StyledButton onPress={handleSubmit}>
