@@ -18,9 +18,10 @@ const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, 
 const statusBarHeight = Constants.statusBarHeight;
 
 import { filterData, carsAround } from '../components/data';
+import MapComponent  from '../components/MapComponent';
 // import MapView from 'react-native-maps';
 
-const Welcome = ({ navigation }) => {
+const Welcome = ({}) => {
 
 
   const [latlng, setLatlng] = useState({}); 
@@ -76,7 +77,7 @@ const Welcome = ({ navigation }) => {
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <TouchableOpacity onPress={()=>{navigation.navigate('Request')}}>
+            <TouchableOpacity>
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
               </View>
