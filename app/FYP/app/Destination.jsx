@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, TextInput, View, Dimensions } from 'react-native'
+import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-native'
 import { Avatar, Icon } from 'react-native-elements';
 import { Colors, parameters } from '../components/global/styles';
 import React from 'react'
