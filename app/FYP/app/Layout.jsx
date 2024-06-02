@@ -34,9 +34,18 @@ const Layout = () => {
             <StatusBar style="black" />
             <InnerContainer>
                 <PageLogo resizeMode="cover" source={require("./../assets/image/img1.png")} />
+                <ExtraView>
+                    <ExtraText>GET STARTED SEND AND RECEIVE YOUR PARCEL SAFETLY WITH US</ExtraText>
+                </ExtraView>
+                <ExtraView>
+                    <ExtraText>ONGEZENI MANENO YAKUVUTIA ILI MTUMIAJI AVUTIWE KUITUMIA MANENO SINA YAKUVUTIA MPAKA SASAA </ExtraText>
+                </ExtraView>
                 <PageLogo resizeMode="cover" source={require("../assets/image/image2.png")} />
                 <ExtraView>
                     <ExtraText>GET STARTED SEND AND RECEIVE YOUR PARCEL SAFETLY WITH US</ExtraText>
+                </ExtraView>
+                <ExtraView>
+                    <ExtraText>ONGEZENI MANENO YAKUVUTIA ILI MTUMIAJI AVUTIWE KUITUMIA MANENO SINA YAKUVUTIA MPAKA SASAA </ExtraText>
                 </ExtraView>
                 <StyledButton>
                     <ButtonText><Link href="/Login">GET STARTED HERE</Link></ButtonText>
