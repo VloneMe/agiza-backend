@@ -1,41 +1,70 @@
-import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-native'
+import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensions } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Avatar, Icon } from 'react-native-elements';
 import { Colors, parameters } from '../components/global/styles';
-import React from 'react'
+import React, { useRef } from 'react'
+import { Link } from 'expo-router';
+// import { GOOGLE_MAPS_APIKEY } from "../@env";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const Destination = () => {
+  const textInput1 = useRef(4);
+  const textInput2 = useRef(5);
   return (
-    <View style = {styles.container}>
-        <View style = { styles.view1 }>
-        <Icon 
-          name = 'arrow-left'
-          type = 'material-community'
-          color = {Colors.grey1}
-          size = {32}
-        />
+    <>
+      <View style = {styles.view2}>
+          <View style = { styles.view1 }>
+            <Link href="Request">
+          <Icon 
+            name = 'arrow-left'
+            type = 'material-community'
+            color = {Colors.grey1}
+            size = {32}
+          />
+          </Link>
+        </View>
+          <TouchableOpacity>
+            <View style = {{top: 25, alignItems: 'center'}}>
+              <View style = {styles.view3}>
+                <Avatar 
+                  rounded
+                  avatarStyle={{}}
+                  source={require('../assets/blankProfilePic.jpg')}
+                  size = {30}
+                />
+                <Text style = {{ marginLeft: 5 }}>For Someone</Text>
+                <Icon 
+                  name = 'chevron-down'
+                  type = 'material-community'
+                  color = {Colors.grey1}
+                  size = {26}
+                /> 
+              </View>
+            </View>
+          </TouchableOpacity>
       </View>
-        <TouchableOpacity>
-          <View style = {styles.view3}>
-            <Avatar 
-              rounded
-              avatarStyle={{}}
-              source={require('../assets/blankProfilePic.jpg')}
-              size = {30}
-            />
-            <Text style = {{ marginLeft: 5 }}>For Someone</Text>
-            <Icon 
-              name = 'chevron-down'
-              type = 'material-community'
-              color = {Colors.grey1}
-              size = {26}
-            /> 
-          </View>
-        </TouchableOpacity>
-      
-    </View>
+      <GooglePlacesAutocomplete 
+        nearbyPlacesAPI='GooglePlacesSearch'
+        placeholder='Where to........?'
+        listViewDisplayed='auto'
+        debounce={400}
+        currentLocation={true}
+        ref={textInput1}
+        minLength={2}
+        enablePoweredByContainer={false}
+        fetchDetails={false}
+        autoFocus={true}
+        styles={autocomplete}
+        query={
+          {
+            key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
+            language: 'en', 
+          }
+        }
+      />
+    </>
   )
 }
 
