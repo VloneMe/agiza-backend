@@ -8,7 +8,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const Destination = () => {
   return (
-    <View>
+    <View style = {styles.container}>
         <View style = { styles.view1 }>
         <Icon 
           name = 'arrow-left'
@@ -34,7 +34,7 @@ const Destination = () => {
             /> 
           </View>
         </TouchableOpacity>
-      <Text>Destination</Text>
+      
     </View>
   )
 }
@@ -43,10 +43,11 @@ export default Destination
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: parameters.statusBarHeight
     },
 
     view1: {

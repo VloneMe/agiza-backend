@@ -48,7 +48,9 @@ const Layout = () => {
                     <ExtraText>ONGEZENI MANENO YAKUVUTIA ILI MTUMIAJI AVUTIWE KUITUMIA MANENO SINA YAKUVUTIA MPAKA SASAA </ExtraText>
                 </ExtraView>
                 <StyledButton>
-                    <ButtonText><Link href="/Login">GET STARTED HERE</Link></ButtonText>
+                    <Link href="/Login">
+                    <ButtonText>GET STARTED HERE</ButtonText>
+                    </Link>
                  </StyledButton>
             </InnerContainer>
         </StyledContainer>  
