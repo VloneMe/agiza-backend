@@ -64,7 +64,7 @@ const Destination = () => {
           }
         }
         onPress={(data,details = null) => {
-          console.log(details.geometry)
+          console.log(details)
         }}
       />
     </>
