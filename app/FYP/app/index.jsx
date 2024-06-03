@@ -57,7 +57,7 @@ import Destination from './Destination';
 
 export default function App() {
   return (
-    <Welcome />
+    <Layout />
   );
 }
 
