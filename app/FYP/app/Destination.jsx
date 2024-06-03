@@ -54,7 +54,7 @@ const Destination = () => {
         ref={textInput1}
         minLength={2}
         enablePoweredByContainer={false}
-        fetchDetails={false}
+        fetchDetails={true}
         autoFocus={true}
         styles={autocomplete}
         query={
@@ -63,6 +63,9 @@ const Destination = () => {
             language: 'en', 
           }
         }
+        onPress={(data,details = null) => {
+          console.log(details.geometry)
+        }}
       />
     </>
   )
