@@ -3,6 +3,7 @@ import React from 'react'
 import { Colors, parameters } from '../components/global/styles';
 import MapComponent from '../components/MapComponent';
 import { Avatar, Icon } from 'react-native-elements';
+import { Link } from 'expo-router';
 
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -10,7 +11,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 
-export default function Request(navigation) {
+export default function Request() {
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
@@ -45,10 +46,12 @@ export default function Request(navigation) {
             style = {styles.image1}
           />
           <View>
-            <TouchableOpacity onPress={()=>navigation.navigate("Destination")}>
+            <TouchableOpacity>
+              <Link href= "Destination">
               <View style = {styles.view6}>
                 <Text style = {styles.text1}>From where</Text>
               </View>
+              </Link>
             </TouchableOpacity>
             <View style = {styles.view7}>
               <TouchableOpacity>
