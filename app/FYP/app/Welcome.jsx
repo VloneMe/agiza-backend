@@ -18,8 +18,7 @@ const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, 
 const statusBarHeight = Constants.statusBarHeight;
 
 import { filterData, carsAround } from '../components/data';
-import MapComponent  from '../components/MapComponent';
-// import MapView from 'react-native-maps';
+
 
 const Welcome = ({}) => {
 
@@ -77,10 +76,10 @@ const Welcome = ({}) => {
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <TouchableOpacity>
+            <TouchableOpacity><Link href="Request"> 
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
-              </View>
+              </View></Link>
             </TouchableOpacity>
             </View>
             <View>
@@ -194,7 +193,8 @@ const Welcome = ({}) => {
               // zoomEnabled={true}
               // toolbarEnabled={true}
             >
-              {carsAround.map((item, index) => 
+              
+              {/* {carsAround.map((item, index) => 
               <MapView.Marker coordinate = {item} key = {index.toString()}>
                 <Image 
                   source={require('./../assets/kigaridereva.png')}
@@ -202,7 +202,7 @@ const Welcome = ({}) => {
                   resizeMode='cover'
                 />
               </MapView.Marker>
-            )}
+            )} */}
             </MapView>
           </View>
       </ScrollView>
