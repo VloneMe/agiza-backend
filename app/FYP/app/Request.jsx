@@ -15,12 +15,14 @@ export default function Request() {
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
+        <Link href="Welcome">
         <Icon 
           name = 'arrow-left'
           type = 'material-community'
           color = {Colors.grey1}
           size = {32}
         />
+        </Link>
       </View>
       <View style ={ styles.view2}>
         <TouchableOpacity>
