@@ -1,4 +1,6 @@
 import React, { createContext, useReducer} from "react";
+import { OriginReducer } from "../reducers/reducers";
+
 export const Origincontext = createContext()
 
 export const OrigincontextProvider = (props) => {
