@@ -5,11 +5,14 @@ import { Colors, parameters } from '../components/global/styles';
 import React, { useRef } from 'react'
 import { Link } from 'expo-router';
 // import { GOOGLE_MAPS_APIKEY } from "../@env";
+import { Origincontext } from '../context/context';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const Destination = () => {
+
+  const { dispatchOrigin } = useContext(Origincontext)
   const textInput1 = useRef(4);
   const textInput2 = useRef(5);
   return (
@@ -64,7 +67,13 @@ const Destination = () => {
           }
         }
         onPress={(data,details = null) => {
-          console.log(details)
+          dispatchOrigin({type: "ADD_ORIGIN", payload: {
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+            address: details.formatted_address,
+            name: details.name
+          }})
+          navigation.goBack()
         }}
       />
     </>

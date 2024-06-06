@@ -1,10 +1,10 @@
 import { StyleSheet, Image, View, Text, Dimensions, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import { Colors, parameters } from '../components/global/styles';
 import MapComponent from '../components/MapComponent';
 import { Avatar, Icon } from 'react-native-elements';
 import { Link } from 'expo-router';
-
+import { Origincontext } from '../context/context';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -12,6 +12,12 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 
 export default function Request() {
+
+  const { origin, dispatchOrigin } = useContext(Origincontext)
+  const [userOrigin, setUserOrigin] = useState({
+    latitude:origin.latitude,
+    longtude:origin.longitude,
+  })
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
@@ -74,7 +80,7 @@ export default function Request() {
             
         </View>
       </View>
-      <MapComponent />
+      <MapComponent userOrigin = {userOrigin}/>
     </View>
   )
 }

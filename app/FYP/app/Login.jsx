@@ -26,7 +26,7 @@ import {
     TextLinkContent,
     StyledButton,
     Colors,
-    } from './../components/styles';
+    } from '../components/styles';
 
 
 
@@ -41,7 +41,7 @@ const { brand, darkLight, primary } = Colors;
 
 
 // keyboard avoiding view
-import KeyboardAvoidingWrapper from './../components/KeyboardAvoidingWrapper';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const Login = () => {
     const [hidePassword, setHidePassword] = useState(true);
