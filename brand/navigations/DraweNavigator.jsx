@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { HomeStack } from './StackNavigators';
+import { HomeStack } from './StackNavigator';
 import {Icon} from 'react-native-elements';
 import {colors} from "./../components/global/styles";
 
