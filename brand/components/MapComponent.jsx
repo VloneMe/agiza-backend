@@ -8,6 +8,25 @@ import { Colors, parameters } from '../components/global/styles';
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, cardbackground, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 
 export default class MapComponent extends Component {
+
+constructor(){
+  super(props)
+  this.state = {}
+  this._map = React.createRef(5)
+}
+
+componentDidUpdate (){
+  setInterval (() => {
+    if (this.props.userDestination.latitude !== null){
+      this._map.current.fitTocoordinates(
+        [this.props.userOrigin, this.props.userDestination],{
+          edgePadding: {top: 450, right: 50, bottom: 350, left: 50},
+          animated: true
+        }
+      )
+    }
+  }, 500)
+}
   render() {
     return (
       <View>
@@ -15,6 +34,7 @@ export default class MapComponent extends Component {
               provider={PROVIDER_GOOGLE}
               style={styles.map}
               customMapStyle={mapStyle}
+              ref={this._map}
               >
                 {this.props.userOrigin.latitude != null &&
                   <MapView.Marker coordibate = {this.props.userOrigin} anchor = {{x:0.5,y:0.5}} >
