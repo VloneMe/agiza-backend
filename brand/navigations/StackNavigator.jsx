@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import index from './../app/index';
 import Login from './../app/Login';
-import Signin from './../app/Signin';
+import Signup from './../app/Signup';
 import Welcome from './../app/Welcome';
 import Request from './../app/Request';
 import Destination from './../app/Destination';
@@ -24,8 +24,8 @@ export function HomeStack(){
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
-                name ="Signin"
-                component = {Signin}
+                name ="Signup"
+                component = {Signup}
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
