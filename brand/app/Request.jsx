@@ -4,7 +4,7 @@ import { Colors, parameters } from '../components/global/styles';
 import MapComponent from '../components/MapComponent';
 import { Avatar, Icon } from 'react-native-elements';
 import { Link } from 'expo-router';
-import { Origincontext } from '../context/context';
+import { Origincontext, DestinationContext } from '../context/context';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -18,13 +18,23 @@ export default function Request() {
     latitude:origin.latitude,
     longtude:origin.longitude,
   })
+  
+  const { destination, dispatchDestination } = useContext(DestinationContext)
+  const [userDestination, setUserDestination] = useState({
+    latitude:destination.latitude,
+    longtude:destination.longitude,
+  })
 
   useEffect (() => {
     setUserOrigin({
       latitude:origin.latitude,
       longtude:origin.longitude,
     })
-  }, [origin])
+    setUserDestination({
+      latitude:destination.latitude,
+      longtude:destination.longitude,
+    })
+  }, [origin,destination])
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
@@ -87,7 +97,7 @@ export default function Request() {
             
         </View>
       </View>
-      <MapComponent userOrigin = {userOrigin}/>
+      <MapComponent userOrigin = {userOrigin} userDestination = {userDestination}/>
     </View>
   )
 }
