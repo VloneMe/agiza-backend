@@ -78,7 +78,7 @@ const Destination = () => {
                 address: details.formatted_address,
                 name: details.name
               }})
-              navigation.goBack()
+              setDestination(true)
             }}
           />
       }
