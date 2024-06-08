@@ -5,7 +5,7 @@ import { Colors, parameters } from '../components/global/styles';
 import React, { useRef } from 'react'
 import { Link } from 'expo-router';
 // import { GOOGLE_MAPS_APIKEY } from "../@env";
-import { Origincontext } from '../context/context';
+import { Origincontext, DestinationContext } from '../context/context';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -13,6 +13,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const Destination = () => {
 
   const { dispatchOrigin } = useContext(Origincontext)
+  const { dispatchDestination } = useContext(DestinationContext)
   const textInput1 = useRef(4);
   const textInput2 = useRef(5);
   return (
