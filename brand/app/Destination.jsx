@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity, Dimensio
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Avatar, Icon } from 'react-native-elements';
 import { Colors, parameters } from '../components/global/styles';
-import React, { useRef } from 'react'
+import React, { useRef, useContext,useState } from 'react'
 import { Link } from 'expo-router';
 // import { GOOGLE_MAPS_APIKEY } from "../@env";
 import { Origincontext, DestinationContext } from '../context/context';
@@ -16,6 +16,9 @@ const Destination = () => {
   const { dispatchDestination } = useContext(DestinationContext)
   const textInput1 = useRef(4);
   const textInput2 = useRef(5);
+ 
+  const [destination, setDestination] = useState(false)
+
   return (
     <>
       <View style = {styles.view2}>
@@ -49,62 +52,66 @@ const Destination = () => {
             </View>
           </TouchableOpacity>
       </View>
-      <GooglePlacesAutocomplete 
-        nearbyPlacesAPI='GooglePlacesSearch'
-        placeholder='From ........?'
-        listViewDisplayed='auto'
-        debounce={400}
-        currentLocation={true}
-        ref={textInput1}
-        minLength={2}
-        enablePoweredByContainer={false}
-        fetchDetails={true}
-        autoFocus={true}
-        styles={autocomplete}
-        query={
-          {
-            key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
-            language: 'en', 
-          }
-        }
-        onPress={(data,details = null) => {
-          dispatchOrigin({type: "ADD_ORIGIN", payload: {
-            latitude: details.geometry.location.lat,
-            longitude: details.geometry.location.lng,
-            address: details.formatted_address,
-            name: details.name
-          }})
-          navigation.goBack()
-        }}
-      />
-      <GooglePlacesAutocomplete 
-        nearbyPlacesAPI='GooglePlacesSearch'
-        placeholder='Where to........?'
-        listViewDisplayed='auto'
-        debounce={400}
-        currentLocation={true}
-        ref={textInput2}
-        minLength={2}
-        enablePoweredByContainer={false}
-        fetchDetails={true}
-        autoFocus={true}
-        styles={autocomplete}
-        query={
-          {
-            key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
-            language: 'en', 
-          }
-        }
-        onPress={(data,details = null) => {
-          dispatchDestination({type: "ADD_DESTINATION", payload: {
-            latitude: details.geometry.location.lat,
-            longitude: details.geometry.location.lng,
-            address: details.formatted_address,
-            name: details.name
-          }})
-          navigation.goBack()
-        }}
-      />
+      {destination === false &&
+          <GooglePlacesAutocomplete 
+            nearbyPlacesAPI='GooglePlacesSearch'
+            placeholder='From ........?'
+            listViewDisplayed='auto'
+            debounce={400}
+            currentLocation={true}
+            ref={textInput1}
+            minLength={2}
+            enablePoweredByContainer={false}
+            fetchDetails={true}
+            autoFocus={true}
+            styles={autocomplete}
+            query={
+              {
+                key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
+                language: 'en', 
+              }
+            }
+            onPress={(data,details = null) => {
+              dispatchOrigin({type: "ADD_ORIGIN", payload: {
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                address: details.formatted_address,
+                name: details.name
+              }})
+              navigation.goBack()
+            }}
+          />
+      }
+      {destination === true &&
+          <GooglePlacesAutocomplete 
+            nearbyPlacesAPI='GooglePlacesSearch'
+            placeholder='Where to........?'
+            listViewDisplayed='auto'
+            debounce={400}
+            currentLocation={true}
+            ref={textInput2}
+            minLength={2}
+            enablePoweredByContainer={false}
+            fetchDetails={true}
+            autoFocus={true}
+            styles={autocomplete}
+            query={
+              {
+                key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
+                language: 'en', 
+              }
+            }
+            onPress={(data,details = null) => {
+              dispatchDestination({type: "ADD_DESTINATION", payload: {
+                latitude: details.geometry.location.lat,
+                longitude: details.geometry.location.lng,
+                address: details.formatted_address,
+                name: details.name
+              }})
+              navigation.goBack()
+            }}
+          />
+      }
     </>
   )
 }
