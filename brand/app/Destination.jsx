@@ -23,7 +23,7 @@ const Destination = () => {
     <>
       <View style = {styles.view2}>
           <View style = { styles.view1 }>
-            <Link href="Request">
+            <Link href="Details">
           <Icon 
             name = 'arrow-left'
             type = 'material-community'
