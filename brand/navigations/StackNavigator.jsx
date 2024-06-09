@@ -6,6 +6,7 @@ import Signup from './../app/Signup';
 import Welcome from './../app/Welcome';
 import Request from './../app/Request';
 import Destination from './../app/Destination';
+import Details from './../app/Details';
 
 
 const Home = createNativeStackNavigator();
@@ -41,6 +42,10 @@ export function HomeStack(){
              <Home.Screen 
                 name ="Destination"
                 component = {Destination}
+                options ={{headerShown:false}}
+            /> <Home.Screen 
+                name ="Details"
+                component = {Details}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
