@@ -12,29 +12,53 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, CardComment, statusbar, heaherText, lightgreen, blue, black, white, darkBlue, pagebackground } = Colors;
 
 export default function Request() {
-
-  const { origin, dispatchOrigin } = useContext(Origincontext)
+  const { origin, dispatchOrigin } = useContext(Origincontext);
   const [userOrigin, setUserOrigin] = useState({
-    latitude:origin.latitude,
-    longtude:origin.longitude,
-  })
-  
-  const { destination, dispatchDestination } = useContext(DestinationContext)
-  const [userDestination, setUserDestination] = useState({
-    latitude:destination.latitude,
-    longtude:destination.longitude,
-  })
+    latitude: origin.latitude,
+    longitude: origin.longitude,
+  });
 
-  useEffect (() => {
+  const { destination, dispatchDestination } = useContext(DestinationContext);
+  const [userDestination, setUserDestination] = useState({
+    latitude: destination.latitude,
+    longitude: destination.longitude,
+  });
+
+  useEffect(() => {
     setUserOrigin({
-      latitude:origin.latitude,
-      longtude:origin.longitude,
-    })
+      latitude: origin.latitude,
+      longitude: origin.longitude,
+    });
     setUserDestination({
-      latitude:destination.latitude,
-      longtude:destination.longitude,
-    })
-  }, [origin,destination])
+      latitude: destination.latitude,
+      longitude: destination.longitude,
+    });
+  }, [origin, destination]);
+
+// export default function Request() {
+
+//   const { origin, dispatchOrigin } = useContext(Origincontext)
+//   const [userOrigin, setUserOrigin] = useState({
+//     latitude:origin.latitude,
+//     longtude:origin.longitude,
+//   })
+  
+//   const { destination, dispatchDestination } = useContext(DestinationContext)
+//   const [userDestination, setUserDestination] = useState({
+//     latitude:destination.latitude,
+//     longtude:destination.longitude,
+//   })
+
+//   useEffect (() => {
+//     setUserOrigin({
+//       latitude:origin.latitude,
+//       longtude:origin.longitude,
+//     })
+//     setUserDestination({
+//       latitude:destination.latitude,
+//       longtude:destination.longitude,
+//     })
+//   }, [origin,destination])
   return (
     <View style={styles.container}>
       <View style = { styles.view1 }>
