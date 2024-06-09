@@ -76,7 +76,7 @@ const Welcome = ({}) => {
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <TouchableOpacity><Link href="Request"> 
+            <TouchableOpacity><Link href="Details"> 
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
               </View></Link>
