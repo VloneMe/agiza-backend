@@ -34,7 +34,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const Selection = () => {
   return (
        <ScrollView bounces={false}>
-        <View style={styles.view2}>
+        <View style={styles.view5}>
             <View style={styles.view6}>
               <View style={styles.view7}>
                   <Icon 
