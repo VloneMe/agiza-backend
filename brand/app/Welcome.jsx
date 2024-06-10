@@ -61,17 +61,18 @@ const Welcome = ({}) => {
 
   return (
     <View style={styles.container}>
-      <View styles={styles.header}></View>
-      <ScrollView bounces={false}>
-        <View style={styles.home}>
-          <View style={styles.icon1}>
+      <View styles={styles.header}>
+      <View style={styles.icon1}>
               <Icon 
                   type = "material-community"
                   name = "menu"
-                  color = {Colors.white}
+                  color = {Colors.blue}
                   size = {40}
               />
           </View>
+      </View>
+      <ScrollView bounces={false}>
+        <View style={styles.home}>
           <Text style={styles.text1}>Welcome to aGIZA</Text>
           <View style={styles.view1}>
             <View style={styles.view8}>
