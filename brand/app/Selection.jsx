@@ -34,7 +34,11 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const Selection = () => {
   return (
        <ScrollView bounces={false}>
-        <TouchableOpacity>
+        <View style={styles.home}>
+          <Text style={styles.text1}Welcome to aGIZA></Text>
+        </View>
+
+        <TouchableOpacity style={{}}>
         <View style={styles.view5}>
             <View style={styles.view6}>
               <View style={styles.view7}>
