@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native'
+import { Icon } from 'react-native-elements/dist/icons/Icon'
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
 import { Formik } from 'formik';
@@ -32,12 +33,13 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const Selection = () => {
   return (
-    <View style={styles.view5}>
+       <ScrollView bounces={false}>
+        <View style={styles.view2}>
             <View style={styles.view6}>
               <View style={styles.view7}>
                   <Icon 
                       type = "material-community"
-                      name = "map-marker"
+                      name = "bed-single"
                       color = {Colors.black}
                       size = {22}
                   />
@@ -56,6 +58,7 @@ const Selection = () => {
                     />
             </View>
           </View>
+          </ScrollView>
   )
 }
 
