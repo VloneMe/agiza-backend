@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, Touchable } from 'react-native';
+import { View, Text, Touchable, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
 
@@ -41,11 +41,16 @@ import {
 const { brand, darkLight, primary } = Colors;
 
 
+// const MultilineTextInput = () => {
+//     const [text, setText] = useState('');
+
 // keyboard avoiding view
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
-const Signup = () => {
+const Details = () => {
     const [hidePassword, setHidePassword] = useState(true);
+    const [text, setText] = useState('');
+    
 
   return (
     <KeyboardAvoidingWrapper>
@@ -92,7 +97,10 @@ const Signup = () => {
                         <MyTextInput 
                             label="Decription of the Parcel"
                             icon="mail"
-                            placeholder="Small Box or Envelope or Bag or Other"
+                            placeholder="Small Box or Envelope or Bag or Others"
+                            style={styles.textArea}
+                            multiline={true}
+                            numberOfLines={2}
                             placeholderTextColor={darkLight}
                             onChangeText={handleChange('Detail')}
                             onBlur={handleBlur('Detail')}
@@ -102,6 +110,9 @@ const Signup = () => {
                             label="What is inside the Parcel"
                             icon="info"
                             placeholder="Describe anythig inside the parcel"
+                            style={styles.textArea}
+                            multiline={true}
+                            numberOfLines={4}
                             placeholderTextColor={darkLight}
                             onChangeText={handleChange('Inside')}
                             onBlur={handleBlur('Inside')}
@@ -123,6 +134,23 @@ const Signup = () => {
   )
 }
 
+const styles = StyleSheet.create({
+    // container: {
+    //   flex: 1,
+    //   justifyContent: 'center',
+    //   padding: 16,
+    // },
+    textArea: {
+      height: 150,
+      justifyContent: 'flex-start',
+      textAlignVertical: 'top', // Ensures text starts from the top of the TextInput
+      borderColor: 'gray',
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 5, // Optional: Adds rounded corners to the text area
+    },
+  });
+
 const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
     return (
         <View>
@@ -140,4 +168,4 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
     )
 }
 
-export default Signup
+export default Details;
