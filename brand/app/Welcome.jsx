@@ -61,23 +61,22 @@ const Welcome = ({}) => {
 
   return (
     <View style={styles.container}>
-      <View styles={styles.header}>
-      <View style={styles.icon1}>
+      <View style={styles.header}>
               <Icon 
                   type = "material-community"
                   name = "menu"
-                  color = {Colors.blue}
+                  color = {Colors.white}
                   size = {40}
+                  style={{marginLeft:'2px'}}
               />
           </View>
-      </View>
       <ScrollView bounces={false}>
         <View style={styles.home}>
           <Text style={styles.text1}>Welcome to aGIZA</Text>
           <View style={styles.view1}>
             <View style={styles.view8}>
             <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
-            <TouchableOpacity><Link href="Details"> 
+            <TouchableOpacity style={{marginTop:20, marginBottom:20}} ><Link href="Details"> 
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
               </View></Link>
@@ -222,13 +221,16 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:Colors.white,
-        paddingBottom:30,
-        paddingTop:parameters.statusBarHeight
+        display:'flex'
+        // paddingBottom:30,
+        // paddingTop:parameters.statusBarHeight
     },
-    header:{
+    header: {
+      display:'flex',
+      alignItems:'flex-start',
       backgroundColor:Colors.blue,
-      height:parameters.headerHeight,
-      alignItems:"flex-start"
+      paddingLeft:10,
+      paddingTop:5
     },
     
     image1:{
@@ -273,13 +275,14 @@ const styles = StyleSheet.create({
       borderRadius:20,
       alignItems:"center",
       justifyContent:"center",
-      marginTop:20
+      marginTop:0
     },
     
     button1Text:{
      color:Colors.white,
      fontSize:17,
      marginTop:-2
+     
     
     },
     card:{
@@ -362,10 +365,6 @@ const styles = StyleSheet.create({
           marginBottom:20
         },
     
-    icon1:  {marginLeft:10,
-           marginTop:5
-          },
-
     view8: {flex:4,
           marginTop:-25
         } ,
