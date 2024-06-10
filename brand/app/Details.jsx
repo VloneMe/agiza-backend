@@ -123,7 +123,7 @@ const Details = () => {
                         <MsgBox>..</MsgBox>
                         <MsgBox>.</MsgBox>
                         <StyledButton onPress={handleSubmit}>
-                            <Link href='Destination'><ButtonText>Next</ButtonText></Link>
+                            <Link href='Selection'><ButtonText>Next</ButtonText></Link>
                         </StyledButton>
                     </StyledFormArea>)}
 
