@@ -7,6 +7,7 @@ import Welcome from './../app/Welcome';
 import Request from './../app/Request';
 import Destination from './../app/Destination';
 import Details from './../app/Details';
+import Selection from './../app/Selection';
 
 
 const Home = createNativeStackNavigator();
@@ -43,9 +44,15 @@ export function HomeStack(){
                 name ="Destination"
                 component = {Destination}
                 options ={{headerShown:false}}
-            /> <Home.Screen 
+            /> 
+            <Home.Screen 
                 name ="Details"
                 component = {Details}
+                options ={{headerShown:false}}
+            />
+             <Home.Screen 
+                name ="Selection"
+                component = {Selection}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
