@@ -36,6 +36,9 @@ const Selection = () => {
        <ScrollView bounces={false}>
         <View style={styles.home}>
           <Text style={styles.text1}Welcome to aGIZA></Text>
+          <View style={styles.view1}>
+            <View></View>
+          </View>
         </View>
 
         <TouchableOpacity style={{}}>
