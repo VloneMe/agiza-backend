@@ -35,9 +35,11 @@ const Selection = () => {
   return (
        <ScrollView bounces={false}>
         <View style={styles.home}>
-          <Text style={styles.text1}Welcome to aGIZA></Text>
+          <Text style={styles.text1}>Welcome to aGIZA</Text>
           <View style={styles.view1}>
-            <View></View>
+            <View style={styles.view8}>
+              <Text style={styles.text2}>Please choose the ride you want</Text>
+            </View>
           </View>
         </View>
 
@@ -107,12 +109,16 @@ const styles = StyleSheet.create({
      color:Colors.white,
      fontSize:21,
      paddingBottom:20,
+     alignContent:"center",
+     textAlign:"center",
      paddingTop:20
     },
     
     text2:{
      color:Colors.white,
-     fontSize:16
+     fontSize:16,
+      paddingBottom:10,
+      textAlign:"center"
     },
     
     view1:{
