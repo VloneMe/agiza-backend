@@ -47,18 +47,26 @@ const Selection = () => {
         <Image source={require('./../assets/pikipiki.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Motorcycle</Text>
       </TouchableOpacity>
+      <Line />
 
       <TouchableOpacity style={styles.option}>
         <Image source={require('./../assets/kirikuu.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Small Van</Text>
       </TouchableOpacity>
+      <Line />
 
       <TouchableOpacity style={styles.option}>
         <Image source={require('./../assets/fuso.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Big Van</Text>
       </TouchableOpacity>
       </ScrollView>
+      <StatusBar 
+          style = "dark"
+          backgroundColor = "#2058c0"
+          translucent = {true}
+      />
     </View>
+    
   )
 }
 
@@ -85,6 +93,7 @@ const styles = StyleSheet.create({
     image:{
       alignContent: 'center',
       justifyContent: 'center',
+      marginTop: 20,
       marginBottom: 10,
     },
     
