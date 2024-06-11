@@ -33,7 +33,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const Selection = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <ScrollView>
         <View style = {styles.home}>
             <Text style={styles.text1}>Welcome to aGIZA</Text>
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     home:{
      backgroundColor:Colors.blue,
      paddingLeft:20,
-     
     },
     
     text1:{
