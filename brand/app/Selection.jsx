@@ -1,33 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native'
-import { Icon } from 'react-native-elements/dist/icons/Icon'
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
-import { Formik } from 'formik';
-import {
-    StyledContainer,
-    InnerContainer,
-    PageLogo,
-    PageTitle,
-    SubTitle,
-    StyledFormArea,
-    StyledTextInput,
-    StyledInputLabel,
-    LeftIcon,
-    RightIcon,
-    ButtonText,
-    MsgBox,
-    Line,
-    ExtraView,
-    ExtraText,
-    TextLink,
-    TextLinkContent,
-    StyledButton,
-    } from '../components/styles';
-
-import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
-// keyboard avoiding view
-import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { Line } from '../components/styles';
 import { Colors, parameters } from '../components/global/styles';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
