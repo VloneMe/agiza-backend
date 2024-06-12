@@ -31,8 +31,10 @@ const Selection = () => {
       <Line />
 
       <TouchableOpacity style={styles.option}>
+        <Link href = "Comfirm">
         <Image source={require('./../assets/fuso.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Big Van</Text>
+        </Link>
       </TouchableOpacity>
       </ScrollView>
       <StatusBar 
