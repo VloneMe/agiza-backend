@@ -93,7 +93,7 @@ const Login = () => {
                         <ExtraView>
                             <ExtraText>Don't have an account already? </ExtraText>
                             <TextLink>
-                                <TextLinkContent><Text><Link href="/Signup" >Signup</Link></Text></TextLinkContent>
+                                <TextLinkContent>Signup</TextLinkContent>
                             </TextLink>
                         </ExtraView>
                     </StyledFormArea>)}
