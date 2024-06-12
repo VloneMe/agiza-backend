@@ -2,11 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, Touchable, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
-
-
-
 import { Formik } from 'formik';
-
 import {
     StyledContainer,
     InnerContainer,
@@ -28,23 +24,8 @@ import {
     StyledButton,
     Colors,
     } from '../components/styles';
-
-
-
-    //import icons
-
-    import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
-
-
-    //import colors
-   // import { Colors } from './../components/styles';
+import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
 const { brand, darkLight, primary } = Colors;
-
-
-// const MultilineTextInput = () => {
-//     const [text, setText] = useState('');
-
-// keyboard avoiding view
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const Details = () => {
@@ -60,12 +41,22 @@ const Details = () => {
                 <PageTitle>aGIZA</PageTitle>
                 <SubTitle>Parcel Details </SubTitle>
                 <Formik 
-                    initialValues={{ fullName: '', addres: '', PhoneNumber: '', Details: '', Inside: ''}}
+                    initialValues={{ pickuplocation: '', fullName: '', deliverylocationres: '', PhoneNumber: '', Details: '', Inside: ''}}
                     onSubmit={(values) => {
                         console.log(values);
                     }}
                 >
                     {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                        <MyTextInput 
+                            label="Pickup Location Area"
+                            icon="location"
+                            placeholder="Bunju"
+                            placeholderTextColor={darkLight}
+                            onChangeText={handleChange('pickuplocation')}
+                            onBlur={handleBlur('pickuplocation')}
+                            value={values.pickuplocation}
+                            keyboardType="pickuplocation"
+                        />
                         <MyTextInput 
                             label="Full Name of Receiver of the Parcel"
                             icon="person"
@@ -76,14 +67,14 @@ const Details = () => {
                             value={values.fullName}
                         />
                         <MyTextInput 
-                            label="Street Address"
+                            label="Delivery Location"
                             icon="location"
                             placeholder="Kijitonyama"
                             placeholderTextColor={darkLight}
-                            onChangeText={handleChange('addres')}
-                            onBlur={handleBlur('addres')}
-                            value={values.addres}
-                            keyboardType="addres-address"
+                            onChangeText={handleChange('deliverylocation')}
+                            onBlur={handleBlur('deliverylocation')}
+                            value={values.deliverylocation}
+                            keyboardType="deliverylocation"
                         />
                         <MyTextInput 
                             label="Phone Number"

@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { View, Text, Touchable } from 'react-native';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
+import Checkbox from 'expo-checkbox';
+import { EyeOutline } from 'react-ionicons'
 
 
 
@@ -46,6 +48,7 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const Signup = () => {
     const [hidePassword, setHidePassword] = useState(true);
+    const [isSelected, setSelection] = useState(false);
 
   return (
     <KeyboardAvoidingWrapper>
@@ -116,6 +119,16 @@ const Signup = () => {
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                         />
+                        <View style={{ flexDirection: 'row', marginBottom: 20, marginTop: 20, justifyContent: 'center', flex:1, }}>
+                            {}
+                            <Text>Are you a Driver?</Text>
+                            <Checkbox 
+                                value={isSelected}
+                                onValueChange={setSelection}
+                                style={{ alignSelf:'center',}}
+                            />
+                            <Text>{isSelected ? '👍' : '👎' }</Text>
+                        </View>
                         <MsgBox>...</MsgBox>
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>Submit</ButtonText>
@@ -150,7 +163,7 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
             <StyledTextInput {...props} />
             {isPassword && (
                 <RightIcon onPress={() => setHidePassword(!hidePassword)}>
-                    <Ionicons name={hidePassword ? 'md-eye-off' : 'md-eye'} size={30} color={darkLight} />
+                    <ionicons name={hidePassword ? 'md-eye-off' : 'EyeOutline'} size={30} color={darkLight} />
                 </RightIcon>
             )}
         </View>
