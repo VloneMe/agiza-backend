@@ -8,7 +8,6 @@ import Request from './../app/Request';
 import Destination from './../app/Destination';
 import Details from './../app/Details';
 import Selection from './../app/Selection';
-import Newsignup from './../app/Newsignup';
 import Comfirm from './../app/Comfirm'
 
 
@@ -58,8 +57,8 @@ export function HomeStack(){
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
-                name ="Newsignup"
-                component = {Newsignup}
+                name =""
+                component 
                 options ={{headerShown:false}}
             /> 
              <Home.Screen 
