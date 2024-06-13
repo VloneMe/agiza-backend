@@ -33,11 +33,6 @@ export function HomeStack(){
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
-                name ="Neewsignup"
-                component = {Newsignup}
-                options ={{headerShown:false}}
-            /> 
-            <Home.Screen 
                 name ="Welcome"
                 component = {Welcome}
                 options ={{headerShown:false}}
@@ -60,6 +55,11 @@ export function HomeStack(){
              <Home.Screen 
                 name ="Selection"
                 component = {Selection}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="Newsignup"
+                component = {Newsignup}
                 options ={{headerShown:false}}
             /> 
              <Home.Screen 
