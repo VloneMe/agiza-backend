@@ -19,14 +19,18 @@ const Selection = () => {
             </View>
         </View>
       <TouchableOpacity style={styles.option}>
+        {/* <Link href = "/Comfirm"> */}
         <Image source={require('./../assets/pikipiki.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Motorcycle</Text>
+        {/* </Link> */}
       </TouchableOpacity>
       <Line />
 
       <TouchableOpacity style={styles.option}>
+        {/* <Link href = "/Comfirm"> */}
         <Image source={require('./../assets/kirikuu.jpeg')} style={styles.image} />
         <Text style={styles.optionText}>Click to choose Small Van</Text>
+        {/* </Link> */}
       </TouchableOpacity>
       <Line />
 
