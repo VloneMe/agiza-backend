@@ -1,0 +1,23 @@
+# POST: data to database for new user
+http://localhost:3000/api/users/register
+
+# POST: Confirms user in the database adn login
+http://localhost:3000/api/users/login
+
+# GET: Displays all users in the data base
+http://localhost:3000/api/users
+
+# GET: Displays user in the database with a specified id
+# This displays single User informations
+# For user profile based on his id
+http://localhost:3000/api/users/<provide user id>
+
+# PUT: Updates user in the database with a specified id
+# This updates single User informations
+# For user profile based on his id
+http://localhost:3000/api/users/<provide user id>
+
+# DELETE: Delete user in the database with a specified id
+# This displays single User informations
+# For user profile based on his id
+http://localhost:3000/api/users/<provide user id>
