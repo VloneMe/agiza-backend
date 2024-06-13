@@ -58,12 +58,12 @@ const Signup = () => {
                 <PageTitle>aGIZA</PageTitle>
                 <SubTitle>Account Signup</SubTitle>
                 <Formik 
-                    initialValues={{ fullName: '', email: '', PhoneNumber: '', password: '', confirmPassword: ''}}
+                    initialValues={{ fullName: '', email: '', PhoneNumber: '', password: '', confirmPassword: '', isSelected: false }}
                     onSubmit={(values) => {
                         console.log(values);
                     }}
                 >
-                    {({handleChange, handleBlur, handleSubmit, values}) => (<StyledFormArea>
+                    {({handleChange, handleBlur, handleSubmit, setFieldValue, values}) => (<StyledFormArea>
                         <MyTextInput 
                             label="Full Name"
                             icon="person"
@@ -120,8 +120,8 @@ const Signup = () => {
                         />
                         <View style={styles.checkboxContainer}>
                             <Checkbox
-                            value={isSelected}
-                            onValueChange={setSelection}
+                            value={values.isSelected}
+                            onValueChange={(value) => setFieldValue('isSelected', value)}
                             style={styles.checkbox}
                             />
                              <Text style={styles.label}>Are you a Driver?</Text>
@@ -132,10 +132,6 @@ const Signup = () => {
                             <ButtonText>Submit</ButtonText>
                         </StyledButton>
                         <Line />
-                        {/* <StyledButton onPress={handleSubmit}>
-                            <Fontisto name='google' color={primary} size={25} />
-                            <ButtonText google={true} >Sign in with Google</ButtonText>
-                        </StyledButton> */}
                         <ExtraView>
                             <ExtraText>Already have an account? </ExtraText>
                             <TextLink>
