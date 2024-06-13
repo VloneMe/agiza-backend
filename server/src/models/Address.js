@@ -8,9 +8,7 @@ const addressSchema = new Schema({
     city: { type: String, required: true },
     state: { type: String, required: true },
     zipCode: { type: String, required: true },
-    country: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-});
+    country: { type: String, required: true }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Address', addressSchema);

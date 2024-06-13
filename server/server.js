@@ -5,6 +5,7 @@ const app = express();
 const userRoutes = require('./src/routes/userRoutes');
 const packageRoutes = require('./src/routes/packageRoutes');
 const addressRoutes = require('./src/routes/addressRoutes');
+const transportationRoutes = require('./src/routes/transportationRoutes');
 const verifyToken = require('./src/middlewares/auth');
 
 app.use(express.json());
@@ -16,6 +17,7 @@ DBconnection();
 app.use('/api/users', userRoutes);
 app.use('/api/packages', verifyToken, packageRoutes);
 app.use('/api/addresses', verifyToken, addressRoutes);
+app.use('/api/transportation', verifyToken, transportationRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
