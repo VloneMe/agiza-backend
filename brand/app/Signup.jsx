@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, Touchable } from 'react-native';
+import { View, Text, Touchable, StyleSheet } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
 
@@ -46,6 +47,7 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 const Signup = () => {
     const [hidePassword, setHidePassword] = useState(true);
+    const [isSelected, setSelection] = useState(false);
 
   return (
     <KeyboardAvoidingWrapper>
@@ -116,6 +118,15 @@ const Signup = () => {
                             hidePassword={hidePassword}
                             setHidePassword={setHidePassword}
                         />
+                        <View style={styles.checkboxContainer}>
+                            <Checkbox
+                            value={isSelected}
+                            onValueChange={setSelection}
+                            style={styles.checkbox}
+                            />
+                             <Text style={styles.label}>Are you a Driver?</Text>
+                         </View>
+                             <Text>If yes select the checkbox above: {isSelected ? '👍' : '👎'}</Text>
                         <MsgBox>...</MsgBox>
                         <StyledButton onPress={handleSubmit}>
                             <ButtonText>Submit</ButtonText>
@@ -156,5 +167,23 @@ const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ..
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    // container: {
+    //   flex: 1,
+    //   alignItems: 'center',
+    //   justifyContent: 'center',
+    // },
+    checkboxContainer: {
+      flexDirection: 'row',
+      marginBottom: 20,
+    },
+    checkbox: {
+      alignSelf: 'center',
+    },
+    label: {
+      margin: 8,
+    },
+  });
 
 export default Signup
