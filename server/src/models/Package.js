@@ -6,9 +6,7 @@ const packageSchema = new Schema({
     recipientId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     pickupAddress: { type: String, required: true },
     deliveryAddress: { type: String, required: true },
-    status: { type: String, enum: ['pending', 'in-transit', 'delivered', 'cancelled'], required: true },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-});
+    status: { type: String, enum: ['pending', 'in-transit', 'delivered', 'cancelled'], required: true }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Package', packageSchema);
