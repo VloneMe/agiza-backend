@@ -29,6 +29,8 @@ import {
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import axios from 'axios';
+import { Picker } from '@react-native-picker/picker';
+
 
 const { brand, darkLight, primary } = Colors;
 
@@ -36,12 +38,14 @@ const { brand, darkLight, primary } = Colors;
 const validationSchema = Yup.object().shape({
   username: Yup.string().min(4, 'Username must be at least 4 characters long').required('Username is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  PhoneNumber: Yup.string().min(5, 'Phone Number must be at least 5 digits').required('Phone Number is required'),
-  password: Yup.string().min(3, 'Password must be at least 3 characters long').required('Password is required'),
+  phone: Yup.string().min(10, 'Phone Number must be at least 10 digits').required('Phone Number is required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required'),
+  role: Yup.string().required('Role is required'),
 });
+
 
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -86,9 +90,9 @@ const Signup = () => {
           <PageTitle>aGIZA</PageTitle>
           <SubTitle>Account Signup</SubTitle>
           <Formik
-            initialValues={{ username: '', email: '', PhoneNumber: '', password: '', confirmPassword: '', isSelected: false }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+             initialValues={{ username: '', email: '', phone: '', password: '', confirmPassword: '', role: '', isSelected: false }}
+             validationSchema={validationSchema}
+             onSubmit={handleSubmit}
           >
             {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
               <StyledFormArea>
