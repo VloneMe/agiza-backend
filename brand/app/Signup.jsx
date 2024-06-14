@@ -38,8 +38,8 @@ const { brand, darkLight, primary } = Colors;
 const validationSchema = Yup.object().shape({
   username: Yup.string().min(4, 'Username must be at least 4 characters long').required('Username is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
-  phone: Yup.string().min(10, 'Phone Number must be at least 10 digits').required('Phone Number is required'),
-  password: Yup.string().min(6, 'Password must be at least 6 characters long').required('Password is required'),
+  phone: Yup.string().min(5, 'Phone Number must be at least 5 digits').required('Phone Number is required'),
+  password: Yup.string().min(3, 'Password must be at least 3 characters long').required('Password is required'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required'),
@@ -94,95 +94,107 @@ const Signup = () => {
              validationSchema={validationSchema}
              onSubmit={handleSubmit}
           >
-            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
-              <StyledFormArea>
-                <MyTextInput
-                  label="Full Name"
-                  icon="person"
-                  placeholder="Omari Rasuli"
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('username')}
-                  onBlur={handleBlur('username')}
-                  value={values.username}
+           {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
+            <StyledFormArea>
+              <MyTextInput
+                label="Full Name"
+                icon="person"
+                placeholder="Omari Rasuli"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('username')}
+                onBlur={handleBlur('username')}
+                value={values.username}
+              />
+              {touched.username && errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+              
+              <MyTextInput
+                label="Email Address"
+                icon="mail"
+                placeholder="rasuliomari4@gmail.com"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                keyboardType="email-address"
+              />
+              {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+              
+              <MyTextInput
+                label="Phone Number"
+                icon="plus"
+                placeholder="+255 657707046"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.phone}
+              />
+              {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+              
+              <MyTextInput
+                label="Password"
+                icon="lock"
+                placeholder="* * * * * * * *"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+              />
+              {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+              
+              <MyTextInput
+                label="Confirm Password"
+                icon="lock"
+                placeholder="* * * * * * * *"
+                placeholderTextColor={darkLight}
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={handleBlur('confirmPassword')}
+                value={values.confirmPassword}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+              />
+              {touched.confirmPassword && errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
+              
+              <StyledInputLabel>Role</StyledInputLabel>
+              <Picker
+                selectedValue={values.role}
+                onValueChange={(itemValue) => setFieldValue('role', itemValue)}
+                style={{ height: 50, width: '100%' }}
+              >
+                <Picker.Item label="Select Role" value="" />
+                <Picker.Item label="Client" value="client" />
+                <Picker.Item label="Driver" value="driver" />
+              </Picker>
+              {touched.role && errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
+{/* 
+              <View style={styles.checkboxContainer}>
+                <Checkbox
+                  value={values.isSelected}
+                  onValueChange={(value) => setFieldValue('isSelected', value)}
+                  style={styles.checkbox}
                 />
-                {touched.username && errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
-                
-                <MyTextInput
-                  label="Email Address"
-                  icon="mail"
-                  placeholder="rasuliomari4@gmail.com"
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                  keyboardType="email-address"
-                />
-                {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-                
-                <MyTextInput
-                  label="Phone Number"
-                  icon="plus"
-                  placeholder="+255 657707046"
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('PhoneNumber')}
-                  onBlur={handleBlur('PhoneNumber')}
-                  value={values.PhoneNumber}
-                />
-                {touched.PhoneNumber && errors.PhoneNumber && <Text style={styles.errorText}>{errors.PhoneNumber}</Text>}
-                
-                <MyTextInput
-                  label="Password"
-                  icon="lock"
-                  placeholder="* * * * * * * *"
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  secureTextEntry={hidePassword}
-                  isPassword={true}
-                  hidePassword={hidePassword}
-                  setHidePassword={setHidePassword}
-                />
-                {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-                
-                <MyTextInput
-                  label="Confirm Password"
-                  icon="lock"
-                  placeholder="* * * * * * * *"
-                  placeholderTextColor={darkLight}
-                  onChangeText={handleChange('confirmPassword')}
-                  onBlur={handleBlur('confirmPassword')}
-                  value={values.confirmPassword}
-                  secureTextEntry={hidePassword}
-                  isPassword={true}
-                  hidePassword={hidePassword}
-                  setHidePassword={setHidePassword}
-                />
-                {touched.confirmPassword && errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
-                
-                <View style={styles.checkboxContainer}>
-                  <Checkbox
-                    value={values.isSelected}
-                    onValueChange={(value) => setFieldValue('isSelected', value)}
-                    style={styles.checkbox}
-                  />
-                  <Text style={styles.label}>Are you a Driver?</Text>
-                </View>
-                
-                <Text>If yes select the checkbox above: {values.isSelected ? '👍' : '👎'}</Text>
-                <MsgBox>...</MsgBox>
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Submit</ButtonText>
-                </StyledButton>
-                <Line />
-                <ExtraView>
-                  <ExtraText>Already have an account? </ExtraText>
-                  <TextLink>
-                    <TextLinkContent><Link href="/Login">Login</Link></TextLinkContent>
-                  </TextLink>
-                </ExtraView>
-              </StyledFormArea>
-            )}
+                <Text style={styles.label}>Are you a Driver?</Text>
+              </View>
+              
+              <Text>If yes select the checkbox above: {values.isSelected ? '👍' : '👎'}</Text> */}
+              <MsgBox>...</MsgBox>
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Submit</ButtonText>
+              </StyledButton>
+              <Line />
+              <ExtraView>
+                <ExtraText>Already have an account? </ExtraText>
+                <TextLink>
+                  <TextLinkContent><Link href="/Login">Login</Link></TextLinkContent>
+                </TextLink>
+              </ExtraView>
+            </StyledFormArea>
+          )}
           </Formik>
         </InnerContainer>
       </StyledContainer>
