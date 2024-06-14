@@ -20,7 +20,7 @@ const statusBarHeight = Constants.statusBarHeight;
 import { filterData, carsAround } from '../components/data';
 
 
-const Welcome = ({}) => {
+const Welcome = ({ navigation }) => {
 
 
   const [latlng, setLatlng] = useState({}); 
@@ -68,14 +68,15 @@ const Welcome = ({}) => {
                   color = {Colors.white}
                   size = {40}
                   style={{marginLeft:'2px'}}
+                  onPress={() => navigation.openDrawer()}
               />
           </View>
       <ScrollView bounces={false}>
         <View style={styles.home}>
-          <Text style={styles.text1}>Welcome to aGIZA</Text>
+          <Text style={styles.text1}>WELCOME TO aGIZA</Text>
           <View style={styles.view1}>
             <View style={styles.view8}>
-            <Text style={styles.text2}>Rasoul Mogasa Christin Irene</Text>
+            <Text style={styles.text2}>SEND AND RECEIVE YOUR PARCEL SAFETLY WITH US</Text>
             <TouchableOpacity style={{marginTop:20, marginBottom:20}} ><Link href="Details"> 
               <View style={styles.button1}>
                 <Text style={styles.button1Text}>Send with aGIZA</Text>
@@ -230,7 +231,8 @@ const styles = StyleSheet.create({
       alignItems:'flex-start',
       backgroundColor:Colors.blue,
       paddingLeft:10,
-      paddingTop:5
+      paddingTop:5,
+      marginLeft: '2px'
     },
     
     image1:{

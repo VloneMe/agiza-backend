@@ -8,7 +8,10 @@ import Request from './../app/Request';
 import Destination from './../app/Destination';
 import Details from './../app/Details';
 import Selection from './../app/Selection';
-import Comfirm from './../app/Comfirm'
+import Comfirm from './../app/Comfirm';
+import Profile from './../app/Profile';
+import Setting from './../app/Setting';
+import DrawerNavigator from './DraweNavigator'
 
 
 const Home = createNativeStackNavigator();
@@ -64,6 +67,21 @@ export function HomeStack(){
              <Home.Screen 
                 name ="Comfirm"
                 component = {Comfirm}
+                options ={{headerShown:false}}
+            /> 
+             <Home.Screen 
+                name ="DrawerNavigator"
+                component = {DrawerNavigator}
+                options ={{headerShown:false}}
+            /> 
+             <Home.Screen 
+                name ="Profile"
+                component = {Profile}
+                options ={{headerShown:false}}
+            /> 
+             <Home.Screen 
+                name ="Setting"
+                component = {Setting}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>

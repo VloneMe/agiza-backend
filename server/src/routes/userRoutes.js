@@ -6,10 +6,14 @@ const User = require('../models/User');
 
 // Register a new user
 router.post('/register', async (req, res) => {
+    const oldUser = await User.findOne({ email: email });
+    if (oldUser) {
+        return res.status(409).json({ message: "User Already Exist. Please Login" });
+    }
     try {
-        const { username, password, email, role } = req.body;
+        const { username, email, PhoneNumber, password, comfirmPassword, isSelected } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword, email, role });
+        const user = new User({ username, password: hashedPassword, comfirmPassword: hashedPassword, email, isSelected, PhoneNumber });
         await user.save();
         res.status(201).json(user);
     } catch (error) {

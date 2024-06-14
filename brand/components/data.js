@@ -1,18 +1,18 @@
-export const filterData = [ {name:"Small",image: require('../assets/ride.png'), id:"0"},
-                            {name:"Medium",image:require("../assets/food.png"),id:"1"},
+export const filterData = [ {name:"Small",image: require('../assets/package.png'), id:"0"},
+                            {name:"Medium",image:require("../assets/package.png"),id:"1"},
                             {name:"Large",image:require("../assets/package.png"),id:"2"},
                             {name:"Others",image:require("../assets/reserve.png"),id:"3"}
                           
                            ];
 
 
-// export const rideData =[
-//     {street:"32 Olivia Rd",area:"Klipfontein 83-Ir,Boksburg",id:"0"},
-//     {street:"Hughes Industrial Park",area:"Hughes,Boksburg",id:"1"},
-//     {street:"32 Olivia Road",area:" East Rand,Ekurhuleni,Gauteng,1459",id:"2"},
-//     {street:"Total Boksburg",area:"35 Atlas Rd,Anderbolt,Boksburg",id:"3"},
-//     {street:"179 8th Ave",area:"Bezuidenhout Valley,Johannesburg",id:"4"},
-// ];
+export const rideData =[
+    {street:"32 Olivia Rd",area:"Klipfontein 83-Ir,Boksburg",id:"0"},
+    {street:"Hughes Industrial Park",area:"Hughes,Boksburg",id:"1"},
+    {street:"32 Olivia Road",area:" East Rand,Ekurhuleni,Gauteng,1459",id:"2"},
+    {street:"Total Boksburg",area:"35 Atlas Rd,Anderbolt,Boksburg",id:"3"},
+    {street:"179 8th Ave",area:"Bezuidenhout Valley,Johannesburg",id:"4"},
+];
 
 // export const carTypeData =[
 //     {title:"Popular",

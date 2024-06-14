@@ -3,7 +3,7 @@ version: '3.9'
 services:
   # MongoDb Service
   mongo_db: 
-    image: mongo:latest
+    image: mongo:4
     restart: always
     ports:
       - 27017:27017
@@ -12,8 +12,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: secret
     # volumes:
     #   - mongo_db:/data/db
-    networks:
-      - app-network
+    # networks:
+    #   - app-network
 
   api-server:
     build: ./server/
@@ -21,8 +21,8 @@ services:
       - 5000:5000
     depends_on:
       - mongo_db
-    networks:
-      - app-network
+    # networks:
+    #   - app-network
 
   # client:
   #   build: ./client/
@@ -36,6 +36,6 @@ services:
 # volumes:
 #   mongo_db:
 
-networks:
-  app-network:
-    driver: bridge
+# networks:
+#   app-network:
+#     driver: bridge
