@@ -1,2 +1,2 @@
 cd brand && yarn install
-cd server && yarn install
+cd .. && cd server && yarn install

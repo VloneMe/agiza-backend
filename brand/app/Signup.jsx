@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -45,6 +45,7 @@ const validationSchema = Yup.object().shape({
 
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true);
+  const router = useRouter(); // Initialize the router
 
   const handleSubmit = async (values) => {
     const userData = {
@@ -73,6 +74,7 @@ const Signup = () => {
 
       if (response.ok) {
         Alert.alert('User registered successfully');
+        router.push('/Login'); // Redirect to login screen
       } else {
         Alert.alert('User registration failed', data.message || 'Error');
       }
