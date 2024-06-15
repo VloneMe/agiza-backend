@@ -3,17 +3,14 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const verifyToken = require("../middlewares/auth")
 
 // Register a new user
 router.post('/register', async (req, res) => {
-    const oldUser = await User.findOne({ email: email });
-    if (oldUser) {
-        return res.status(409).json({ message: "User Already Exist. Please Login" });
-    }
     try {
-        const { username, email, PhoneNumber, password, comfirmPassword, isSelected } = req.body;
+        const { username, password, email, phone, role } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword, comfirmPassword: hashedPassword, email, isSelected, PhoneNumber });
+        const user = new User({ username, password: hashedPassword, email, phone, role });
         await user.save();
         res.status(201).json(user);
     } catch (error) {
@@ -31,7 +28,7 @@ router.post('/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -50,7 +47,7 @@ router.get('/verify', (req, res) => {
 });
 
 // Read all users
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -60,7 +57,7 @@ router.get('/', async (req, res) => {
 });
 
 // Read a single user
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
@@ -71,7 +68,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a user
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
     try {
         const { username, email, role } = req.body;
         const user = await User.findById(req.params.id);
@@ -90,7 +87,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete a user
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });

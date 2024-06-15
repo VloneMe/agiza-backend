@@ -18,7 +18,7 @@ services:
   api-server:
     build: ./server/
     ports:
-      - 5000:5000
+      - 4000:5000
     depends_on:
       - mongo_db
     # networks:
