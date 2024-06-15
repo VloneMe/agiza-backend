@@ -54,14 +54,13 @@ const Signup = () => {
     const userData = {
       username: values.username,
       email: values.email,
-      PhoneNumber: values.PhoneNumber,
+      phone: values.phone,
       password: values.password,
-      confirmPassword: values.confirmPassword,
-      isSelected: values.isSelected,
+      role: values.role,
     };
 
     try {
-      const response = await axios.post('http://192.168.1.165:5000/api/users/register', userData);
+      const response = await axios.post('http://localhost:5000/api/users/register', userData);
       if (response.data.status === 'Ok') {
         Alert.alert('User registered successfully');
       } else {
@@ -90,7 +89,7 @@ const Signup = () => {
           <PageTitle>aGIZA</PageTitle>
           <SubTitle>Account Signup</SubTitle>
           <Formik
-             initialValues={{ username: '', email: '', phone: '', password: '', confirmPassword: '', role: '', isSelected: false }}
+             initialValues={{ username: '', email: '', phone: '', password: '', role: ''}}
              validationSchema={validationSchema}
              onSubmit={handleSubmit}
           >
