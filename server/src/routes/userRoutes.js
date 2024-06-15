@@ -47,7 +47,7 @@ router.get('/verify', (req, res) => {
 });
 
 // Read all users
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);

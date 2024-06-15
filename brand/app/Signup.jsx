@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react';
 import { Link } from 'expo-router';
 import { Formik } from 'formik';
@@ -28,9 +27,7 @@ import {
 
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
-
 
 const { brand, darkLight, primary } = Colors;
 
@@ -46,7 +43,6 @@ const validationSchema = Yup.object().shape({
   role: Yup.string().required('Role is required'),
 });
 
-
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true);
 
@@ -59,25 +55,30 @@ const Signup = () => {
       role: values.role,
     };
 
+    // Log the URL and user data to debug
+    const url = 'http://192.168.1.147:4000/api/users/register'; // replace with your local IP
+    console.log('Sending request to:', url);
+    console.log('User data:', userData);
+
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', userData);
-      if (response.data.status === 'Ok') {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
         Alert.alert('User registered successfully');
       } else {
-        Alert.alert('User registration failed');
+        Alert.alert('User registration failed', data.message || 'Error');
       }
     } catch (error) {
-      console.error(error);
-      if (error.response) {
-        // Server responded with a status other than 2xx
-        Alert.alert(`Error: ${error.response.data.message || 'Bad Request'}`);
-      } else if (error.request) {
-        // Request was made but no response was received
-        Alert.alert('Network error. Please try again.');
-      } else {
-        // Something happened in setting up the request
-        Alert.alert(`Error: ${error.message}`);
-      }
+      console.error('Error:', error);
+      Alert.alert('Network error. Please try again.');
     }
   };
 
@@ -89,111 +90,101 @@ const Signup = () => {
           <PageTitle>aGIZA</PageTitle>
           <SubTitle>Account Signup</SubTitle>
           <Formik
-             initialValues={{ username: '', email: '', phone: '', password: '', role: ''}}
-             validationSchema={validationSchema}
-             onSubmit={handleSubmit}
+            initialValues={{ username: '', email: '', phone: '', password: '', confirmPassword: '', role: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
           >
-           {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
-            <StyledFormArea>
-              <MyTextInput
-                label="Full Name"
-                icon="person"
-                placeholder="Omari Rasuli"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('username')}
-                onBlur={handleBlur('username')}
-                value={values.username}
-              />
-              {touched.username && errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
-              
-              <MyTextInput
-                label="Email Address"
-                icon="mail"
-                placeholder="rasuliomari4@gmail.com"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                value={values.email}
-                keyboardType="email-address"
-              />
-              {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-              
-              <MyTextInput
-                label="Phone Number"
-                icon="plus"
-                placeholder="+255 657707046"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('phone')}
-                onBlur={handleBlur('phone')}
-                value={values.phone}
-              />
-              {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
-              
-              <MyTextInput
-                label="Password"
-                icon="lock"
-                placeholder="* * * * * * * *"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                value={values.password}
-                secureTextEntry={hidePassword}
-                isPassword={true}
-                hidePassword={hidePassword}
-                setHidePassword={setHidePassword}
-              />
-              {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-              
-              <MyTextInput
-                label="Confirm Password"
-                icon="lock"
-                placeholder="* * * * * * * *"
-                placeholderTextColor={darkLight}
-                onChangeText={handleChange('confirmPassword')}
-                onBlur={handleBlur('confirmPassword')}
-                value={values.confirmPassword}
-                secureTextEntry={hidePassword}
-                isPassword={true}
-                hidePassword={hidePassword}
-                setHidePassword={setHidePassword}
-              />
-              {touched.confirmPassword && errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
-              
-              <StyledInputLabel>Role</StyledInputLabel>
-              <Picker
-                selectedValue={values.role}
-                onValueChange={(itemValue) => setFieldValue('role', itemValue)}
-                style={{ height: 50, width: '100%' }}
-              >
-                <Picker.Item label="Select Role" value="" />
-                <Picker.Item label="customer" value="customer" />
-                <Picker.Item label="courier" value="courier" />
-              </Picker>
-              {touched.role && errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
-{/* 
-              <View style={styles.checkboxContainer}>
-                <Checkbox
-                  value={values.isSelected}
-                  onValueChange={(value) => setFieldValue('isSelected', value)}
-                  style={styles.checkbox}
+            {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
+              <StyledFormArea>
+                <MyTextInput
+                  label="Full Name"
+                  icon="person"
+                  placeholder="Omari Rasuli"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('username')}
+                  onBlur={handleBlur('username')}
+                  value={values.username}
                 />
-                <Text style={styles.label}>Are you a Driver?</Text>
-              </View>
-              
-              <Text>If yes select the checkbox above: {values.isSelected ? '👍' : '👎'}</Text> */}
-              <MsgBox>...</MsgBox>
-              <StyledButton onPress={handleSubmit}>
-                <ButtonText>Submit</ButtonText>
-              </StyledButton>
-              <Line />
-              <ExtraView>
-                <ExtraText>Already have an account? </ExtraText>
-                <TextLink>
-                  <TextLinkContent><Link href="/Login">Login</Link></TextLinkContent>
-                </TextLink>
-              </ExtraView>
-            </StyledFormArea>
-          )}
+                {touched.username && errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+
+                <MyTextInput
+                  label="Email Address"
+                  icon="mail"
+                  placeholder="rasuliomari4@gmail.com"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                  keyboardType="email-address"
+                />
+                {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+
+                <MyTextInput
+                  label="Phone Number"
+                  icon="device-mobile"
+                  placeholder="+255 657707046"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  value={values.phone}
+                />
+                {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
+
+                <MyTextInput
+                  label="Password"
+                  icon="lock"
+                  placeholder="* * * * * * * *"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  secureTextEntry={hidePassword}
+                  isPassword={true}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                />
+                {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+
+                <MyTextInput
+                  label="Confirm Password"
+                  icon="lock"
+                  placeholder="* * * * * * * *"
+                  placeholderTextColor={darkLight}
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={handleBlur('confirmPassword')}
+                  value={values.confirmPassword}
+                  secureTextEntry={hidePassword}
+                  isPassword={true}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                />
+                {touched.confirmPassword && errors.confirmPassword && <Text style={styles.errorText}>{errors.confirmPassword}</Text>}
+
+                <StyledInputLabel>Role</StyledInputLabel>
+                <Picker
+                  selectedValue={values.role}
+                  onValueChange={(itemValue) => setFieldValue('role', itemValue)}
+                  style={{ height: 50, width: '100%' }}
+                >
+                  <Picker.Item label="Select Role" value="" />
+                  <Picker.Item label="customer" value="customer" />
+                  <Picker.Item label="courier" value="courier" />
+                </Picker>
+                {touched.role && errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
+
+                <MsgBox>...</MsgBox>
+                <StyledButton onPress={handleSubmit}>
+                  <ButtonText>Submit</ButtonText>
+                </StyledButton>
+                <Line />
+                <ExtraView>
+                  <ExtraText>Already have an account? </ExtraText>
+                  <TextLink>
+                    <TextLinkContent><Link href="/Login">Login</Link></TextLinkContent>
+                  </TextLink>
+                </ExtraView>
+              </StyledFormArea>
+            )}
           </Formik>
         </InnerContainer>
       </StyledContainer>
@@ -219,19 +210,10 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
 };
 
 const styles = StyleSheet.create({
-  checkboxContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  label: {
-    margin: 8,
-  },
   errorText: {
     color: 'red',
     fontSize: 12,
+    marginBottom: 10,
   },
 });
 

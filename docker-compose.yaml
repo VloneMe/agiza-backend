@@ -18,18 +18,18 @@ services:
   api-server:
     build: ./server/
     ports:
-      - 4000:5000
+      - 5000:5000
     depends_on:
       - mongo_db
     # networks:
     #   - app-network
 
-  # client:
-  #   build: ./client/
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - api-server
+  agiza:
+    build: ./brand/
+    ports:
+      - 8081:8081
+    depends_on:
+      - api-server
   #   networks:
   #     - app-network
 
