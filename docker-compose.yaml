@@ -24,12 +24,12 @@ services:
     # networks:
     #   - app-network
 
-  agiza:
-    build: ./brand/
-    ports:
-      - 8081:8081
-    depends_on:
-      - api-server
+  # agiza:
+  #   build: ./brand/
+  #   ports:
+  #     - 8081:8081
+  #   depends_on:
+  #     - api-server
   #   networks:
   #     - app-network
 
