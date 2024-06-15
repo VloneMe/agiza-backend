@@ -12,6 +12,7 @@ import Comfirm from './../app/Comfirm';
 import Profile from './../app/Profile';
 import Setting from './../app/Setting';
 import DrawerNavigator from './DraweNavigator'
+import Driver from '../app/Driver'; 
 
 
 const Home = createNativeStackNavigator();
@@ -82,6 +83,11 @@ export function HomeStack(){
              <Home.Screen 
                 name ="Setting"
                 component = {Setting}
+                options ={{headerShown:false}}
+            /> 
+             <Home.Screen 
+                name ="Driver"
+                component = {Driver}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
