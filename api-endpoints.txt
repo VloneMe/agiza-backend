@@ -1,3 +1,6 @@
+# Be sure PORT address may differ
+# Depending on services you are running
+
 # POST: data to database for new user
 http://localhost:3000/api/users/register
 
