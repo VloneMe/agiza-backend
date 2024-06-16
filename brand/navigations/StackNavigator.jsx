@@ -13,11 +13,14 @@ import Profile from './../app/Profile';
 import Setting from './../app/Setting';
 import DrawerNavigator from './DraweNavigator'
 import Driver from '../app/Driver'; 
+import Bottomnavigator from './../navigations/Bottomnavigators'
 
 
-const Home = createNativeStackNavigator();
+// const Home = createNativeStackNavigator();
+export function Home (){
+    return <Bottomnavigator/>};
 
-export function HomeStack(){
+    export function HomeStack(){
     return(
         <Home.Navigator>
             <Home.Screen 
@@ -91,5 +94,5 @@ export function HomeStack(){
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
-    )
+    ) 
 }
