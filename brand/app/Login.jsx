@@ -52,7 +52,7 @@ const Login = () => {
 
     const handleLogin = (credentials, setSubmitting) => {
         handleMessage(null);
-        const url = 'http://192.168.1.165:4000/api/users/login';
+        const url = 'http://192.168.1.164:4000/api/users/login';
 
         axios
         .post(url, credentials)
