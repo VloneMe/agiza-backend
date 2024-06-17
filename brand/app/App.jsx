@@ -2,15 +2,18 @@ import React from 'react'
 import { StyleSheet, Text, View,Dimensions } from 'react-native'
 import { OriginContextProvider,DestinationContextProvider } from './../context/context'
 import RoootNavigator from './../navigations/RootNavigator'
+import { UserContextProvider } from '../context/UserContext'
 
 
 const App = () => {
   return (
-  <DestinationContextProvider>
-    <OriginContextProvider>
-        <RoootNavigator />
-    </OriginContextProvider>
-   </DestinationContextProvider>
+    <UserContextProvider>
+      <DestinationContextProvider>
+        <OriginContextProvider>
+            <RoootNavigator />
+        </OriginContextProvider>
+      </DestinationContextProvider>
+   </UserContextProvider>
    
   )
 }
