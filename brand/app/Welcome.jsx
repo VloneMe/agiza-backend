@@ -15,6 +15,7 @@ const { buttons, grey, grey1, grey2, grey3, grey4, grey5, grey6, grey7, grey10, 
 const statusBarHeight = Constants.statusBarHeight;
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CustomSwitch from './../components/CustomSwitch';
 
 import { filterData, carsAround } from '../components/data';
 
