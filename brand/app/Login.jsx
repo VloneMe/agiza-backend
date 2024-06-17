@@ -77,6 +77,8 @@ const Login = () => {
                 router.push('/Welcome');
             } else if (decodedToken.role === 'courier') {
                 router.push('/Driver');
+            } else if (decodedToken.role === 'admin') {
+                router.push('/Driver');
             }
 
         } catch (error) {
