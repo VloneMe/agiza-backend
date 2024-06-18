@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useState, useContext } from 'react'
+import { View, Text, StyleSheet, Button } from 'react-native'
+import React, { useState, useRef, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, Callout } from 'react-native-maps'
+import * as FileSystem from 'expo-file-system'
+import { shareAsync } from 'expo-sharing'
 
 let locationOfInterest = [
   {
@@ -30,6 +32,7 @@ export default function Driver (){
 const [count, setCount] = useState(0);
 const [draggableMarkerCoodrd, setDraggableMarkerCoodrd] = useState({latitude: -6.780, longitude: 39.284});
 
+  const mapRef = React.useRef(null);
   const onRegionChange = (region) => {
     console.log(region);
   };
@@ -47,9 +50,17 @@ const showLocationsOfInterest = () => {
   })
 };
 
+const takeSnapshotAndShare = async () => {
+  const snapshot = await mapRef.current.takeSnapshot({ width: 300, height: 300, format: 'base64' });
+  const url = FileSystem.documentDirectory + 'snapshot.png';
+  await FileSystem.writeAsStringAsync(url, snapshot, { encoding: FileSystem.EncodingType.Base64 });
+  await shareAsync(url);
+};
+
   return (
     <View styles={styles.container}>
       <MapView
+        ref={mapRef}
         style={styles.map}
         onRegionChange={onRegionChange}
         initialRegion={{
@@ -68,7 +79,16 @@ const showLocationsOfInterest = () => {
           title={"Drag me"}
           description={"I'm draggable"}
         />
-        <Marker></Marker>
+        <Marker
+          pinColor='Yellow'
+          coordinate={{latitude: -6.980, longitude: 39.484}}
+        >
+          <Callout>
+            <Text>Count: {count}</Text>
+            <Button title="Increment" onPress={() => setCount(count + 1)} />
+            <Button title="Take snap and share" onPress={takeSnapshotAndShare} />
+          </Callout>
+        </Marker>
       </MapView>
       <StatusBar style="auto" />
     </View>
