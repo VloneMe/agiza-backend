@@ -57,7 +57,7 @@ const Signup = () => {
     };
 
     // Log the URL and user data to debug
-    const url = 'http://192.168.1.147:4000/api/users/register'; // replace with your local IP
+    const url = 'http://192.168.252.127:4000/api/users/register'; // replace with your local IP
     console.log('Sending request to:', url);
     console.log('User data:', userData);
 
