@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { Colors, parameters } from '../components/global/styles';
+import { useRouter, useSearchParams } from 'expo-router';
+import { PageLogo } from '../components/styles';
+import { StatusBar } from 'expo-status-bar';
+
 
 const ProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState(null);
@@ -19,26 +24,77 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {profile ? (
-        <View>
-          <Text>Name: {profile.name}</Text>
-          <Text>Email: {profile.email}</Text>
-          <Button title="Edit Profile" onPress={() => navigation.navigate('EditProfile', { profile })} />
-          <Button title="Delete Profile" onPress={deleteProfile} />
+    <View>
+      <View style={styles.home}>
+        <Text style={styles.text1}>Thank you for choosing aGIZA</Text>
+        <View style={styles.view1}>
+          <View style={styles.view8}>
+            <Text style={styles.text2}>Welcome to your profile</Text>
+          </View>
         </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      </View>
+      <View style={styles.home1}>
+        <PageLogo resizeMode="cover" source={require("./../assets/blankProfilePic.jpg")} />
+      </View>
+      <View style={styles.container}>
+        {profile ? (
+          <View>
+            <Text>Name: {profile.name}</Text>
+            <Text>Email: {profile.email}</Text>
+            <Button title="Edit Profile" onPress={() => navigation.navigate('EditProfile', { profile })} />
+            <Button title="Delete Profile" onPress={deleteProfile} />
+          </View>
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
+  home1: {
+    // flex: 1,
+    marginTop: 90,
+    backgroundColor: 'white',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  home: {
+    backgroundColor: Colors.blue,
+    paddingLeft: 20,
+  },
+  text1: {
+    color: Colors.white,
+    fontSize: 21,
+    paddingBottom: 20,
+    alignContent: "center",
+    textAlign: "center",
+    paddingTop: 20,
+  },
+  view1: {
+    flexDirection: "row",
+    flex: 1,
+    paddingTop: 30,
+  },
+  view8: {
+    flex: 4,
+    marginTop: -25,
+  },
+  text2: {
+    color: Colors.white,
+    fontSize: 16,
+    paddingBottom: 10,
+    textAlign: "center",
+  },
+  details: {
+    fontSize: 18,
+    marginBottom: 10,
   },
 });
 
