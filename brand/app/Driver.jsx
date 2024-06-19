@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Button } from 'react-native'
 import React, { useState, useRef, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import MapView, { Marker, Callout } from 'react-native-maps'
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps'
 import * as FileSystem from 'expo-file-system'
 import { shareAsync } from 'expo-sharing'
 
@@ -60,6 +60,7 @@ const takeSnapshotAndShare = async () => {
   return (
     <View styles={styles.container}>
       <MapView
+        provider={PROVIDER_GOOGLE}
         ref={mapRef}
         style={styles.map}
         onRegionChange={onRegionChange}
@@ -89,6 +90,7 @@ const takeSnapshotAndShare = async () => {
             <Button title="Take snap and share" onPress={takeSnapshotAndShare} />
           </Callout>
         </Marker>
+        <Text styles={styles.MapOverlay} > Hellow </Text>
       </MapView>
       <StatusBar style="auto" />
     </View>
@@ -106,4 +108,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  MapOverlay: {
+    position: 'absolute',
+    bottom: 50,
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 5,
+    borderWidth: 2,
+    left: "25%",
+    width: "50%",
+    textAlign: 'center',
+  }
 });
