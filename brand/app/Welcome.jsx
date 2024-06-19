@@ -76,13 +76,20 @@ const Welcome = ({ navigation }) => {
             <View style={styles.view1}>
               <View style={styles.view8}>
                 <Text style={styles.text2}>SEND AND RECEIVE YOUR PARCEL SAFELY WITH US</Text>
-                <TouchableOpacity style={{ marginTop: 20, marginBottom: 20 }}>
-                  <Link href="Details">
-                    <View style={styles.button1}>
-                      <Text style={styles.button1Text}>Send with aGIZA</Text>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={{ marginTop: 20, marginBottom: 20 }}>
+                    <View style={styles.button1}><Link href="Details">
+                      <Text style={styles.button1Text}>Send with aGIZA</Text> </Link>
                     </View>
-                  </Link>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{ marginLeft: 10 }}>
+                    <View style={styles.button2}>
+                      <Link href="Profile">
+                        <Text style={styles.button2Text}>View Profile</Text>
+                      </Link>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
@@ -204,7 +211,22 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 20,
+  },
   button1: {
+    height: 40,
+    width: 150,
+    backgroundColor: Colors.black,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 0,
+  }, 
+  button2: {
     height: 40,
     width: 150,
     backgroundColor: Colors.black,
@@ -214,6 +236,10 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   button1Text: {
+    color: Colors.white,
+    fontSize: 17,
+    marginTop: -2,
+  },button2Text: {
     color: Colors.white,
     fontSize: 17,
     marginTop: -2,
@@ -313,3 +339,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+
