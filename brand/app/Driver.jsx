@@ -87,7 +87,7 @@ const takeSnapshotAndShare = async () => {
           <Callout>
             <Text>Count: {count}</Text>
             <Button title="Increment" onPress={() => setCount(count + 1)} />
-            <Button title="Take snap and share" onPress={takeSnapshotAndShare} />
+            {/* <Button title="Take snap and share" onPress={takeSnapshotAndShare} /> */}
           </Callout>
         </Marker>
         <Text styles={styles.MapOverlay} > Hellow </Text>
