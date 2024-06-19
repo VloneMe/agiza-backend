@@ -3,12 +3,13 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { Colors, parameters } from '../components/global/styles';
 import { useRouter, useSearchParams } from 'expo-router';
-import { PageLogo } from '../components/styles';
+import { PageLogo, StyledButton } from '../components/styles';
 import { StatusBar } from 'expo-status-bar';
 
 
 const ProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState(null);
+  const router = useRouter(); 
 
   useEffect(() => {
     // Fetch profile data
@@ -35,19 +36,27 @@ const ProfileScreen = ({ navigation }) => {
       </View>
       <View style={styles.home1}>
         <PageLogo resizeMode="cover" source={require("./../assets/blankProfilePic.jpg")} />
-      </View>
-      <View style={styles.container}>
+        <Text>......</Text>
+        <Text style={styles.header}>INFORMATION</Text>
+        <View style={styles.container}>
         {profile ? (
           <View>
-            <Text>Name: {profile.name}</Text>
-            <Text>Email: {profile.email}</Text>
-            <Button title="Edit Profile" onPress={() => navigation.navigate('EditProfile', { profile })} />
+            <Text style={styles.details}>Name: {profile.name}</Text>
+            <Text style={styles.details}>Email: {profile.email}</Text>
+            <Text style={styles.details}>Role: {profile.role}</Text>
+            <Button title="Edit Profile" onPress={() => router.push('EditProfile', { profile })} />
             <Button title="Delete Profile" onPress={deleteProfile} />
           </View>
         ) : (
           <Text>Loading...</Text>
         )}
       </View>
+      </View>
+      <StatusBar
+        style="dark"
+        backgroundColor="#2058c0"
+        translucent={true}
+      />
     </View>
   );
 };
