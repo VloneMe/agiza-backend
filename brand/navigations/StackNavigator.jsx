@@ -14,6 +14,7 @@ import Setting from './../app/Setting';
 import DrawerNavigator from './DraweNavigator'
 import Driver from '../app/Driver'; 
 import Bottomnavigator from './../navigations/Bottomnavigators'
+import EditProfile from './../app/EditProfile';
 
 
 // const Home = createNativeStackNavigator();
@@ -91,6 +92,11 @@ export function Home (){
              <Home.Screen 
                 name ="Driver"
                 component = {Driver}
+                options ={{headerShown:false}}
+            />  
+             <Home.Screen 
+                name ="EditProfile"
+                component = {EditProfile}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
