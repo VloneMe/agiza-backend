@@ -27,6 +27,7 @@ import {
 import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
 const { brand, darkLight, primary } = Colors;
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 const Details = () => {
     const [hidePassword, setHidePassword] = useState(true);
@@ -114,7 +115,7 @@ const Details = () => {
                         <MsgBox>..</MsgBox>
                         <MsgBox>.</MsgBox>
                         <StyledButton onPress={handleSubmit}>
-                            <Link href='Selection'><ButtonText>Next</ButtonText></Link>
+                            <Link href='ClientMap'><ButtonText>Next</ButtonText></Link>
                         </StyledButton>
                     </StyledFormArea>)}
 
