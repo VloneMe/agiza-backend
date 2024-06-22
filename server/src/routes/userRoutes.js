@@ -3,14 +3,26 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const verifyToken = require("../middlewares/auth")
+const verifyToken = require("../middlewares/auth");
 
 // Register a new user
 router.post('/register', async (req, res) => {
     try {
-        const { username, password, email, phone, role } = req.body;
+        const { username, password, email, phone, role, plateNumber, vehicleName, vehicleColor } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword, email, phone, role });
+
+        // Construct user object with conditional fields for couriers
+        const user = new User({ 
+            username, 
+            password: hashedPassword,
+            email, 
+            phone, 
+            role,
+            plateNumber: role === 'courier' ? plateNumber : undefined,
+            vehicleName: role === 'courier' ? vehicleName : undefined,
+            vehicleColor: role === 'courier' ? vehicleColor : undefined
+        });
+
         await user.save();
         res.status(201).json(user);
     } catch (error) {
@@ -47,7 +59,7 @@ router.get('/verify', (req, res) => {
 });
 
 // Read all users
-router.get('/profile', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -70,13 +82,16 @@ router.get('/:id', verifyToken, async (req, res) => {
 // Update a user
 router.put('/:id', verifyToken, async (req, res) => {
     try {
-        const { username, email, role } = req.body;
+        const { username, email, role, plateNumber, vehicleName, vehicleColor } = req.body;
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
         user.username = username || user.username;
         user.email = email || user.email;
         user.role = role || user.role;
+        user.plateNumber = role === 'courier' ? plateNumber : user.plateNumber;
+        user.vehicleName = role === 'courier' ? vehicleName : user.vehicleName;
+        user.vehicleColor = role === 'courier' ? vehicleColor : user.vehicleColor;
         user.updatedAt = Date.now();
 
         await user.save();

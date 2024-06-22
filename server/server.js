@@ -26,7 +26,7 @@ server.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-const HOST = '192.168.252.127';
+const HOST = '192.168.1.147';
 server.listen(PORT, HOST, () => {
     console.log(`[Server]: is running on port http://${HOST}:${PORT}`);
 });
