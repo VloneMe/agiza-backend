@@ -16,6 +16,10 @@ const AdressPickup = ({
           key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
           language: 'en',
         }}
+        styles={{
+            textInputContainer: styles.containerStyle,
+            textIput: styles.textInputStyle,
+        }}
       />
     </View>
   );
@@ -25,6 +29,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  containerStyle: {
+    backgroundColor: 'white',
+  },
+    textInputStyle: {
+        height: 48,
+        color: 'black',
+        fontSize: 16,
+        backgroundColor: "#f3f3f3"
+    },
 });
 
 export default AdressPickup;
