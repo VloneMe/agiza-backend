@@ -29,7 +29,7 @@ let locationOfInterest = [
 
 export default function Driver (){
   
-const [count, setCount] = useState(0);
+// const [count, setCount] = useState(0);
 const [draggableMarkerCoodrd, setDraggableMarkerCoodrd] = useState({latitude: -6.780, longitude: 39.284});
 
   const mapRef = React.useRef(null);
@@ -85,8 +85,7 @@ const takeSnapshotAndShare = async () => {
           coordinate={{latitude: -6.980, longitude: 39.484}}
         >
           <Callout>
-            <Text>Count: {count}</Text>
-            <Button title="Increment" onPress={() => setCount(count + 1)} />
+            {/* <Text>Count: {count}</Text>////////////// */}
             {/* <Button title="Take snap and share" onPress={takeSnapshotAndShare} /> */}
           </Callout>
         </Marker>
