@@ -55,10 +55,11 @@ const Welcome = ({ navigation }) => {
     console.log(latlng);
   }, []);
 
+  
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Icon
             type="material-community"
             name="menu"
@@ -67,7 +68,7 @@ const Welcome = ({ navigation }) => {
             style={{ marginLeft: '2px' }}
             onPress={() => navigation.openDrawer()}
           />
-        </View>
+        </View> */}
         <ScrollView bounces={false}>
           <View style={styles.home}>
             <Text style={styles.text1}>WELCOME TO aGIZA</Text>
@@ -88,13 +89,13 @@ const Welcome = ({ navigation }) => {
                     </View>
                   </TouchableOpacity>
                   
-                  <TouchableOpacity style={{ marginLeft: 10 }}>
+                  {/* <TouchableOpacity style={{ marginLeft: 10 }}>
                     <View style={styles.button2}>
                       <Link href="UserLocation">
                         <Text style={styles.button2Text}>Testing</Text>
                       </Link>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                   
                 </View>
               </View>
