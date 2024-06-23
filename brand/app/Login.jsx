@@ -28,6 +28,7 @@ import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { UserContext } from '../context/UserContext';
 import { jwtDecode } from 'jwt-decode';
+import { API_BASE_URL } from '@env'; // Import the environment variable
 
 const { brand, darkLight, primary } = Colors;
 
@@ -36,11 +37,11 @@ const Login = () => {
     const [hidePassword, setHidePassword] = useState(true);
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState();
-    const { setUserInfo, userInfo} = useContext(UserContext);
+    const { setUserInfo, userInfo } = useContext(UserContext);
 
     const handleLogin = async (credentials, setSubmitting) => {
         handleMessage(null);
-        const url = 'http://192.168.214.127:4000/api/users/login';
+        const url = `${API_BASE_URL}/api/users/login`; // Use the environment variable
 
         const { email, password } = credentials;
 

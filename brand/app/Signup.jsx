@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import React, { useState } from 'react';
 import { Link, useRouter } from 'expo-router';
 import { Formik } from 'formik';
@@ -28,6 +28,7 @@ import {
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { Picker } from '@react-native-picker/picker';
+import { API_BASE_URL } from '@env'; // Import the environment variable
 
 const { brand, darkLight, primary } = Colors;
 
@@ -45,9 +46,11 @@ const validationSchema = Yup.object().shape({
 
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true);
-  const router = useRouter(); // Initialize the router
+  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const router = useRouter();
 
   const handleSubmit = async (values) => {
+    setIsLoading(true);
     const userData = {
       username: values.username,
       email: values.email,
@@ -56,10 +59,7 @@ const Signup = () => {
       role: values.role,
     };
 
-    // Log the URL and user data to debug
-    const url = 'http://192.168.214.127:4000/api/users/register'; // replace with your local IP
-    console.log('Sending request to:', url);
-    console.log('User data:', userData);
+    const url = `${API_BASE_URL}/api/users/register`;
 
     try {
       const response = await fetch(url, {
@@ -74,13 +74,15 @@ const Signup = () => {
 
       if (response.ok) {
         Alert.alert('User registered successfully');
-        router.push('/Login'); // Redirect to login screen
+        router.push('/Login');
       } else {
         Alert.alert('User registration failed', data.message || 'Error');
       }
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Network error. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -178,6 +180,7 @@ const Signup = () => {
                 <StyledButton onPress={handleSubmit}>
                   <ButtonText>Submit</ButtonText>
                 </StyledButton>
+                {isLoading && <ActivityIndicator size="large" color={primary} />}
                 <Line />
                 <ExtraView>
                   <ExtraText>Already have an account? </ExtraText>
