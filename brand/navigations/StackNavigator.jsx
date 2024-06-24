@@ -2,6 +2,7 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import FlashMessage from 'react-native-flash-message';
 import index from './../app/index';
 import Login from './../app/Login';
 import Signup from './../app/Signup';
@@ -121,6 +122,7 @@ export function Home (){
                 component = {"AfterDestination"}
                 options ={{headerShown:false}}
             /> 
+            <FlashMessage position="top" />
         </Home.Navigator>
     ) 
 }
