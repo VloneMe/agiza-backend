@@ -1,15 +1,12 @@
-// screens/ClientMap.js
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import ImagePath from "./../constant/ImagePath";
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 const ClientMap = () => {
   const mapRef = useRef(null);
-  const navigation = useNavigation();
-  const route = useRoute();
 
   const [state, setState] = useState({
     pickupCords: {
@@ -28,29 +25,25 @@ const ClientMap = () => {
 
   const { pickupCords, dropoffCords } = state;
 
-  const setCoordinates = (data) => {
-    setState((prevState) => ({
-      ...prevState,
-      pickupCords: {
-        latitude: data.pickupCords.latitude,
-        longitude: data.pickupCords.longitude,
-        latitudeDelta: 0.3924108008642557,
-        longitudeDelta: 0.18297526985406876,
-      },
-      dropoffCords: {
-        latitude: data.dropoffCords.latitude,
-        longitude: data.dropoffCords.longitude,
-        latitudeDelta: 0.3924108008642557,
-        longitudeDelta: 0.18297526985406876,
-      },
-    }));
+  const onPressLocation = () => {
+    {getCordinates: fetchValues}
   };
 
-  useEffect(() => {
-    if (route.params?.pickupCords && route.params?.dropoffCords) {
-      setCoordinates(route.params);
-    }
-  }, [route.params]);
+  const fetchValues = (data) => {
+    setState({
+      startingCords: {
+        latitude: data.pickupCords.latitude,
+        longitude: data.pickupCords.longitude,
+      },
+      destinationCords: {
+        latitude: data.dropoffCords.latitude,
+        longitude: data.dropoffCords.longitude,
+      }
+    });
+    console.log("Data===>", data);
+  }
+
+  const router = useRouter(); // Initialize the router
 
   return (
     <View style={styles.container}>
@@ -102,10 +95,7 @@ const ClientMap = () => {
       </View>
       <View style={styles.bottomCard}>
         <Text>Where are you going..?</Text>
-        <TouchableOpacity 
-          style={styles.inputStyle} 
-          onPress={() => navigation.navigate('Destination', { setCoordinates })}
-        >
+        <TouchableOpacity style={styles.inputStyle} onPress={(onPressLocation) => router.push('/Destination')}>
           <Text>Choose your location</Text>
         </TouchableOpacity>
       </View>
@@ -131,7 +121,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
-    marginTop: 16,
+    marginTop: 16
   },
 });
 
@@ -141,16 +131,18 @@ export default ClientMap;
 
 
 
-
-// import React, { useRef, useState } from "react";
+// screens/ClientMap.js
+// import React, { useRef, useState, useEffect } from "react";
 // import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 // import MapViewDirections from "react-native-maps-directions";
 // import ImagePath from "./../constant/ImagePath";
-// import { useRouter } from 'expo-router';
+// import { useNavigation, useRoute } from '@react-navigation/native';
 
 // const ClientMap = () => {
 //   const mapRef = useRef(null);
+//   const navigation = useNavigation();
+//   const route = useRoute();
 
 //   const [state, setState] = useState({
 //     pickupCords: {
@@ -169,25 +161,29 @@ export default ClientMap;
 
 //   const { pickupCords, dropoffCords } = state;
 
-//   const onPressLocation = () => {
-//     {getCordinates: fetchValues}
-//   };
-
-//   const fetchValues = (data) => {
-//     setState({
-//       startingCords: {
+//   const setCoordinates = (data) => {
+//     setState((prevState) => ({
+//       ...prevState,
+//       pickupCords: {
 //         latitude: data.pickupCords.latitude,
 //         longitude: data.pickupCords.longitude,
+//         latitudeDelta: 0.3924108008642557,
+//         longitudeDelta: 0.18297526985406876,
 //       },
-//       destinationCords: {
+//       dropoffCords: {
 //         latitude: data.dropoffCords.latitude,
 //         longitude: data.dropoffCords.longitude,
-//       }
-//     });
-//     console.log("Data===>", data);
-//   }
+//         latitudeDelta: 0.3924108008642557,
+//         longitudeDelta: 0.18297526985406876,
+//       },
+//     }));
+//   };
 
-//   const router = useRouter(); // Initialize the router
+//   useEffect(() => {
+//     if (route.params?.pickupCords && route.params?.dropoffCords) {
+//       setCoordinates(route.params);
+//     }
+//   }, [route.params]);
 
 //   return (
 //     <View style={styles.container}>
@@ -239,7 +235,10 @@ export default ClientMap;
 //       </View>
 //       <View style={styles.bottomCard}>
 //         <Text>Where are you going..?</Text>
-//         <TouchableOpacity style={styles.inputStyle} onPress={(onPressLocation) => router.push('/Destination')}>
+//         <TouchableOpacity 
+//           style={styles.inputStyle} 
+//           onPress={() => navigation.navigate('Destination', { setCoordinates })}
+//         >
 //           <Text>Choose your location</Text>
 //         </TouchableOpacity>
 //       </View>
@@ -265,7 +264,7 @@ export default ClientMap;
 //     justifyContent: 'center',
 //     alignItems: 'center',
 //     height: 50,
-//     marginTop: 16
+//     marginTop: 16,
 //   },
 // });
 
