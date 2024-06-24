@@ -1,6 +1,6 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import AddressPickup from './../components/AdressPickup';
 import CustomButton from '../components/CustomButton';
 
