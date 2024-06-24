@@ -3,15 +3,25 @@ import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 const AdressPickup = ({
-    placeholderText
+    placeholderText,
+    fetchAddress
 }) => {
+
+  const onPressAddress = (data, details) => {
+    // console.log("Details===>", details)
+
+    const lat = details.geometry.location.lat;
+    const lng = details.geometry.location.lng;
+    fetchAddress(lat, lng);
+  };
+
+
   return (
     <View style={styles.container}>
       <GooglePlacesAutocomplete 
         placeholder={placeholderText}
-        onPress={(data, details = null) => {
-          console.log(data, details);
-        }}
+        fetchDetails={true}
+        onPress={onPressAddress}
         query={{
           key: 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw',
           language: 'en',
