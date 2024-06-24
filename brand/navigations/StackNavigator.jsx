@@ -15,11 +15,11 @@ import Comfirm from './../app/Comfirm';
 import Profile from './../app/Profile';
 import Setting from './../app/Setting';
 import DrawerNavigator from './DraweNavigator'
-import Driver from '../app/Driver'; 
+import Admin from '../app/Admin'; 
 import EditProfile from './../app/EditProfile';
+import editUser from './../app/editUser';
 import UserLocation from './../app/UserLocation';
 import ClientMap from './../app/ClientMap';
-import AfterDestination from './../app/AfterDestination';
 
 
 
@@ -98,8 +98,13 @@ export function Home (){
                 options ={{headerShown:false}}
             /> 
              <Home.Screen 
-                name ="Driver"
-                component = {Driver}
+                name ="Admin"
+                component = {Admin}
+                options ={{headerShown:false}}
+            />  
+             <Home.Screen 
+                name ="editUser"
+                component = {editUser}
                 options ={{headerShown:false}}
             />  
              <Home.Screen 
