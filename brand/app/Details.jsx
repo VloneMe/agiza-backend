@@ -127,21 +127,16 @@ const Details = () => {
 }
 
 const styles = StyleSheet.create({
-    // container: {
-    //   flex: 1,
-    //   justifyContent: 'center',
-    //   padding: 16,
-    // },
     textArea: {
       height: 150,
       justifyContent: 'flex-start',
-      textAlignVertical: 'top', // Ensures text starts from the top of the TextInput
+      textAlignVertical: 'top', 
       borderColor: 'gray',
       borderWidth: 1,
       padding: 10,
-      borderRadius: 5, // Optional: Adds rounded corners to the text area
-    },
-  });
+      borderRadius: 5, 
+    }
+});
 
 const MyTextInput = ({label, icon, isPassword, hidePassword, setHidePassword, ...props}) => {
     return (
