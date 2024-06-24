@@ -15,10 +15,12 @@ import Profile from './../app/Profile';
 import Setting from './../app/Setting';
 import DrawerNavigator from './DraweNavigator'
 import Driver from '../app/Driver'; 
-import Bottomnavigator from './../navigations/Bottomnavigators'
 import EditProfile from './../app/EditProfile';
 import UserLocation from './../app/UserLocation';
 import ClientMap from './../app/ClientMap';
+import AfterDestination from './../app/AfterDestination';
+
+
 
 const Stack = createStackNavigator();
 
@@ -112,6 +114,11 @@ export function Home (){
             <Home.Screen 
                 name ="ClientMap"
                 component = {ClientMap}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="AfterDestination"
+                component = {"AfterDestination"}
                 options ={{headerShown:false}}
             /> 
         </Home.Navigator>
