@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import AddressPickup from './../components/AdressPickup';
 import CustomButton from '../components/CustomButton';
 
-const Destination = (props) => {
+const Destination = () => {
   const router = useRouter();
 
   const [state, setState] = useState({
@@ -12,35 +12,52 @@ const Destination = (props) => {
     dropoffCords: {},
   });
 
+  const { pickupCords, dropoffCords } = state;
+
+  const checkValid = () => {
+    if (Object.keys(pickupCords).length === 0) {
+      showError("Please enter pickup location");
+      return false;
+    }
+    if (Object.keys(dropoffCords).length === 0) {
+      showError("Please enter destination location");
+      return false;
+    }
+    return true;
+  };
+
   const onDone = () => {
-    router.push({
-      pathname: '/ClientMap',
-      params: {
-        pickupCords: state.pickupCords,
-        dropoffCords: state.dropoffCords,
-      },
-    });
-  }
+    const isValid = checkValid();
+    if (isValid) {
+      router.push({
+        pathname: '/ClientMap',
+        params: {
+          pickupCords: state.pickupCords,
+          dropoffCords: state.dropoffCords,
+        },
+      });
+    }
+  };
 
   const fetchAddressCords = (lat, lng) => {
-    setState({
-      ...state,
+    setState((prevState) => ({
+      ...prevState,
       pickupCords: {
         latitude: lat,
         longitude: lng,
       },
-    });
-  }
+    }));
+  };
 
   const fetchDestinationCords = (lat, lng) => {
-    setState({
-      ...state,
+    setState((prevState) => ({
+      ...prevState,
       dropoffCords: {
         latitude: lat,
         longitude: lng,
       },
-    });
-  }
+    }));
+  };
 
   console.log("Pickup cords: ", state.pickupCords);
   console.log("Dropoff cords: ", state.dropoffCords);
@@ -76,6 +93,7 @@ const styles = StyleSheet.create({
 });
 
 export default Destination;
+
 
 
 
