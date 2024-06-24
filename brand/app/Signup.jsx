@@ -43,22 +43,21 @@ const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
   role: Yup.string().required('Role is required'),
   plateNumber: Yup.string().when('role', {
-    is: 'courier',
+    is: (role) => role === 'courier',
     then: Yup.string().required('Plate Number is required'),
-    otherwise: Yup.string(),
+    otherwise: Yup.string().notRequired(),
   }),
   vehicleName: Yup.string().when('role', {
-    is: 'courier',
+    is: (role) => role === 'courier',
     then: Yup.string().required('Vehicle Name is required'),
-    otherwise: Yup.string(),
+    otherwise: Yup.string().notRequired(),
   }),
   vehicleColor: Yup.string().when('role', {
-    is: 'courier',
+    is: (role) => role === 'courier',
     then: Yup.string().required('Vehicle Color is required'),
-    otherwise: Yup.string(),
+    otherwise: Yup.string().notRequired(),
   }),
 });
-
 
 
 const Signup = () => {
