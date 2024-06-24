@@ -28,7 +28,7 @@ import {
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { Picker } from '@react-native-picker/picker';
-import { API_BASE_URL } from '@env'; // Import the environment variable
+import { API_BASE_URL } from '@env';
 
 const { brand, darkLight, primary } = Colors;
 
@@ -59,10 +59,9 @@ const validationSchema = Yup.object().shape({
   }),
 });
 
-
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true);
-  const [isLoading, setIsLoading] = useState(false); // State for loading indicator
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (values) => {
@@ -78,7 +77,7 @@ const Signup = () => {
       vehicleColor: values.vehicleColor,
     };
 
-    const url = `http://192.168.81.127:4000/api/users/register`;
+    const url = `${API_BASE_URL}/users/register`;
 
     try {
       const response = await fetch(url, {
@@ -113,23 +112,13 @@ const Signup = () => {
           <PageTitle>aGIZA</PageTitle>
           <SubTitle>Account Signup</SubTitle>
           <Formik
-            initialValues={{
-              username: '',
-              email: '',
-              phone: '',
-              password: '',
-              confirmPassword: '',
-              role: '',
-              plateNumber: '',
-              vehicleName: '',
-              vehicleColor: '',
-            }}
+            initialValues={{ username: '', email: '', phone: '', password: '', confirmPassword: '', role: '', plateNumber: '', vehicleName: '', vehicleColor: '' }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
             {({ handleChange, handleBlur, handleSubmit, setFieldValue, values, errors, touched }) => (
               <StyledFormArea>
-                <MyTextInput
+                <FormField
                   label="Full Name"
                   icon="person"
                   placeholder="Omari Rasuli"
@@ -137,10 +126,9 @@ const Signup = () => {
                   onChangeText={handleChange('username')}
                   onBlur={handleBlur('username')}
                   value={values.username}
+                  name="username"
                 />
-                {touched.username && errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
-
-                <MyTextInput
+                <FormField
                   label="Email Address"
                   icon="mail"
                   placeholder="rasuliomari4@gmail.com"
@@ -149,10 +137,9 @@ const Signup = () => {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   keyboardType="email-address"
+                  name="email"
                 />
-                {touched.email && errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-
-                <MyTextInput
+                <FormField
                   label="Phone Number"
                   icon="device-mobile"
                   placeholder="+255 657707046"
@@ -160,10 +147,9 @@ const Signup = () => {
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
                   value={values.phone}
+                  name="phone"
                 />
-                {touched.phone && errors.phone && <Text style={styles.errorText}>{errors.phone}</Text>}
-
-                <MyTextInput
+                <FormField
                   label="Password"
                   icon="lock"
                   placeholder="* * * * * * * *"
@@ -172,13 +158,12 @@ const Signup = () => {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   secureTextEntry={hidePassword}
-                  isPassword={true}
+                  isPassword
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
+                  name="password"
                 />
-                {touched.password && errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
-
-                <MyTextInput
+                <FormField
                   label="Confirm Password"
                   icon="lock"
                   placeholder="* * * * * * * *"
@@ -187,14 +172,11 @@ const Signup = () => {
                   onBlur={handleBlur('confirmPassword')}
                   value={values.confirmPassword}
                   secureTextEntry={hidePassword}
-                  isPassword={true}
+                  isPassword
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
+                  name="confirmPassword"
                 />
-                {touched.confirmPassword && errors.confirmPassword && (
-                  <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-                )}
-
                 <StyledInputLabel>Role</StyledInputLabel>
                 <Picker
                   selectedValue={values.role}
@@ -209,7 +191,7 @@ const Signup = () => {
 
                 {values.role === 'courier' && (
                   <>
-                    <MyTextInput
+                    <FormField
                       label="Plate Number"
                       icon="car"
                       placeholder="Plate Number"
@@ -217,12 +199,9 @@ const Signup = () => {
                       onChangeText={handleChange('plateNumber')}
                       onBlur={handleBlur('plateNumber')}
                       value={values.plateNumber}
+                      name="plateNumber"
                     />
-                    {touched.plateNumber && errors.plateNumber && (
-                      <Text style={styles.errorText}>{errors.plateNumber}</Text>
-                    )}
-
-                    <MyTextInput
+                    <FormField
                       label="Vehicle Name"
                       icon="car"
                       placeholder="Vehicle Name"
@@ -230,12 +209,9 @@ const Signup = () => {
                       onChangeText={handleChange('vehicleName')}
                       onBlur={handleBlur('vehicleName')}
                       value={values.vehicleName}
+                      name="vehicleName"
                     />
-                    {touched.vehicleName && errors.vehicleName && (
-                      <Text style={styles.errorText}>{errors.vehicleName}</Text>
-                    )}
-
-                    <MyTextInput
+                    <FormField
                       label="Vehicle Color"
                       icon="car"
                       placeholder="Vehicle Color"
@@ -243,18 +219,15 @@ const Signup = () => {
                       onChangeText={handleChange('vehicleColor')}
                       onBlur={handleBlur('vehicleColor')}
                       value={values.vehicleColor}
+                      name="vehicleColor"
                     />
-                    {touched.vehicleColor && errors.vehicleColor && (
-                      <Text style={styles.errorText}>{errors.vehicleColor}</Text>
-                    )}
                   </>
                 )}
 
                 <MsgBox>...</MsgBox>
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Submit</ButtonText>
+                <StyledButton onPress={handleSubmit} disabled={isLoading}>
+                  {isLoading ? <ActivityIndicator size="small" color={primary} /> : <ButtonText>Submit</ButtonText>}
                 </StyledButton>
-                {isLoading && <ActivityIndicator size="large" color={primary} />}
                 <Line />
                 <ExtraView>
                   <ExtraText>Already have an account? </ExtraText>
@@ -290,6 +263,13 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
   );
 };
 
+const FormField = ({ label, icon, name, ...props }) => (
+  <>
+    <MyTextInput label={label} icon={icon} {...props} />
+    {touched[name] && errors[name] && <Text style={styles.errorText}>{errors[name]}</Text>}
+  </>
+);
+
 const styles = StyleSheet.create({
   errorText: {
     color: 'red',
@@ -299,6 +279,7 @@ const styles = StyleSheet.create({
 });
 
 export default Signup;
+
 
      
 
