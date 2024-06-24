@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import index from './../app/index';
 import Login from './../app/Login';
 import Signup from './../app/Signup';
@@ -17,6 +19,8 @@ import Bottomnavigator from './../navigations/Bottomnavigators'
 import EditProfile from './../app/EditProfile';
 import UserLocation from './../app/UserLocation';
 import ClientMap from './../app/ClientMap';
+
+const Stack = createStackNavigator();
 
 // const Home = createNativeStackNavigator();
 export function Home (){
