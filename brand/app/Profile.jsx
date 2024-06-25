@@ -13,7 +13,7 @@ const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     // Fetch profile data
-    axios.get('https://your-api-endpoint.com/profile')
+    axios.get('http://192.168.81.127:4000/api/users/')
       .then(response => setProfile(response.data))
       .catch(error => console.error(error));
   }, []);
@@ -41,8 +41,9 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.container}>
         {profile ? (
           <View>
-            <Text style={styles.details}>Name: {profile.name}</Text>
+            <Text style={styles.details}>Name: {profile.username}</Text>
             <Text style={styles.details}>Email: {profile.email}</Text>
+            <Text style={styles.details}>Phone Number: {profile.phane}</Text>
             <Text style={styles.details}>Role: {profile.role}</Text>
             <Button title="Edit Profile" onPress={() => router.push('EditProfile', { profile })} />
             <Button title="Delete Profile" onPress={deleteProfile} />
