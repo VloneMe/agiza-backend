@@ -83,7 +83,8 @@ const Welcome = ({ navigation }) => {
                   </TouchableOpacity>
                   <TouchableOpacity style={{ marginLeft: 10 }}>
                     <View style={styles.button2}>
-                      <Link href="Profile">
+                      {/* <Link href="Profile"> */}
+                      <Link href="Driver">
                         <Text style={styles.button2Text}>View Profile</Text>
                       </Link>
                     </View>
