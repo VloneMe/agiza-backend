@@ -74,7 +74,7 @@ const Signup = () => {
       vehicleColor: values.vehicleColor,
     };
 
-    const url = `${API_BASE_URL}/users/register`;
+    const url = `http://192.168.81.127:4000/users/register`;
 
     try {
       const response = await fetch(url, {
