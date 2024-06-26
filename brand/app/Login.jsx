@@ -44,7 +44,7 @@ const Login = () => {
 
     const handleLogin = async (credentials, setSubmitting) => {
         handleMessage(null);
-        const url = `${API_BASE_URL}/api/users/login`;
+        const url = `http://192.168.230.127:4000/api/users/login`;
 
         try {
             const response = await fetch(url, {
@@ -71,7 +71,7 @@ const Login = () => {
 
             if (userData.role === 'customer') {
                 router.push('/Welcome');
-            } else if (userData.role === 'courier' || userData.role === 'admin') {
+            } else if (userData.role === 'courier' || userData.role === 'Admin') {
                 router.push('/Driver');
             }
 
