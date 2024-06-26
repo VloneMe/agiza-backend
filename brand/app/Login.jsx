@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, ActivityIndicator } from 'react-native';
-import React, { useState, useContext } from 'react';
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Link, useRouter } from 'expo-router';
 import {
@@ -27,8 +27,10 @@ import {
 import { Octicons, Ionicons } from '@expo/vector-icons';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import { UserContext } from '../context/UserContext';
-import { jwtDecode } from 'jwt-decode';
-import { API_BASE_URL } from '@env'; // Import the environment variable
+import {jwtDecode} from 'jwt-decode';
+import { API_BASE_URL } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userDataHook } from '../hook/userDataHook';
 
 const { brand, darkLight, primary } = Colors;
 
@@ -37,18 +39,17 @@ const Login = () => {
     const [hidePassword, setHidePassword] = useState(true);
     const [message, setMessage] = useState();
     const [messageType, setMessageType] = useState();
-    const { setUserInfo, userInfo } = useContext(UserContext);
+    const { userInfo, setUserInfo } = useContext(UserContext);
+    const { userData } = userDataHook();
 
     const handleLogin = async (credentials, setSubmitting) => {
         handleMessage(null);
-        const url = `http://192.168.103.127:4000/api/users/login`; // Use the environment variable
-
-        const { email, password } = credentials;
+        const url = `${API_BASE_URL}/api/users/login`;
 
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify(credentials),
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
             });
@@ -66,19 +67,11 @@ const Login = () => {
                 return;
             }
 
-            // Decode token to get user info
-            const decodedToken = jwtDecode(token);
-            setUserInfo(decodedToken);
+            await AsyncStorage.setItem("token", token);
 
-            console.log("User infos: ", userInfo);
-            console.log("decoded infos: ", decodedToken);
-
-            // Redirect based on role
-            if (decodedToken.role === 'customer') {
+            if (userData.role === 'customer') {
                 router.push('/Welcome');
-            } else if (decodedToken.role === 'courier') {
-                router.push('/Driver');
-            } else if (decodedToken.role === 'admin') {
+            } else if (userData.role === 'courier' || userData.role === 'admin') {
                 router.push('/Driver');
             }
 
@@ -100,7 +93,7 @@ const Login = () => {
             <StyledContainer>
                 <StatusBar style="dark" />
                 <InnerContainer>
-                    <PageLogo resizeMode="cover" source={require("./../assets/img1.png")} />
+                    <PageLogo resizeMode="cover" source={require("../assets/img1.png")} />
                     <PageTitle>aGIZA</PageTitle>
                     <SubTitle>Account Login</SubTitle>
                     <Formik
