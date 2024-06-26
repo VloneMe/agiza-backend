@@ -13,13 +13,13 @@ import Details from './../app/Details';
 import Selection from './../app/Selection';
 import Comfirm from './../app/Comfirm';
 import Profile from './../app/Profile';
-import Setting from './../app/Setting';
-import DrawerNavigator from './DraweNavigator'
 import Admin from '../app/Admin'; 
 import EditProfile from './../app/EditProfile';
 import editUser from './../app/editUser';
 import UserLocation from './../app/UserLocation';
 import ClientMap from './../app/ClientMap';
+import Driver from './../app/Driver';
+import DriverMap from './../app/DriverMap';
 
 
 
@@ -81,20 +81,10 @@ export function Home (){
                 name ="Comfirm"
                 component = {Comfirm}
                 options ={{headerShown:false}}
-            /> 
-             <Home.Screen 
-                name ="DrawerNavigator"
-                component = {DrawerNavigator}
-                options ={{headerShown:false}}
-            /> 
+            />
              <Home.Screen 
                 name ="Profile"
                 component = {Profile}
-                options ={{headerShown:false}}
-            /> 
-             <Home.Screen 
-                name ="Setting"
-                component = {Setting}
                 options ={{headerShown:false}}
             /> 
              <Home.Screen 
@@ -125,6 +115,16 @@ export function Home (){
             <Home.Screen 
                 name ="AfterDestination"
                 component = {"AfterDestination"}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="Driver"
+                component = {"Driver"}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="DriverMap"
+                component = {"DriverMap"}
                 options ={{headerShown:false}}
             /> 
             <FlashMessage position="top" />
