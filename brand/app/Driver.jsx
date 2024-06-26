@@ -1,7 +1,11 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import { useRouter } from 'expo-router';
 
-const Driver = ({ navigation }) => {
+const Driver = () => {
+
+  const router = useRouter();
+
   // Hardcoded list of parcels for testing purposes
   const parcels = [
     {
@@ -21,7 +25,10 @@ const Driver = ({ navigation }) => {
   ];
 
   const handleAccept = (parcel) => {
-    navigation.navigate('DriverMapPage', { parcel });
+    router.push({
+      pathname: '/DriverMap',
+      params: { parcel: JSON.stringify(parcel) }, // Pass parcel as a string
+    });
   };
 
   const renderItem = ({ item }) => (
@@ -41,7 +48,6 @@ const Driver = ({ navigation }) => {
         data={parcels}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        // contentContainerStyle={styles.container}
       />
     </View>
   );
