@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import FlashMessage from 'react-native-flash-message';
 import index from './../app/index';
@@ -16,10 +14,10 @@ import Profile from './../app/Profile';
 import Admin from '../app/Admin'; 
 import EditProfile from './../app/EditProfile';
 import editUser from './../app/editUser';
-import UserLocation from './../app/UserLocation';
 import ClientMap from './../app/ClientMap';
 import Driver from './../app/Driver';
 import DriverMap from './../app/DriverMap';
+import AddUser from '../app/AddUser';
 
 
 
@@ -72,11 +70,6 @@ export function Home (){
                 component = {Selection}
                 options ={{headerShown:false}}
             /> 
-            <Home.Screen 
-                name =""
-                component 
-                options ={{headerShown:false}}
-            /> 
              <Home.Screen 
                 name ="Comfirm"
                 component = {Comfirm}
@@ -103,11 +96,6 @@ export function Home (){
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
-                name ="UserLocation"
-                component = {UserLocation}
-                options ={{headerShown:false}}
-            /> 
-            <Home.Screen 
                 name ="ClientMap"
                 component = {ClientMap}
                 options ={{headerShown:false}}
@@ -125,6 +113,11 @@ export function Home (){
             <Home.Screen 
                 name ="DriverMap"
                 component = {"DriverMap"}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="AddUser"
+                component = {"AddUser"}
                 options ={{headerShown:false}}
             /> 
             <FlashMessage position="top" />

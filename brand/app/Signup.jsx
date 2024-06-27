@@ -59,7 +59,7 @@ const Signup = () => {
       role: values.role,
     };
 
-    const url = `http://192.168.230.127:4000/api/users/register`;
+    const url = `http://192.168.62.127:4000/api/users/register`;
 
     try {
       const response = await fetch(url, {
@@ -173,6 +173,7 @@ const Signup = () => {
                   <Picker.Item label="Select Role" value="" />
                   <Picker.Item label="customer" value="customer" />
                   <Picker.Item label="courier" value="courier" />
+                  <Picker.Item label="admin" value="admin" />
                 </Picker>
                 {touched.role && errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
 
