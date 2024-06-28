@@ -59,7 +59,7 @@ router.get('/verify', (req, res) => {
 });
 
 // Read all users
-router.get('/', verifyToken, async (req, res) => {
+router.get('/',  async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
@@ -69,7 +69,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Read a single user
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id',  async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
@@ -80,7 +80,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 });
 
 // Update a user
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id',  async (req, res) => {
     try {
         const { username, email, role, plateNumber, vehicleName, vehicleColor } = req.body;
         const user = await User.findById(req.params.id);
@@ -102,7 +102,7 @@ router.put('/:id', verifyToken, async (req, res) => {
 });
 
 // Delete a user
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id',  async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ message: 'User not found' });
