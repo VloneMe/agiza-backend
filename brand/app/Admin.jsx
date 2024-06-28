@@ -30,7 +30,7 @@ const AdminScreen = () => {
   };
 
   const addUser = () => {
-    router.push({ pathname: 'addUser' });
+    router.push({ pathname: 'AddUser' });
   };
 
   const renderItem = ({ item }) => (
@@ -38,8 +38,14 @@ const AdminScreen = () => {
       <Text style={styles.userDetails}>Name: {item.username}</Text>
       <Text style={styles.userDetails}>Email: {item.email}</Text>
       <Text style={styles.userDetails}>Phone Number: {item.phone}</Text>
-      <Text style={styles.userDetails}>Password: {item.password}</Text>
       <Text style={styles.userDetails}>Role: {item.role}</Text>
+      {item.role === 'courier' && (
+        <>
+          <Text style={styles.userDetails}>Plate Number: {item.plateNumber}</Text>
+          <Text style={styles.userDetails}>Vehicle Name: {item.vehicleName}</Text>
+          <Text style={styles.userDetails}>Vehicle Color: {item.vehicleColor}</Text>
+        </>
+      )}
       <Button title="Edit" onPress={() => editUser(item)} />
     </View>
   );
