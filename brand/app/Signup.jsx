@@ -59,7 +59,7 @@ const Signup = () => {
       role: values.role,
     };
 
-    const url = `http://192.168.230.127:4000/api/users/register`;
+    const url = `http://192.168.62.127:4000/api/users/register`;
 
     try {
       const response = await fetch(url, {
