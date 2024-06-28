@@ -1,57 +1,62 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { TextInput } from 'react-native-gesture-handler';
+import { Colors } from '../components/global/styles';
+import { useRouter } from 'expo-router';
+import { userDataHook } from './../hook/userDataHook';
 
-const EditProfileScreen = ({ route, navigation }) => {
+const EditProfile = ({ route }) => {
   const { profile } = route.params;
+  const [username, setUsername] = useState(profile.username);
+  const [email, setEmail] = useState(profile.email);
+  const [phone, setPhone] = useState(profile.phone);
+  const [role, setRole] = useState(profile.role);
+  const { userData } = userDataHook();
+  const router = useRouter();
 
-  const ProfileSchema = Yup.object().shape({
-    name: Yup.string().required('Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
-  });
-
-  const handleSubmit = (values) => {
-    axios.put('https://your-api-endpoint.com/profile', values)
-      .then(() => navigation.goBack())
-      .catch(error => console.error(error));
+  const saveProfile = () => {
+    axios.put(`http://192.168.81.127:4000/api/users/${userData.id}`, {
+      username,
+      email,
+      phone,
+      role,
+    })
+    .then(() => {
+      router.push('ProfileScreen');
+    })
+    .catch(error => console.error('Error updating profile:', error));
   };
 
   return (
     <View style={styles.container}>
-      <Formik
-        initialValues={{ name: profile.name, email: profile.email }}
-        validationSchema={ProfileSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <View>
-            <TextInput
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-              placeholder="Name"
-              style={styles.input}
-            />
-            {touched.name && errors.name && <Text style={styles.error}>{errors.name}</Text>}
-            <TextInput
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              placeholder="Email"
-              style={styles.input}
-            />
-            {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button2} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Save Changes</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </Formik>
+      <Text style={styles.header}>Edit Profile</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone"
+        value={phone}
+        onChangeText={setPhone}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Role"
+        value={role}
+        onChangeText={setRole}
+      />
+      <Button title="Save" onPress={saveProfile} />
     </View>
   );
 };
@@ -59,103 +64,84 @@ const EditProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
+    backgroundColor: 'white',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
-    padding: 10,
-    width: 300,
-  },
-  error: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-    paddingHorizontal: 20,
-  },
-  button2: {
-    height: 40,
-    width: 150,
-    backgroundColor: 'black',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 0,
-  },
-  buttonText: {
-    color: 'white',
+    paddingLeft: 10,
   },
 });
 
-export default EditProfileScreen;
+export default EditProfile;
 
 
 
-
-
-
-// // screens/EditProfileScreen.js
-// import React from 'react';
-// import { View, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
-// import { Formik } from 'formik';
-// import * as Yup from 'yup';
+// import React, { useState } from 'react';
+// import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 // import axios from 'axios';
-// import { TextInput } from 'react-native-gesture-handler';
+// import { Colors } from '../components/global/styles';
+// import { useRouter, useRoute } from 'expo-router';
 
-// const EditProfileScreen = ({ route, navigation }) => {
+// const EditProfile = () => {
+//   const router = useRouter();
+//   const route = useRoute();
 //   const { profile } = route.params;
 
-//   const ProfileSchema = Yup.object().shape({
-//     name: Yup.string().required('Required'),
-//     email: Yup.string().email('Invalid email').required('Required'),
-//   });
+//   const [username, setUsername] = useState(profile.username);
+//   const [email, setEmail] = useState(profile.email);
+//   const [phone, setPhone] = useState(profile.phone);
+//   const [role, setRole] = useState(profile.role);
 
-//   const handleSubmit = (values) => {
-//     axios.put('https://your-api-endpoint.com/profile', values)
-//       .then(() => navigation.goBack())
-//       .catch(error => console.error(error));
+//   const saveProfile = () => {
+//     axios.put(`http://192.168.62.127:4000/api/users/${profile.id}`, {
+//       username,
+//       email,
+//       phone,
+//       role,
+//     })
+//     .then(() => {
+//       router.push('/ProfileScreen');
+//     })
+//     .catch(error => console.error('Error updating profile:', error));
 //   };
 
 //   return (
 //     <View style={styles.container}>
-//       <Formik
-//         initialValues={{ name: profile.name, email: profile.email }}
-//         validationSchema={ProfileSchema}
-//         onSubmit={handleSubmit}
-//       >
-//         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-//           <View>
-//             <TextInput
-//               onChangeText={handleChange('name')}
-//               onBlur={handleBlur('name')}
-//               value={values.name}
-//               placeholder="Name"
-//               style={styles.input}
-//             />
-//             {touched.name && errors.name && <Text style={styles.error}>{errors.name}</Text>}
-//             <TextInput
-//               onChangeText={handleChange('email')}
-//               onBlur={handleBlur('email')}
-//               value={values.email}
-//               placeholder="Email"
-//               style={styles.input}
-//             />
-//             {touched.email && errors.email && <Text style={styles.error}>{errors.email}</Text>}
-//             <View style={styles.buttonContainer}>
-//               <TouchableOpacity style={styles.button2} onPress={handleSubmit}>
-//                 <Text style={styles.buttonText}>Save Changes</Text>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//         )}
-//       </Formik>
+//       <Text style={styles.header}>Edit Profile</Text>
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Username"
+//         value={username}
+//         onChangeText={setUsername}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Email"
+//         value={email}
+//         onChangeText={setEmail}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Phone"
+//         value={phone}
+//         onChangeText={setPhone}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Role"
+//         value={role}
+//         onChangeText={setRole}
+//       />
+//       <Button title="Save" onPress={saveProfile} />
 //     </View>
 //   );
 // };
@@ -163,39 +149,24 @@ export default EditProfileScreen;
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
+//     padding: 20,
+//     backgroundColor: 'white',
+//   },
+//   header: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
 //   },
 //   input: {
 //     height: 40,
 //     borderColor: 'gray',
 //     borderWidth: 1,
 //     marginBottom: 10,
-//     padding: 10,
-//     width: 300,
-//   },
-//   error: {
-//     color: 'red',
-//     marginBottom: 10,
-//   },
-//   buttonContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'flex-end',
-//     width: '100%',
-//     paddingHorizontal: 20,
-//   },
-//   button2: {
-//     height: 40,
-//     width: 150,
-//     backgroundColor: 'black',
-//     borderRadius: 20,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     marginTop: 0,
-//   },
-//   buttonText: {
-//     color: 'white',
+//     paddingLeft: 10,
 //   },
 // });
 
-// export default EditProfileScreen;
+// export default EditProfile;
+
+
+
