@@ -100,24 +100,24 @@ export function Home (){
                 component = {ClientMap}
                 options ={{headerShown:false}}
             /> 
-            <Home.Screen 
+            {/* <Home.Screen 
                 name ="AfterDestination"
-                component = {"AfterDestination"}
+                component = {AfterDestination}
                 options ={{headerShown:false}}
-            /> 
+            />  */}
             <Home.Screen 
                 name ="Driver"
-                component = {"Driver"}
+                component = {Driver}
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
                 name ="DriverMap"
-                component = {"DriverMap"}
+                component = {DriverMap}
                 options ={{headerShown:false}}
             /> 
             <Home.Screen 
                 name ="AddUser"
-                component = {"AddUser"}
+                component = {AddUser}
                 options ={{headerShown:false}}
             /> 
             <FlashMessage position="top" />
