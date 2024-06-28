@@ -41,7 +41,7 @@ const AddUser = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Add New User</Text>
+      <Text style={styles.header}>Add New Driver</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
