@@ -151,6 +151,7 @@ export default Details;
 
 
 
+
 // import { StatusBar } from 'expo-status-bar';
 // import { View, Text, Touchable, StyleSheet } from 'react-native';
 // import React, { useState } from 'react';
