@@ -16,7 +16,7 @@ const ClientMap = () => {
     const [cost, setCost] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const { pickuplocation, deliverylocation } = route.params;
+    const { pickuplocation, fullName, deliverylocation, PhoneNumber, Detail, Inside } = route.params;
 
     useEffect(() => {
         (async () => {
@@ -99,7 +99,11 @@ const ClientMap = () => {
             </MapView>
             <View style={styles.detailsContainer}>
                 <Text>Pickup Location: {pickuplocation}</Text>
+                <Text>Full Name: {fullName}</Text>
                 <Text>Delivery Location: {deliverylocation}</Text>
+                <Text>Phone Number: {PhoneNumber}</Text>
+                <Text>Parcel Description: {Detail}</Text>
+                <Text>Parcel Contents: {Inside}</Text>
                 {loading ? (
                     <Text>Calculating distance...</Text>
                 ) : (
@@ -134,7 +138,6 @@ const styles = StyleSheet.create({
 });
 
 export default ClientMap;
-
 
 
 
