@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useRouter } from 'expo-router';
 import { Colors } from '../components/global/styles';
 import { StatusBar } from 'expo-status-bar';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AdminScreen = () => {
   const [users, setUsers] = useState([]);
@@ -89,12 +90,12 @@ const AdminScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.header}>User Management</Text>
+        <Text style={styles.header}>User and Package Management</Text>
         <TouchableOpacity onPress={addUser} style={styles.addButton}>
           <Icon name="plus-circle" size={30} color={Colors.blue} />
         </TouchableOpacity>
         <TouchableOpacity onPress={viewPackages} style={styles.addButton}>
-          <Icon name="box" size={30} color={Colors.blue} />
+          <Icon name="package" size={30} color={Colors.blue} />
         </TouchableOpacity>
       </View>
       {loading ? (
