@@ -48,7 +48,7 @@ const AdminScreen = () => {
           onPress: () => {
             axios.delete(`http://192.168.62.127:4000/api/users/${userId}`)
               .then(response => {
-                setUsers(users.filter(user => user.id !== userId));
+                setUsers(users.filter(user => user._id !== userId));
                 Alert.alert('Success', 'User deleted successfully.');
               })
               .catch(error => {
