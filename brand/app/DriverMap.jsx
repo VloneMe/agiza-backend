@@ -2,30 +2,65 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
 import * as Location from 'expo-location';
+
+const GOOGLE_API_KEY = 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw';
 
 const DriverMap = () => {
     const route = useRoute();
     const { packageDetails, currentLocation } = route.params;
-    const [location, setLocation] = useState(currentLocation);
+    const [driverLocation, setDriverLocation] = useState(currentLocation.coords);
+    const [pickupCoords, setPickupCoords] = useState(null);
+    const [deliveryCoords, setDeliveryCoords] = useState(null);
     const [driverRoute, setDriverRoute] = useState([]);
+
     const mapRef = useRef(null);
 
     useEffect(() => {
-        const getRoute = async () => {
+        const geocodeLocation = async (location) => {
             try {
-                const response = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${currentLocation.coords.latitude},${currentLocation.coords.longitude}&destination=${packageDetails.pickuplocation}&key=${GOOGLE_API_KEY}`);
-                const json = await response.json();
-                const points = json.routes[0].overview_polyline.points;
-                const steps = decode(points);
-
-                setDriverRoute(steps);
+                const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GOOGLE_API_KEY}`);
+                if (response.data.status === 'OK') {
+                    const { lat, lng } = response.data.results[0].geometry.location;
+                    return { latitude: lat, longitude: lng };
+                } else {
+                    Alert.alert('Error', 'Unable to geocode location');
+                    return null;
+                }
             } catch (error) {
-                Alert.alert('Error', 'Unable to get route');
+                Alert.alert('Error', error.message);
+                return null;
             }
         };
 
-        getRoute();
+        const fetchLocations = async () => {
+            const pickupLocation = await geocodeLocation(packageDetails.pickuplocation);
+            const deliveryLocation = await geocodeLocation(packageDetails.deliverylocation);
+            if (pickupLocation && deliveryLocation) {
+                setPickupCoords(pickupLocation);
+                setDeliveryCoords(deliveryLocation);
+
+                const getRoute = async () => {
+                    try {
+                        const response = await axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${driverLocation.latitude},${driverLocation.longitude}&destination=${deliveryLocation.latitude},${deliveryLocation.longitude}&waypoints=${pickupLocation.latitude},${pickupLocation.longitude}&key=${GOOGLE_API_KEY}`);
+                        if (response.data.status === 'OK') {
+                            const points = response.data.routes[0].overview_polyline.points;
+                            const steps = decode(points);
+                            setDriverRoute(steps);
+                        } else {
+                            Alert.alert('Error', 'Unable to get route');
+                        }
+                    } catch (error) {
+                        Alert.alert('Error', error.message);
+                    }
+                };
+
+                getRoute();
+            }
+        };
+
+        fetchLocations();
     }, []);
 
     const decode = (t, e = 5) => {
@@ -65,6 +100,10 @@ const DriverMap = () => {
         });
     };
 
+    if (!pickupCoords || !deliveryCoords) {
+        return <Text>Loading...</Text>;
+    }
+
     return (
         <View style={styles.container}>
             <MapView
@@ -85,17 +124,11 @@ const DriverMap = () => {
                     title="Driver Location"
                 />
                 <Marker
-                    coordinate={{
-                        latitude: packageDetails.pickuplocation.lat,
-                        longitude: packageDetails.pickuplocation.lng,
-                    }}
+                    coordinate={pickupCoords}
                     title="Pickup Location"
                 />
                 <Marker
-                    coordinate={{
-                        latitude: packageDetails.deliverylocation.lat,
-                        longitude: packageDetails.deliverylocation.lng,
-                    }}
+                    coordinate={deliveryCoords}
                     title="Delivery Location"
                 />
                 <Polyline
@@ -117,7 +150,7 @@ const DriverMap = () => {
 };
 
 const { height } = Dimensions.get('window');
-const mapHeight = height / 1.5;
+const mapHeight = height / 1.2;
 
 const styles = StyleSheet.create({
     container: {
@@ -132,8 +165,6 @@ const styles = StyleSheet.create({
 });
 
 export default DriverMap;
-
-
 
 
 // import React, { useRef, useState, useEffect } from "react";
