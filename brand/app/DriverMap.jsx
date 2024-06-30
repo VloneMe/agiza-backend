@@ -1,231 +1,252 @@
-import React, { useRef, useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import ImagePath from "./../constant/ImagePath";
-import { getCurrentLocation, locationPermission } from "./../helper/helperFunction";
-import { useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
+import MapView, { Marker, Polyline } from 'react-native-maps';
+import { useRoute } from '@react-navigation/native';
+import * as Location from 'expo-location';
 
 const DriverMap = () => {
-  const [state, setState] = useState({
-    pickupCords: {
-      latitude: -6.8226625,
-      longitude: 39.30244649999999,
-    },
-    dropoffCords: null,
-  });
+    const route = useRoute();
+    const { packageDetails, currentLocation } = route.params;
+    const [location, setLocation] = useState(currentLocation);
+    const [driverRoute, setDriverRoute] = useState([]);
+    const mapRef = useRef(null);
 
-  const { pickupCords, dropoffCords } = state;
+    useEffect(() => {
+        const getRoute = async () => {
+            try {
+                const response = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${currentLocation.coords.latitude},${currentLocation.coords.longitude}&destination=${packageDetails.pickuplocation}&key=${GOOGLE_API_KEY}`);
+                const json = await response.json();
+                const points = json.routes[0].overview_polyline.points;
+                const steps = decode(points);
 
-  const mapRef = useRef(null);
-  const router = useRouter(); // Initialize the router
+                setDriverRoute(steps);
+            } catch (error) {
+                Alert.alert('Error', 'Unable to get route');
+            }
+        };
 
-  useEffect(() => {
-    const getLiveLocation = async () => {
-      const locPermissionDenied = await locationPermission();
-      if (!locPermissionDenied) {
-        const { latitude, longitude } = await getCurrentLocation();
-        setState((prevState) => ({
-          ...prevState,
-          pickupCords: {
-            latitude,
-            longitude,
-          },
-        }));
-      }
+        getRoute();
+    }, []);
+
+    const decode = (t, e = 5) => {
+        let d = [],
+            n, o, u, l = 0,
+            r = 0,
+            h = 0,
+            i = 0,
+            a = 0;
+        while (l < t.length) {
+            n = 1;
+            o = 0;
+            while (true) {
+                u = t.charCodeAt(l++) - 63 - 1;
+                o += u << i;
+                i += 5;
+                if (u < 0x1f) break;
+            }
+            r += (o & 1 ? ~(o >> 1) : o >> 1);
+            n = 1;
+            o = 0;
+            i = 0;
+            while (true) {
+                u = t.charCodeAt(l++) - 63 - 1;
+                o += u << i;
+                i += 5;
+                if (u < 0x1f) break;
+            }
+            h += (o & 1 ? ~(o >> 1) : o >> 1);
+            d.push([r / e, h / e]);
+        }
+        return d.map(point => {
+            return {
+                latitude: point[0],
+                longitude: point[1]
+            };
+        });
     };
 
-    getLiveLocation();
-  }, []);
-
-  const fetchValues = (data) => {
-    setState((prevState) => ({
-      ...prevState,
-      dropoffCords: {
-        latitude: data.dropoffCords.latitude,
-        longitude: data.dropoffCords.longitude,
-      },
-    }));
-    console.log("Data===>", data);
-  };
-
-  const onPressLocation = () => {
-    router.push('/Destination');
-  };
-
-  return (
-    <View style={styles.container}>
-      <View style={{ flex: 1 }}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={StyleSheet.absoluteFill}
-          initialRegion={{
-            ...pickupCords,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          ref={mapRef}
-        >
-          <Marker 
-            coordinate={pickupCords} 
-            pinColor="green" 
-            image={ImagePath.icCurLoc}
-          />
-          {dropoffCords && (
-            <Marker 
-              coordinate={dropoffCords} 
-              pinColor="red" 
-              image={ImagePath.icGreenMarker}
-            />
-          )}
-          {dropoffCords && (
-            <MapViewDirections 
-              origin={pickupCords}
-              destination={dropoffCords}
-              apikey='AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw'
-              strokeWidth={3}
-              strokeColor="hotpink"
-              onReady={result => {
-                if (mapRef.current) {
-                  mapRef.current.fitToCoordinates(result.coordinates, {
-                    edgePadding: {
-                      right: 30,
-                      left: 30,
-                      top: 100,
-                      bottom: 300,
-                    },
-                    animated: true,
-                  });
-                  console.log(`Distance: ${result.distance} km`);
-                  console.log(`Duration: ${result.duration} min.`);
-                } else {
-                  console.log('MapView reference is not available');
-                }
-              }}
-              onError={(errorMessage) => {
-                console.log('GOT AN ERROR', errorMessage);
-              }}
-            />
-          )}
-        </MapView>
-      </View>
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <MapView
+                ref={mapRef}
+                style={styles.map}
+                initialRegion={{
+                    latitude: currentLocation.coords.latitude,
+                    longitude: currentLocation.coords.longitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                <Marker
+                    coordinate={{
+                        latitude: currentLocation.coords.latitude,
+                        longitude: currentLocation.coords.longitude,
+                    }}
+                    title="Driver Location"
+                />
+                <Marker
+                    coordinate={{
+                        latitude: packageDetails.pickuplocation.lat,
+                        longitude: packageDetails.pickuplocation.lng,
+                    }}
+                    title="Pickup Location"
+                />
+                <Marker
+                    coordinate={{
+                        latitude: packageDetails.deliverylocation.lat,
+                        longitude: packageDetails.deliverylocation.lng,
+                    }}
+                    title="Delivery Location"
+                />
+                <Polyline
+                    coordinates={driverRoute}
+                    strokeColor="#000"
+                    strokeWidth={6}
+                />
+            </MapView>
+            <View style={styles.detailsContainer}>
+                <Text>Recipient Name: {packageDetails.fullName}</Text>
+                <Text>Phone Number: {packageDetails.PhoneNumber}</Text>
+                <Text>Pickup Location: {packageDetails.pickuplocation}</Text>
+                <Text>Delivery Location: {packageDetails.deliverylocation}</Text>
+                <Text>Ride Type: {packageDetails.rideType}</Text>
+                <Text>Cost: {packageDetails.cost} TZS</Text>
+            </View>
+        </View>
+    );
 };
 
+const { height } = Dimensions.get('window');
+const mapHeight = height / 1.5;
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  bottomCard: {
-    backgroundColor: 'white',
-    width: '100%',
-    padding: 30,
-    borderTopEndRadius: 24,
-    borderTopStartRadius: 24,
-  },
-  inputStyle: {
-    backgroundColor: 'white',
-    borderRadius: 4,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    marginTop: 16
-  },
+    container: {
+        flex: 1,
+    },
+    map: {
+        height: mapHeight,
+    },
+    detailsContainer: {
+        padding: 20,
+    },
 });
 
 export default DriverMap;
 
 
 
-// import React, { useEffect, useState } from 'react';
-// import { View, Text, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-// import MapView, { Marker, Polyline } from 'react-native-maps';
-// import * as Location from 'expo-location';
-// import { useSearchParams } from 'expo-router';
+
+// import React, { useRef, useState, useEffect } from "react";
+// import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+// import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+// import MapViewDirections from "react-native-maps-directions";
+// import ImagePath from "./../constant/ImagePath";
+// import { getCurrentLocation, locationPermission } from "./../helper/helperFunction";
+// import { useRouter } from 'expo-router';
 
 // const DriverMap = () => {
-//   const [params] = useSearchParams();
-//   const parcelData = JSON.parse(params.parcel);
+//   const [state, setState] = useState({
+//     pickupCords: {
+//       latitude: -6.8226625,
+//       longitude: 39.30244649999999,
+//     },
+//     dropoffCords: null,
+//   });
 
-//   const [driverLocation, setDriverLocation] = useState(null);
-//   const [routeCoordinates, setRouteCoordinates] = useState([]);
-//   const [loading, setLoading] = useState(true);
+//   const { pickupCords, dropoffCords } = state;
+
+//   const mapRef = useRef(null);
+//   const router = useRouter(); // Initialize the router
 
 //   useEffect(() => {
-//     (async () => {
-//       try {
-//         let { status } = await Location.requestForegroundPermissionsAsync();
-//         if (status !== 'granted') {
-//           Alert.alert('Permission to access location was denied');
-//           return;
-//         }
-
-//         let location = await Location.getCurrentPositionAsync({});
-//         setDriverLocation(location.coords);
-
-//         const driverCoords = {
-//           latitude: location.coords.latitude,
-//           longitude: location.coords.longitude,
-//         };
-
-//         const pickUpCoords = {
-//           latitude: parseFloat(parcelData.pickUpLocation.split(',')[0]),
-//           longitude: parseFloat(parcelData.pickUpLocation.split(',')[1]),
-//         };
-
-//         const destinationCoords = {
-//           latitude: parseFloat(parcelData.destinationLocation.split(',')[0]),
-//           longitude: parseFloat(parcelData.destinationLocation.split(',')[1]),
-//         };
-
-//         setRouteCoordinates([driverCoords, pickUpCoords, destinationCoords]);
-//       } catch (error) {
-//         console.error(error);
-//         Alert.alert('Error fetching location data');
-//       } finally {
-//         setLoading(false);
+//     const getLiveLocation = async () => {
+//       const locPermissionDenied = await locationPermission();
+//       if (!locPermissionDenied) {
+//         const { latitude, longitude } = await getCurrentLocation();
+//         setState((prevState) => ({
+//           ...prevState,
+//           pickupCords: {
+//             latitude,
+//             longitude,
+//           },
+//         }));
 //       }
-//     })();
+//     };
+
+//     getLiveLocation();
 //   }, []);
 
-//   if (loading) {
-//     return <ActivityIndicator size="large" color="#0000ff" />;
-//   }
+//   const fetchValues = (data) => {
+//     setState((prevState) => ({
+//       ...prevState,
+//       dropoffCords: {
+//         latitude: data.dropoffCords.latitude,
+//         longitude: data.dropoffCords.longitude,
+//       },
+//     }));
+//     console.log("Data===>", data);
+//   };
 
-//   if (!driverLocation) {
-//     return <Text>Location not available</Text>;
-//   }
+//   const onPressLocation = () => {
+//     router.push('/Destination');
+//   };
 
 //   return (
 //     <View style={styles.container}>
-//       <MapView
-//         style={styles.map}
-//         initialRegion={{
-//           latitude: driverLocation.latitude,
-//           longitude: driverLocation.longitude,
-//           latitudeDelta: 0.0922,
-//           longitudeDelta: 0.0421,
-//         }}
-//       >
-//         <Marker coordinate={driverLocation} title="Driver Location" />
-//         <Marker
-//           coordinate={{
-//             latitude: parseFloat(parcelData.pickUpLocation.split(',')[0]),
-//             longitude: parseFloat(parcelData.pickUpLocation.split(',')[1]),
+//       <View style={{ flex: 1 }}>
+//         <MapView
+//           provider={PROVIDER_GOOGLE}
+//           style={StyleSheet.absoluteFill}
+//           initialRegion={{
+//             ...pickupCords,
+//             latitudeDelta: 0.0922,
+//             longitudeDelta: 0.0421,
 //           }}
-//           title="Pick Up Location"
-//         />
-//         <Marker
-//           coordinate={{
-//             latitude: parseFloat(parcelData.destinationLocation.split(',')[0]),
-//             longitude: parseFloat(parcelData.destinationLocation.split(',')[1]),
-//           }}
-//           title="Destination Location"
-//         />
-//         <Polyline coordinates={routeCoordinates} strokeWidth={4} strokeColor="blue" />
-//       </MapView>
+//           ref={mapRef}
+//         >
+//           <Marker 
+//             coordinate={pickupCords} 
+//             pinColor="green" 
+//             image={ImagePath.icCurLoc}
+//           />
+//           {dropoffCords && (
+//             <Marker 
+//               coordinate={dropoffCords} 
+//               pinColor="red" 
+//               image={ImagePath.icGreenMarker}
+//             />
+//           )}
+//           {dropoffCords && (
+//             <MapViewDirections 
+//               origin={pickupCords}
+//               destination={dropoffCords}
+//               apikey='AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw'
+//               strokeWidth={3}
+//               strokeColor="hotpink"
+//               onReady={result => {
+//                 if (mapRef.current) {
+//                   mapRef.current.fitToCoordinates(result.coordinates, {
+//                     edgePadding: {
+//                       right: 30,
+//                       left: 30,
+//                       top: 100,
+//                       bottom: 300,
+//                     },
+//                     animated: true,
+//                   });
+//                   console.log(`Distance: ${result.distance} km`);
+//                   console.log(`Duration: ${result.duration} min.`);
+//                 } else {
+//                   console.log('MapView reference is not available');
+//                 }
+//               }}
+//               onError={(errorMessage) => {
+//                 console.log('GOT AN ERROR', errorMessage);
+//               }}
+//             />
+//           )}
+//         </MapView>
+//       </View>
 //     </View>
 //   );
 // };
@@ -234,10 +255,22 @@ export default DriverMap;
 //   container: {
 //     flex: 1,
 //   },
-//   map: {
-//     ...StyleSheet.absoluteFillObject,
+//   bottomCard: {
+//     backgroundColor: 'white',
+//     width: '100%',
+//     padding: 30,
+//     borderTopEndRadius: 24,
+//     borderTopStartRadius: 24,
+//   },
+//   inputStyle: {
+//     backgroundColor: 'white',
+//     borderRadius: 4,
+//     borderWidth: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     height: 50,
+//     marginTop: 16
 //   },
 // });
 
 // export default DriverMap;
-
