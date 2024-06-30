@@ -4,7 +4,7 @@ const Package = require('../models/Package');
 const verifyToken = require('../middlewares/auth');
 
 // Create a new package
-router.post('/', verifyToken, async (req, res) => {
+router.post('/',  async (req, res) => {
     try {
         const package = new Package(req.body);
         await package.save();
@@ -15,7 +15,7 @@ router.post('/', verifyToken, async (req, res) => {
 });
 
 // Read all packages
-router.get('/', verifyToken, async (req, res) => {
+router.get('/',  async (req, res) => {
     try {
         const packages = await Package.find();
         res.json(packages);
@@ -25,7 +25,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Read a single package
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id',  async (req, res) => {
     try {
         const package = await Package.findById(req.params.id);
         if (!package) return res.status(404).json({ message: 'Package not found' });
@@ -36,7 +36,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 });
 
 // Update a package
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id',  async (req, res) => {
     try {
         const package = await Package.findById(req.params.id);
         if (!package) return res.status(404).json({ message: 'Package not found' });
@@ -56,7 +56,7 @@ router.put('/:id', verifyToken, async (req, res) => {
 });
 
 // Delete a package
-router.delete('/:id', verifyToken, async (req, res) => {
+router.delete('/:id',  async (req, res) => {
     try {
         const package = await Package.findById(req.params.id);
         if (!package) return res.status(404).json({ message: 'Package not found' });
