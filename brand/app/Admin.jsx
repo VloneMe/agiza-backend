@@ -64,7 +64,7 @@ const AdminScreen = () => {
   };
 
   const viewPackages = () => {
-    router.push({ pathname: 'PackagesScreen' }); // Navigate to PackagesScreen
+    router.push({ pathname: 'Packages' }); // Navigate to PackagesScreen
   };
 
   const renderItem = ({ item }) => (
