@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, Alert } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import * as Location from 'expo-location';
 
 const GOOGLE_API_KEY = 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw';
 
@@ -16,6 +15,7 @@ const DriverMap = () => {
     const [driverRoute, setDriverRoute] = useState([]);
 
     const mapRef = useRef(null);
+    const driverMarkerRef = useRef(null);
 
     useEffect(() => {
         const geocodeLocation = async (location) => {
@@ -100,6 +100,24 @@ const DriverMap = () => {
         });
     };
 
+    const animateDriverMarker = (route) => {
+        let index = 0;
+        const intervalId = setInterval(() => {
+            if (index >= route.length - 1) {
+                clearInterval(intervalId);
+                return;
+            }
+            setDriverLocation(route[index]);
+            index += 1;
+        }, 1000);
+    };
+
+    useEffect(() => {
+        if (driverRoute.length > 0) {
+            animateDriverMarker(driverRoute);
+        }
+    }, [driverRoute]);
+
     if (!pickupCoords || !deliveryCoords) {
         return <Text>Loading...</Text>;
     }
@@ -117,10 +135,8 @@ const DriverMap = () => {
                 }}
             >
                 <Marker
-                    coordinate={{
-                        latitude: currentLocation.coords.latitude,
-                        longitude: currentLocation.coords.longitude,
-                    }}
+                    ref={driverMarkerRef}
+                    coordinate={driverLocation}
                     title="Driver Location"
                 />
                 <Marker
@@ -133,7 +149,7 @@ const DriverMap = () => {
                 />
                 <Polyline
                     coordinates={driverRoute}
-                    strokeColor="#000"
+                    strokeColor="hotpink"
                     strokeWidth={6}
                 />
             </MapView>
@@ -165,6 +181,7 @@ const styles = StyleSheet.create({
 });
 
 export default DriverMap;
+
 
 
 // import React, { useRef, useState, useEffect } from "react";
