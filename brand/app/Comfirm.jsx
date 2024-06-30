@@ -1,34 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { getDistance } from 'geolib';
-import { Colors, parameters } from '../components/global/styles';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { PageLogo } from '../components/styles';
-import { useRouter, useSearchParams } from 'expo-router';
 
-const Comfirm = () => {
-  const router = useRouter();
-  const { name = '', pickupLocation = '', deliveryLocation = '', ride = '' } = router?.params || {};
+const Confirm = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { pickuplocation, fullName, deliverylocation, PhoneNumber, Detail, Inside, rideType, cost, distance, duration } = route.params;
 
-  const [distance, setDistance] = useState(0);
-  const [amount, setAmount] = useState(0);
-
-  useEffect(() => {
-    const calculateDistance = () => {
-      // Placeholder coordinates for example purposes
-      const pickupCoords = { latitude: -6.7924, longitude: 39.2083 };
-      const deliveryCoords = { latitude: -6.8163, longitude: 39.2805 };
-
-      const dist = getDistance(pickupCoords, deliveryCoords) / 1000; // distance in km
-      setDistance(dist);
-
-      // Calculate amount (example rates)
-      const ratePerKm = ride === 'Motorcycle' ? 1000 : ride === 'Small Van' ? 6000 : 10000;
-      setAmount(dist * ratePerKm);
-    };
-
-    calculateDistance();
-  }, [ride]);
+  const handleConfirm = () => {
+    Alert.alert(
+      'Confirmation',
+      'Thank you for choosing aGIZA. The ride is nearby to pick up your parcel soon! You will receive an SMS soon.',
+      [
+        { text: 'OK', onPress: () => navigation.navigate('Welcome') }
+      ]
+    );
+  };
 
   return (
     <View>
@@ -41,28 +30,27 @@ const Comfirm = () => {
         </View>
       </View>
       <View style={styles.home1}>
-        <PageLogo resizeMode="cover" source={require("./../assets/end.png")} />
+        <PageLogo resizeMode="cover" source={require('./../assets/end.png')} />
         <Text style={styles.header}>Confirmation</Text>
-        <Text style={styles.details}>Name: {name}</Text>
-        <Text style={styles.details}>Pickup Location: {pickupLocation}</Text>
-        <Text style={styles.details}>Delivery Location: {deliveryLocation}</Text>
-        <Text style={styles.details}>Selected Ride: {ride}</Text>
-        <Text style={styles.details}>Distance: {distance.toFixed(2)} km</Text>
-        <Text style={styles.details}>Total Amount: {amount.toFixed(2)} TZS</Text>
-        <Button title="Confirm" onPress={() => alert('Thank you for choosing aGIZA, The ride is nearby to pick up your parcel soon..! You will receive the SMS soon..!')} />
+        <Text style={styles.details}>Full Name: {fullName}</Text>
+        <Text style={styles.details}>Pickup Location: {pickuplocation}</Text>
+        <Text style={styles.details}>Delivery Location: {deliverylocation}</Text>
+        <Text style={styles.details}>Phone Number: {PhoneNumber}</Text>
+        <Text style={styles.details}>Parcel Description: {Detail}</Text>
+        <Text style={styles.details}>Parcel Contents: {Inside}</Text>
+        <Text style={styles.details}>Selected Ride: {rideType}</Text>
+        <Text style={styles.details}>Distance: {distance}</Text>
+        <Text style={styles.details}>Duration: {duration}</Text>
+        <Text style={styles.details}>Total Amount: {cost} TZS</Text>
+        <Button title="Confirm" onPress={handleConfirm} />
       </View>
-      <StatusBar
-        style="dark"
-        backgroundColor="#2058c0"
-        translucent={true}
-      />
+      <StatusBar style="dark" backgroundColor="#2058c0" translucent={true} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   home1: {
-    // flex: 1,
     marginTop: 90,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -74,19 +62,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   home: {
-    backgroundColor: Colors.blue,
+    backgroundColor: '#2058c0',
     paddingLeft: 20,
   },
   text1: {
-    color: Colors.white,
+    color: 'white',
     fontSize: 21,
     paddingBottom: 20,
-    alignContent: "center",
-    textAlign: "center",
+    alignContent: 'center',
+    textAlign: 'center',
     paddingTop: 20,
   },
   view1: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     paddingTop: 30,
   },
@@ -95,10 +83,10 @@ const styles = StyleSheet.create({
     marginTop: -25,
   },
   text2: {
-    color: Colors.white,
+    color: 'white',
     fontSize: 16,
     paddingBottom: 10,
-    textAlign: "center",
+    textAlign: 'center',
   },
   details: {
     fontSize: 18,
@@ -106,4 +94,95 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Comfirm;
+export default Confirm;
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import { StatusBar } from 'expo-status-bar';
+// import { View, Text, StyleSheet, Button } from 'react-native';
+// import { useRoute, useNavigation } from '@react-navigation/native';
+// import { PageLogo } from '../components/styles';
+
+// const Confirm = () => {
+//   const route = useRoute();
+//   const navigation = useNavigation();
+//   const { pickuplocation, fullName, deliverylocation, PhoneNumber, Detail, Inside, rideType, cost, distance, duration } = route.params;
+
+//   return (
+//     <View>
+//       <View style={styles.home}>
+//         <Text style={styles.text1}>Thank you for choosing aGIZA</Text>
+//         <View style={styles.view1}>
+//           <View style={styles.view8}>
+//             <Text style={styles.text2}>Please confirm your order now</Text>
+//           </View>
+//         </View>
+//       </View>
+//       <View style={styles.home1}>
+//         <PageLogo resizeMode="cover" source={require('./../assets/end.png')} />
+//         <Text style={styles.header}>Confirmation</Text>
+//         <Text style={styles.details}>Full Name: {fullName}</Text>
+//         <Text style={styles.details}>Pickup Location: {pickuplocation}</Text>
+//         <Text style={styles.details}>Delivery Location: {deliverylocation}</Text>
+//         <Text style={styles.details}>Phone Number: {PhoneNumber}</Text>
+//         <Text style={styles.details}>Parcel Description: {Detail}</Text>
+//         <Text style={styles.details}>Parcel Contents: {Inside}</Text>
+//         <Text style={styles.details}>Selected Ride: {rideType}</Text>
+//         {/* <Text style={styles.details}>Distance: {distance}</Text>
+//         <Text style={styles.details}>Duration: {duration}</Text> */}
+//         <Text style={styles.details}>Total Amount: {cost} TZS</Text>
+//         <Button title="Confirm" onPress={() => alert('Thank you for choosing aGIZA, The ride is nearby to pick up your parcel soon..! You will receive the SMS soon..!')} />
+//       </View>
+//       <StatusBar style="dark" backgroundColor="#2058c0" translucent={true} />
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   home1: {
+//     marginTop: 90,
+//     backgroundColor: 'white',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   header: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   home: {
+//     backgroundColor: '#2058c0',
+//     paddingLeft: 20,
+//   },
+//   text1: {
+//     color: 'white',
+//     fontSize: 21,
+//     paddingBottom: 20,
+//     alignContent: 'center',
+//     textAlign: 'center',
+//     paddingTop: 20,
+//   },
+//   view1: {
+//     flexDirection: 'row',
+//     flex: 1,
+//     paddingTop: 30,
+//   },
+//   view8: {
+//     flex: 4,
+//     marginTop: -25,
+//   },
+//   text2: {
+//     color: 'white',
+//     fontSize: 16,
+//     paddingBottom: 10,
+//     textAlign: 'center',
+//   },
+//   details: {
+//     fontSize: 18,
+//     marginBottom: 10,
+//   },
+// });
+
+// export default Confirm;
+
