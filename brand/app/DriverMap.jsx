@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert, Image } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
+import currentLocationIcon from './../assets/kirikuu.jpeg'; // Import your custom marker image
+
 const GOOGLE_API_KEY = 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw';
 
 const DriverMap = () => {
@@ -134,10 +136,15 @@ const DriverMap = () => {
                     });
                 }}
             >
+                {/* Custom image marker for current location */}
                 <Marker
                     coordinate={currentLocation.coords}
                     title="Driver Location"
-                />
+                    anchor={{ x: 0.5, y: 0.5 }}
+                >
+                    <Image source={currentLocationIcon} style={{ width: 32, height: 32 }} />
+                </Marker>
+                {/* Default markers for pickup and delivery locations */}
                 <Marker
                     coordinate={pickupCoords}
                     title="Pickup Location"
@@ -146,6 +153,7 @@ const DriverMap = () => {
                     coordinate={deliveryCoords}
                     title="Delivery Location"
                 />
+                {/* Polyline for driver route */}
                 <Polyline
                     coordinates={driverRoute}
                     strokeColor="hotpink"
