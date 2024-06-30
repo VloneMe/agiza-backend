@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert, Image } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import currentLocationIcon from './../assets/images/bike.png'; // Import your custom marker image
@@ -13,6 +13,8 @@ const DriverMap = () => {
     const [pickupCoords, setPickupCoords] = useState(null);
     const [deliveryCoords, setDeliveryCoords] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [pickupRoute, setPickupRoute] = useState([]);
+    const [deliveryRoute, setDeliveryRoute] = useState([]);
 
     useEffect(() => {
         const geocodeLocation = async (location) => {
@@ -38,11 +40,67 @@ const DriverMap = () => {
                 setPickupCoords(pickupLocation);
                 setDeliveryCoords(deliveryLocation);
                 setIsLoading(false);
+
+                // Fetch routes
+                fetchRoute(currentLocation.coords, pickupLocation, setPickupRoute);
+                fetchRoute(currentLocation.coords, deliveryLocation, setDeliveryRoute);
             }
         };
 
         fetchLocations();
     }, []);
+
+    const fetchRoute = async (origin, destination, setRoute) => {
+        try {
+            const response = await axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&key=${GOOGLE_API_KEY}`);
+            if (response.data.status === 'OK') {
+                const points = response.data.routes[0].overview_polyline.points;
+                const steps = decode(points);
+                setRoute(steps);
+            } else {
+                Alert.alert('Error', 'Unable to fetch route');
+            }
+        } catch (error) {
+            Alert.alert('Error', error.message);
+        }
+    };
+
+    const decode = (t, e = 5) => {
+        let d = [],
+            n, o, u, l = 0,
+            r = 0,
+            h = 0,
+            i = 0,
+            a = 0;
+        while (l < t.length) {
+            n = 1;
+            o = 0;
+            while (true) {
+                u = t.charCodeAt(l++) - 63 - 1;
+                o += u << i;
+                i += 5;
+                if (u < 0x1f) break;
+            }
+            r += (o & 1 ? ~(o >> 1) : o >> 1);
+            n = 1;
+            o = 0;
+            i = 0;
+            while (true) {
+                u = t.charCodeAt(l++) - 63 - 1;
+                o += u << i;
+                i += 5;
+                if (u < 0x1f) break;
+            }
+            h += (o & 1 ? ~(o >> 1) : o >> 1);
+            d.push([r / e, h / e]);
+        }
+        return d.map(point => {
+            return {
+                latitude: point[0],
+                longitude: point[1]
+            };
+        });
+    };
 
     if (isLoading || !pickupCoords || !deliveryCoords) {
         return (
@@ -96,6 +154,17 @@ const DriverMap = () => {
                 <Marker
                     coordinate={deliveryCoords}
                     title="Delivery Location"
+                />
+                {/* Polylines for routes */}
+                <Polyline
+                    coordinates={pickupRoute}
+                    strokeColor="red"
+                    strokeWidth={6}
+                />
+                <Polyline
+                    coordinates={deliveryRoute}
+                    strokeColor="red"
+                    strokeWidth={6}
                 />
             </MapView>
             <View style={styles.detailsContainer}>
