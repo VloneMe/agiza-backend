@@ -1,57 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 
-const EditUserScreen = () => {
+const EditUser = () => {
   const { user } = useLocalSearchParams();
-  const userData = JSON.parse(user);  // Parse the JSON string to an object
-
-  const [username, setUsername] = useState(userData?.username || '');
-  const [email, setEmail] = useState(userData?.email || '');
-  const [phone, setPhone] = useState(userData?.phone || '');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState(userData?.role || '');
-  const [loading, setLoading] = useState(false);
-
+  const userData = JSON.parse(user);
+  const [formData, setFormData] = useState(userData);
   const router = useRouter();
 
-  useEffect(() => {
-    if (userData) {
-      setUsername(userData.username);
-      setEmail(userData.email);
-      setPhone(userData.phone);
-      setRole(userData.role);
-    }
-  }, [userData]);
-
-  const validateInputs = () => {
-    if (!username || !email || !phone || !role) {
-      Alert.alert('Validation Error', 'All fields except password are required.');
-      return false;
-    }
-    return true;
+  const handleChange = (name, value) => {
+    setFormData({ ...formData, [name]: value });
   };
 
-  const updateUser = () => {
-    if (!validateInputs()) {
-      return;
-    }
+  const handleSubmit = () => {
+    console.log('Submitting:', formData);  // Debugging log
 
-    setLoading(true);
-
-    axios.put(`http://192.168.81.127:4000/api/users/${userData.id}`, { username, email, phone, password, role })
-      .then(() => {
-        Alert.alert('Success', 'User information updated successfully.');
+    axios.put(`http://192.168.62.127:4000/api/users/${formData._id}`, formData)
+      .then(response => {
+        console.log('Response:', response.data);  // Debugging log
+        Alert.alert('Success', 'User details updated successfully.');
         router.back();
       })
       .catch(error => {
-        console.error(error);
-        Alert.alert('Error', 'Failed to update user information.');
-      })
-      .finally(() => {
-        setLoading(false);
+        console.error('API Error:', error.response ? error.response.data : error.message);
+        Alert.alert('Error', 'Failed to update user details.');
       });
   };
 
@@ -60,53 +33,51 @@ const EditUserScreen = () => {
       <Text style={styles.header}>Edit User</Text>
       <TextInput
         style={styles.input}
-        placeholder="Name"
-        value={username}
-        onChangeText={setUsername}
-        accessibilityLabel="Username"
-        accessibilityHint="Enter the user's name"
+        placeholder="Username"
+        value={formData.username}
+        onChangeText={(value) => handleChange('username', value)}
       />
       <TextInput
         style={styles.input}
         placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        accessibilityLabel="Email"
-        accessibilityHint="Enter the user's email"
+        value={formData.email}
+        onChangeText={(value) => handleChange('email', value)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Phone"
-        value={phone}
-        onChangeText={setPhone}
-        keyboardType="phone-pad"
-        accessibilityLabel="Phone"
-        accessibilityHint="Enter the user's phone number"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        accessibilityLabel="Password"
-        accessibilityHint="Enter a new password for the user"
+        placeholder="Phone Number"
+        value={formData.phone}
+        onChangeText={(value) => handleChange('phone', value)}
       />
       <TextInput
         style={styles.input}
         placeholder="Role"
-        value={role}
-        onChangeText={setRole}
-        accessibilityLabel="Role"
-        accessibilityHint="Enter the user's role"
+        value={formData.role}
+        onChangeText={(value) => handleChange('role', value)}
       />
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : (
-        <Button title="Update" onPress={updateUser} />
+      {formData.role === 'courier' && (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Plate Number"
+            value={formData.plateNumber}
+            onChangeText={(value) => handleChange('plateNumber', value)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Vehicle Name"
+            value={formData.vehicleName}
+            onChangeText={(value) => handleChange('vehicleName', value)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Vehicle Color"
+            value={formData.vehicleColor}
+            onChangeText={(value) => handleChange('vehicleColor', value)}
+          />
+        </>
       )}
-      <StatusBar style="auto" />
+      <Button title="Save" onPress={handleSubmit} />
     </View>
   );
 };
@@ -114,22 +85,127 @@ const EditUserScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
     padding: 20,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
+    marginBottom: 10,
+    padding: 10,
   },
 });
 
-export default EditUserScreen;
+export default EditUser;
+
+
+
+
+
+// import React, { useState } from 'react';
+// import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+// import axios from 'axios';
+// import { useRouter, useLocalSearchParams } from 'expo-router';
+
+// const EditUser = () => {
+//   const { user } = useLocalSearchParams();
+//   const userData = JSON.parse(user);
+//   const [formData, setFormData] = useState(userData);
+//   const router = useRouter();
+
+//   const handleChange = (name, value) => {
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   const handleSubmit = () => {
+//     axios.put(`http://192.168.62.127:4000/api/users/${formData._id}`, formData)
+//       .then(response => {
+//         Alert.alert('Success', 'User details updated successfully.');
+//         router.back();
+//       })
+//       .catch(error => {
+//         console.error('API Error:', error.response ? error.response.data : error.message);
+//         Alert.alert('Error', 'Failed to update user details.');
+//       });
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.header}>Edit User</Text>
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Username"
+//         value={formData.username}
+//         onChangeText={(value) => handleChange('username', value)}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Email"
+//         value={formData.email}
+//         onChangeText={(value) => handleChange('email', value)}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Phone Number"
+//         value={formData.phone}
+//         onChangeText={(value) => handleChange('phone', value)}
+//       />
+//       <TextInput
+//         style={styles.input}
+//         placeholder="Role"
+//         value={formData.role}
+//         onChangeText={(value) => handleChange('role', value)}
+//       />
+//       {formData.role === 'courier' && (
+//         <>
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Plate Number"
+//             value={formData.plateNumber}
+//             onChangeText={(value) => handleChange('plateNumber', value)}
+//           />
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Vehicle Name"
+//             value={formData.vehicleName}
+//             onChangeText={(value) => handleChange('vehicleName', value)}
+//           />
+//           <TextInput
+//             style={styles.input}
+//             placeholder="Vehicle Color"
+//             value={formData.vehicleColor}
+//             onChangeText={(value) => handleChange('vehicleColor', value)}
+//           />
+//         </>
+//       )}
+//       <Button title="Save" onPress={handleSubmit} />
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 20,
+//   },
+//   header: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   input: {
+//     height: 40,
+//     borderColor: 'gray',
+//     borderWidth: 1,
+//     marginBottom: 10,
+//     padding: 10,
+//   },
+// });
+
+// export default EditUser;
+
