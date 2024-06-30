@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const AdminScreen = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); 
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch all users data
@@ -26,7 +26,7 @@ const AdminScreen = () => {
   }, []);
 
   const editUser = (user) => {
-    router.push({ pathname: 'editUser', params: { user: JSON.stringify(user) } });
+    router.push({ pathname: 'EditUser', params: { user: JSON.stringify(user) } });
   };
 
   const addUser = () => {
@@ -195,7 +195,7 @@ export default AdminScreen;
 //           onPress: () => {
 //             axios.delete(`http://192.168.62.127:4000/api/users/${userId}`)
 //               .then(response => {
-//                 setUsers(users.filter(user => user.id !== userId));
+//                 setUsers(users.filter(user => user._id !== userId));
 //                 Alert.alert('Success', 'User deleted successfully.');
 //               })
 //               .catch(error => {
@@ -223,7 +223,7 @@ export default AdminScreen;
 //       )}
 //       <View style={styles.buttonContainer}>
 //         <Button title="Edit" onPress={() => editUser(item)} />
-//         <Button title="Delete" color="red" onPress={() => deleteUser(item.id)} />
+//         <Button title="Delete" color="red" onPress={() => deleteUser(item._id)} />
 //       </View>
 //     </View>
 //   );
@@ -242,7 +242,7 @@ export default AdminScreen;
 //         <FlatList
 //           data={users}
 //           renderItem={renderItem}
-//           keyExtractor={item => item.id ? item.id.toString() : Math.random().toString()}
+//           keyExtractor={item => item._id ? item._id.toString() : Math.random().toString()}
 //         />
 //       )}
 //       <StatusBar style="dark" backgroundColor="#2058c0" translucent={true} />
