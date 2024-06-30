@@ -26,7 +26,7 @@ const AdminScreen = () => {
   }, []);
 
   const editUser = (user) => {
-    router.push({ pathname: 'EditUser', params: { user: JSON.stringify(user) } });
+    router.push({ pathname: 'editUser', params: { user: JSON.stringify(user) } });
   };
 
   const addUser = () => {
