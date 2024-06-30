@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert, Image } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import currentLocationIcon from './../assets/images/bike.png'; // Import your custom marker image
@@ -12,10 +12,7 @@ const DriverMap = () => {
     const { packageDetails, currentLocation } = route.params;
     const [pickupCoords, setPickupCoords] = useState(null);
     const [deliveryCoords, setDeliveryCoords] = useState(null);
-    const [driverRoute, setDriverRoute] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [distanceToPickup, setDistanceToPickup] = useState(0);
-    const [distanceToDelivery, setDistanceToDelivery] = useState(0);
 
     useEffect(() => {
         const geocodeLocation = async (location) => {
@@ -40,91 +37,12 @@ const DriverMap = () => {
             if (pickupLocation && deliveryLocation) {
                 setPickupCoords(pickupLocation);
                 setDeliveryCoords(deliveryLocation);
-
-                const getRoute = async () => {
-                    try {
-                        const response = await axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${currentLocation.coords.latitude},${currentLocation.coords.longitude}&destination=${deliveryLocation.latitude},${deliveryLocation.longitude}&waypoints=${pickupLocation.latitude},${pickupLocation.longitude}&key=${GOOGLE_API_KEY}`);
-                        if (response.data.status === 'OK') {
-                            const points = response.data.routes[0].overview_polyline.points;
-                            const steps = decode(points);
-                            setDriverRoute(steps);
-
-                            // Calculate distances
-                            const distanceToPickup = calculateDistance(currentLocation.coords.latitude, currentLocation.coords.longitude, pickupLocation.latitude, pickupLocation.longitude);
-                            const distanceToDelivery = calculateDistance(currentLocation.coords.latitude, currentLocation.coords.longitude, deliveryLocation.latitude, deliveryLocation.longitude);
-                            setDistanceToPickup(distanceToPickup);
-                            setDistanceToDelivery(distanceToDelivery);
-                        } else {
-                            Alert.alert('Error', 'Unable to get route');
-                        }
-                    } catch (error) {
-                        Alert.alert('Error', error.message);
-                    } finally {
-                        setIsLoading(false); // Set loading to false after fetching route
-                    }
-                };
-
-                getRoute();
+                setIsLoading(false);
             }
         };
 
         fetchLocations();
     }, []);
-
-    // Function to calculate distance using Haversine formula
-    const calculateDistance = (lat1, lon1, lat2, lon2) => {
-        const R = 6371; // Radius of the earth in km
-        const dLat = deg2rad(lat2 - lat1);
-        const dLon = deg2rad(lon2 - lon1);
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const d = R * c; // Distance in km
-        return d * 1000; // Convert to meters
-    };
-
-    const deg2rad = (deg) => {
-        return deg * (Math.PI / 180);
-    };
-
-    const decode = (t, e = 5) => {
-        let d = [],
-            n, o, u, l = 0,
-            r = 0,
-            h = 0,
-            i = 0,
-            a = 0;
-        while (l < t.length) {
-            n = 1;
-            o = 0;
-            while (true) {
-                u = t.charCodeAt(l++) - 63 - 1;
-                o += u << i;
-                i += 5;
-                if (u < 0x1f) break;
-            }
-            r += (o & 1 ? ~(o >> 1) : o >> 1);
-            n = 1;
-            o = 0;
-            i = 0;
-            while (true) {
-                u = t.charCodeAt(l++) - 63 - 1;
-                o += u << i;
-                i += 5;
-                if (u < 0x1f) break;
-            }
-            h += (o & 1 ? ~(o >> 1) : o >> 1);
-            d.push([r / e, h / e]);
-        }
-        return d.map(point => {
-            return {
-                latitude: point[0],
-                longitude: point[1]
-            };
-        });
-    };
 
     if (isLoading || !pickupCoords || !deliveryCoords) {
         return (
@@ -179,20 +97,12 @@ const DriverMap = () => {
                     coordinate={deliveryCoords}
                     title="Delivery Location"
                 />
-                {/* Polyline for driver route */}
-                <Polyline
-                    coordinates={driverRoute}
-                    strokeColor="red" // Red color for the route
-                    strokeWidth={6}
-                />
             </MapView>
             <View style={styles.detailsContainer}>
                 <Text>Recipient Name: {packageDetails.fullName}</Text>
                 <Text>Phone Number: {packageDetails.PhoneNumber}</Text>
                 <Text>Pickup Location: {packageDetails.pickuplocation}</Text>
-                <Text>Distance to Pickup: {distanceToPickup.toFixed(2)} meters</Text>
                 <Text>Delivery Location: {packageDetails.deliverylocation}</Text>
-                <Text>Distance to Delivery: {distanceToDelivery.toFixed(2)} meters</Text>
                 <Text>Ride Type: {packageDetails.rideType}</Text>
                 <Text>Cost: {packageDetails.cost} TZS</Text>
             </View>
@@ -226,6 +136,7 @@ export default DriverMap;
 
 
 
+
 // import React, { useEffect, useState } from 'react';
 // import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert, Image } from 'react-native';
 // import MapView, { Marker, Polyline } from 'react-native-maps';
@@ -242,6 +153,8 @@ export default DriverMap;
 //     const [deliveryCoords, setDeliveryCoords] = useState(null);
 //     const [driverRoute, setDriverRoute] = useState([]);
 //     const [isLoading, setIsLoading] = useState(true);
+//     const [distanceToPickup, setDistanceToPickup] = useState(0);
+//     const [distanceToDelivery, setDistanceToDelivery] = useState(0);
 
 //     useEffect(() => {
 //         const geocodeLocation = async (location) => {
@@ -274,6 +187,12 @@ export default DriverMap;
 //                             const points = response.data.routes[0].overview_polyline.points;
 //                             const steps = decode(points);
 //                             setDriverRoute(steps);
+
+//                             // Calculate distances
+//                             const distanceToPickup = calculateDistance(currentLocation.coords.latitude, currentLocation.coords.longitude, pickupLocation.latitude, pickupLocation.longitude);
+//                             const distanceToDelivery = calculateDistance(currentLocation.coords.latitude, currentLocation.coords.longitude, deliveryLocation.latitude, deliveryLocation.longitude);
+//                             setDistanceToPickup(distanceToPickup);
+//                             setDistanceToDelivery(distanceToDelivery);
 //                         } else {
 //                             Alert.alert('Error', 'Unable to get route');
 //                         }
@@ -290,6 +209,24 @@ export default DriverMap;
 
 //         fetchLocations();
 //     }, []);
+
+//     // Function to calculate distance using Haversine formula
+//     const calculateDistance = (lat1, lon1, lat2, lon2) => {
+//         const R = 6371; // Radius of the earth in km
+//         const dLat = deg2rad(lat2 - lat1);
+//         const dLon = deg2rad(lon2 - lon1);
+//         const a =
+//             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+//             Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+//             Math.sin(dLon / 2) * Math.sin(dLon / 2);
+//         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//         const d = R * c; // Distance in km
+//         return d * 1000; // Convert to meters
+//     };
+
+//     const deg2rad = (deg) => {
+//         return deg * (Math.PI / 180);
+//     };
 
 //     const decode = (t, e = 5) => {
 //         let d = [],
@@ -384,7 +321,7 @@ export default DriverMap;
 //                 {/* Polyline for driver route */}
 //                 <Polyline
 //                     coordinates={driverRoute}
-//                     strokeColor="hotpink"
+//                     strokeColor="red" // Red color for the route
 //                     strokeWidth={6}
 //                 />
 //             </MapView>
@@ -392,7 +329,9 @@ export default DriverMap;
 //                 <Text>Recipient Name: {packageDetails.fullName}</Text>
 //                 <Text>Phone Number: {packageDetails.PhoneNumber}</Text>
 //                 <Text>Pickup Location: {packageDetails.pickuplocation}</Text>
+//                 <Text>Distance to Pickup: {distanceToPickup.toFixed(2)} meters</Text>
 //                 <Text>Delivery Location: {packageDetails.deliverylocation}</Text>
+//                 <Text>Distance to Delivery: {distanceToDelivery.toFixed(2)} meters</Text>
 //                 <Text>Ride Type: {packageDetails.rideType}</Text>
 //                 <Text>Cost: {packageDetails.cost} TZS</Text>
 //             </View>
@@ -421,3 +360,4 @@ export default DriverMap;
 // });
 
 // export default DriverMap;
+
