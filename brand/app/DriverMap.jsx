@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ActivityIndicator, Alert, Image } f
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import currentLocationIcon from './../assets/kirikuu.jpeg'; // Import your custom marker image
+import currentLocationIcon from './../assets/images/bike.png'; // Import your custom marker image
 
 const GOOGLE_API_KEY = 'AIzaSyD6DVLho-QJOqaxGKZ9pDQLYuDkvxlTyuw';
 
