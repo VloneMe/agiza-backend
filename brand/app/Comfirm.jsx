@@ -39,8 +39,6 @@ const Confirm = () => {
         <Text style={styles.details}>Parcel Description: {Detail}</Text>
         <Text style={styles.details}>Parcel Contents: {Inside}</Text>
         <Text style={styles.details}>Selected Ride: {rideType}</Text>
-        <Text style={styles.details}>Distance: {distance}</Text>
-        <Text style={styles.details}>Duration: {duration}</Text>
         <Text style={styles.details}>Total Amount: {cost} TZS</Text>
         <Button title="Confirm" onPress={handleConfirm} />
       </View>
