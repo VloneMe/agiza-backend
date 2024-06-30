@@ -103,15 +103,26 @@ router.put('/:id',  async (req, res) => {
 
 // Delete a user
 router.delete('/:id',  async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id);
-        if (!user) return res.status(404).json({ message: 'User not found' });
 
-        await user.remove();
-        res.json({ message: 'User deleted' });
-    } catch (error) {
+    try {
+        const userId = req.params.id;
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        res.json({ message: 'User deleted successfully' });
+      } catch (error) {
         res.status(500).json({ message: error.message });
-    }
+      }
+    // try {
+    //     const user = await User.findById(req.params.id);
+    //     if (!user) return res.status(404).json({ message: 'User not found' });
+
+    //     await user.remove();
+    //     res.json({ message: 'User deleted' });
+    // } catch (error) {
+    //     res.status(500).json({ message: error.message });
+    // }
 });
 
 module.exports = router;
