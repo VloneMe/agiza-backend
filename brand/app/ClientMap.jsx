@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
@@ -15,6 +15,7 @@ const ClientMap = () => {
     const [duration, setDuration] = useState(null);
     const [cost, setCost] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [rideType, setRideType] = useState(null);
 
     const { pickuplocation, fullName, deliverylocation, PhoneNumber, Detail, Inside } = route.params;
 
@@ -59,11 +60,9 @@ const ClientMap = () => {
                 const element = response.data.rows[0].elements[0];
                 const distanceText = element.distance.text;
                 const distanceValue = parseFloat(distanceText.replace(' km', ''));
-                const costValue = distanceValue * 2000;
 
                 setDistance(distanceText);
                 setDuration(element.duration.text);
-                setCost(costValue);
             } else {
                 Alert.alert('Error', 'Unable to calculate distance');
             }
@@ -73,6 +72,81 @@ const ClientMap = () => {
             setLoading(false);
         }
     };
+
+    const handleRideSelection = async (rideType) => {
+        setRideType(rideType);
+        let cost = 0;
+        if (rideType === 'bodaboda') {
+            cost = parseFloat(distance.replace(' km', '')) * 2000;
+        } else if (rideType === 'kirikuu') {
+            cost = parseFloat(distance.replace(' km', '')) * 4000;
+        }
+        setCost(cost);
+    
+        // Send data to the database
+        try {
+            await axios.post('http://192.168.62.127:4000/api/packages', {
+                pickuplocation: pickuplocation,
+                deliverylocation: deliverylocation,
+                fullName: fullName,
+                PhoneNumber: PhoneNumber,
+                Detail: Detail,
+                Inside: Inside,
+                rideType: rideType,
+                cost: cost
+            });
+    
+            // Navigate to the driver page
+            navigation.navigate('Comfirm', {
+                pickuplocation,
+                fullName,
+                deliverylocation,
+                PhoneNumber,
+                Detail,
+                Inside,
+                rideType: rideType,
+                cost: cost,
+            });
+        } catch (error) {
+            Alert.alert('Error', 'Failed to create package');
+        }
+    };
+    
+
+    // const handleRideSelection = async (type) => {
+    //     setRideType(type);
+    //     let costValue = 0;
+    //     if (type === 'bodaboda') {
+    //         costValue = parseFloat(distance.replace(' km', '')) * 2000;
+    //     } else if (type === 'kirikuu') {
+    //         costValue = parseFloat(distance.replace(' km', '')) * 4000;
+    //     }
+    //     setCost(costValue);
+
+    //     // Send data to the database
+    //     await axios.post('http://192.168.62.127:4000/api/packages', {
+    //         pickuplocation,
+    //         fullName,
+    //         deliverylocation,
+    //         PhoneNumber,
+    //         Detail,
+    //         Inside,
+    //         rideType: type,
+    //         cost: costValue,
+    //     });
+
+    //     // Navigate to the driver page
+    //     navigation.navigate('DriverPage', {
+    //         pickuplocation,
+    //         fullName,
+    //         deliverylocation,
+    //         PhoneNumber,
+    //         Detail,
+    //         Inside,
+    //         rideType: type,
+    //         cost: costValue,
+    //     });
+    // };
 
     if (!location) {
         return <Text>Loading...</Text>;
@@ -110,10 +184,17 @@ const ClientMap = () => {
                     <>
                         <Text>Distance: {distance}</Text>
                         <Text>Duration: {duration}</Text>
-                        <Text>Cost: {cost} Tsh</Text>
+                        <Text>Cost: {cost ? `${cost} Tsh` : 'Select a ride type'}</Text>
                     </>
                 )}
-                <Button title="Accept" onPress={() => Alert.alert('Accepted')} />
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={() => handleRideSelection('bodaboda')}>
+                        <Text style={styles.buttonText}>Bodaboda</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => handleRideSelection('kirikuu')}>
+                        <Text style={styles.buttonText}>Kirikuu</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -134,6 +215,22 @@ const styles = StyleSheet.create({
         padding: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 20,
+    },
+    button: {
+        backgroundColor: '#f0ad4e',
+        padding: 10,
+        borderRadius: 5,
+        width: '40%',
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white',
+        fontWeight: 'bold',
     },
 });
 
