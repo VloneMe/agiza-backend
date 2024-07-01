@@ -28,7 +28,7 @@ const Driver = () => {
 
     const fetchPackages = async () => {
         try {
-            const response = await axios.get('http://192.168.62.127:4000/api/packages');
+            const response = await axios.get('http://192.168.58.127:4000/api/packages');
             if (response.status === 200) {
                 setPackages(response.data);
             } else {
