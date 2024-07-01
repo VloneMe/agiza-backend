@@ -85,7 +85,7 @@ const ClientMap = () => {
     
         // Send data to the database
         try {
-            await axios.post('http://192.168.62.127:4000/api/packages', {
+            await axios.post('http://192.168.58.127:4000/api/packages', {
                 pickuplocation: pickuplocation,
                 deliverylocation: deliverylocation,
                 fullName: fullName,
