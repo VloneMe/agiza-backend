@@ -16,7 +16,7 @@ const EditUser = () => {
   const handleSubmit = () => {
     console.log('Submitting:', formData);  // Debugging log
 
-    axios.put(`http://192.168.62.127:4000/api/users/${formData._id}`, formData)
+    axios.put(`http://192.168.58.127:4000/api/users/${formData._id}`, formData)
       .then(response => {
         console.log('Response:', response.data);  // Debugging log
         Alert.alert('Success', 'User details updated successfully.');
