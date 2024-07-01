@@ -17,7 +17,7 @@ const EditProfile = ({ route }) => {
   const router = useRouter();
 
   const saveProfile = () => {
-    axios.put(`http://192.168.81.127:4000/api/users/${userData.id}`, {
+    axios.put(`http://192.168.58.127:4000/api/users/${userData.id}`, {
       username,
       email,
       phone,
