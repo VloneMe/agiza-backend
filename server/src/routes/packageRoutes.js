@@ -58,14 +58,28 @@ router.put('/:id',  async (req, res) => {
 // Delete a package
 router.delete('/:id',  async (req, res) => {
     try {
-        const package = await Package.findById(req.params.id);
-        if (!package) return res.status(404).json({ message: 'Package not found' });
+        const packageId = req.params.id;
+        const deletedPackage = await Package.findByIdAndDelete(packageId);
+    
+        if (!deletedPackage) {
+          return res.status(404).json({ message: 'Package not found' });
+        }
+    
+        res.status(200).json({ message: 'Package deleted successfully' });
+      } catch (error) {
+        res.status(500).json({ message: 'Failed to delete package', error: error.message });
+      }
 
-        // await package.remove();
-        res.json({ message: 'Package deleted' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+      
+    // try {
+    //     const package = await Package.findById(req.params.id);
+    //     if (!package) return res.status(404).json({ message: 'Package not found' });
+
+    //     await package.remove();
+    //     res.json({ message: 'Package deleted' });
+    // } catch (error) {
+    //     res.status(500).json({ message: error.message });
+    // }
 });
 
 module.exports = router;
