@@ -16,7 +16,7 @@ const AddUser = () => {
 
   const handleSubmit = () => {
     if (username && email && phone && password && role && plateNumber && vehicleName && vehicleColor) {
-      axios.post('http://192.168.62.127:4000/api/users/register', {
+      axios.post('http://192.168.58.127:4000/api/users/register', {
         username,
         email,
         phone,
