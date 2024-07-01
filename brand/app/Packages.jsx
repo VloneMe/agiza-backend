@@ -27,8 +27,14 @@ const PackagesScreen = () => {
   const renderItem = ({ item }) => (
     <View style={styles.packageContainer}>
       <Text style={styles.packageDetails}>Package ID: {item._id}</Text>
-      <Text style={styles.packageDetails}>Sender Name: {item.senderName}</Text>
-      <Text style={styles.packageDetails}>Recipient Name: {item.recipientName}</Text>
+      <Text style={styles.packageDetails}>Reciver Name: {item.fullName}</Text>
+      <Text style={styles.packageDetails}>Reciver Phone Numbr: {item.PhoneNumber}</Text>
+      <Text style={styles.packageDetails}>Pick-up Location: {item.pickuplocation}</Text>
+      <Text style={styles.packageDetails}>Delivery Location: {item.deliverylocation}</Text>
+      <Text style={styles.packageDetails}>Package Description: {item.Detail}</Text>
+      <Text style={styles.packageDetails}>Inside of the Package: {item.Inside}</Text>
+      <Text style={styles.packageDetails}>Ride Type: {item.rideType}</Text>
+      <Text style={styles.packageDetails}>Package Cost: {item.cost}</Text>
       <Text style={styles.packageDetails}>Status: {item.status}</Text>
       <TouchableOpacity style={styles.deleteButton} onPress={() => deletePackage(item._id)}>
         <Text style={styles.deleteButtonText}>Delete</Text>
