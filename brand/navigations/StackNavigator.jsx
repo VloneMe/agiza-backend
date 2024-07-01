@@ -18,6 +18,7 @@ import ClientMap from './../app/ClientMap';
 import Driver from './../app/Driver';
 import DriverMap from './../app/DriverMap';
 import AddUser from '../app/AddUser';
+import Packages from '../app/Packages';
 
 
 
@@ -100,11 +101,6 @@ export function Home (){
                 component = {ClientMap}
                 options ={{headerShown:false}}
             /> 
-            {/* <Home.Screen 
-                name ="AfterDestination"
-                component = {AfterDestination}
-                options ={{headerShown:false}}
-            />  */}
             <Home.Screen 
                 name ="Driver"
                 component = {Driver}
@@ -118,6 +114,11 @@ export function Home (){
             <Home.Screen 
                 name ="AddUser"
                 component = {AddUser}
+                options ={{headerShown:false}}
+            /> 
+            <Home.Screen 
+                name ="Packages"
+                component = {Packages}
                 options ={{headerShown:false}}
             /> 
             <FlashMessage position="top" />
