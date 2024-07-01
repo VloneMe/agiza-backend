@@ -12,7 +12,7 @@ const PackagesScreen = () => {
 
   useEffect(() => {
     // Fetch all packages data
-    axios.get('http://192.168.62.127:4000/api/packages')
+    axios.get('http://192.168.58.127:4000/api/packages')
       .then(response => {
         setPackages(response.data);
         setLoading(false);
@@ -55,7 +55,7 @@ const PackagesScreen = () => {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            axios.delete(`http://192.168.62.127:4000/api/packages/${packageId}`)
+            axios.delete(`http://192.168.58.127:4000/api/packages/${packageId}`)
               .then(response => {
                 setPackages(packages.filter(packageItem => packageItem._id !== packageId));
                 Alert.alert('Success', 'Package deleted successfully.');
