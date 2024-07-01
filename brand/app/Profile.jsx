@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, ActivityIndicator } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../components/global/styles';
 import { useRouter } from 'expo-router';
-import { PageLogo } from '../components/styles';
+import { Line, PageLogo } from '../components/styles';
 import { StatusBar } from 'expo-status-bar';
 import { userDataHook } from './../hook/userDataHook';
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const { userData } = userDataHook();
@@ -34,6 +36,7 @@ const ProfileScreen = () => {
         .then(() => setProfile(null))
         .catch(error => console.error(error));
     }
+    router.push('Login');
   };
 
   if (loading) {
@@ -62,6 +65,7 @@ const ProfileScreen = () => {
               <Text style={styles.details}>Phone Number: {profile.phone}</Text>
               <Text style={styles.details}>Role: {profile.role}</Text>
               <Button title="Edit Profile" onPress={() => router.push({ pathname: 'EditProfile', params: { profile } })} />
+                <Line />
               <Button title="Delete Profile" onPress={deleteProfile} />
             </View>
           ) : (
