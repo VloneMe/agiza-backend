@@ -16,7 +16,7 @@ const ProfileScreen = () => {
   useEffect(() => {
     if (userData && userData.id) {
       // Fetch profile data
-      axios.get(`http://192.168.62.127:4000/api/users/${userData.id}`)
+      axios.get(`http://192.168.58.127:4000/api/users/${userData.id}`)
         .then(response => {
           setProfile(response.data);
           setLoading(false);
@@ -30,7 +30,7 @@ const ProfileScreen = () => {
 
   const deleteProfile = () => {
     if (userData && userData.id) {
-      axios.delete(`http://192.168.62.127:4000/api/users/${userData.id}`)
+      axios.delete(`http://192.168.58.127:4000/api/users/${userData.id}`)
         .then(() => setProfile(null))
         .catch(error => console.error(error));
     }
