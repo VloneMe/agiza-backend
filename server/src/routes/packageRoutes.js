@@ -61,7 +61,7 @@ router.delete('/:id',  async (req, res) => {
         const package = await Package.findById(req.params.id);
         if (!package) return res.status(404).json({ message: 'Package not found' });
 
-        await package.remove();
+        // await package.remove();
         res.json({ message: 'Package deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });
