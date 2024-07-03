@@ -172,8 +172,8 @@ const Signup = () => {
                 >
                   <Picker.Item label="Select Role" value="" />
                   <Picker.Item label="customer" value="customer" />
-                  <Picker.Item label="courier" value="courier" />
-                  <Picker.Item label="admin" value="admin" />
+                  {/* <Picker.Item label="courier" value="courier" /> */}
+                  {/* <Picker.Item label="admin" value="admin" /> */}
                 </Picker>
                 {touched.role && errors.role && <Text style={styles.errorText}>{errors.role}</Text>}
 
