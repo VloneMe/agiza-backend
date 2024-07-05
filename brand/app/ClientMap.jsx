@@ -77,9 +77,9 @@ const ClientMap = () => {
         setRideType(rideType);
         let cost = 0;
         if (rideType === 'bodaboda') {
-            cost = parseFloat(distance.replace(' km', '')) * 2000;
+            cost = parseFloat(distance.replace(' km', '')) * 1000;
         } else if (rideType === 'kirikuu') {
-            cost = parseFloat(distance.replace(' km', '')) * 4000;
+            cost = parseFloat(distance.replace(' km', '')) * 2000;
         }
         setCost(cost);
     
