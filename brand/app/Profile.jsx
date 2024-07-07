@@ -64,7 +64,7 @@ const ProfileScreen = () => {
               <Text style={styles.details}>Email: {profile.email}</Text>
               <Text style={styles.details}>Phone Number: {profile.phone}</Text>
               <Text style={styles.details}>Role: {profile.role}</Text>
-              <Button title="Edit Profile" onPress={() => router.push({ pathname: 'EditProfile', params: { profile } })} />
+              {/* <Button title="Edit Profile" onPress={() => router.push({ pathname: 'EditProfile', params: { profile } })} /> */}
                 <Line />
               <Button title="Delete Profile" onPress={deleteProfile} />
             </View>
